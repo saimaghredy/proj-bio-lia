@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  background-color: #e9e7e3;
+  color: #2f3a29;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #e9e7e3;
+  color: #2f3a29;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+}
+
+.font-serif {
+  font-family: 'Merriweather', serif;
+}
+
+.font-jakarta {
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+}
+
+a {
+  font-weight: 500;
+  color: #2f3a29;
+  text-decoration: inherit;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #a4be88;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #a4be88;
+  color: #2f3a29;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+}
+button:hover {
+  border-color: #2f3a29;
+  background-color: #d7e7c4;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Removed problematic @apply lines for input::placeholder, textarea::placeholder, and select option. Use Tailwind classes directly in JSX. */
+
+/* ...keep your custom animations and utilities... */
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.8s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes fade-in-slow {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-slow {
+  animation: fade-in-slow 1.4s cubic-bezier(0.4,0,0.2,1) both;
+}
