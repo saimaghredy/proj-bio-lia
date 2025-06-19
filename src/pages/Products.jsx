@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { products, categories } from '../data/products';
+import { useCart } from '../context/CartContext';
 
 const Products = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All Products');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  const { addToCart } = useCart();
+
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = selectedCategory === 'All Products' || product.category === selectedCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortBy) {
+      case 'price-low':
+        return a.price - b.price;
+      case 'price-high':
+        return b.price - a.price;
+      case 'rating':
+        return b.rating - a.rating;
+      case 'name':
+      default:
+        return a.name.localeCompare(b.name);
+    }
+  });
+
+  const handleAddToCart = (product) => {
+    addToCart(product, 1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4]">
       {/* Header Section */}
@@ -13,176 +46,131 @@ const Products = () => {
         </p>
       </section>
 
-      {/* Products Section */}
-      <div className="max-w-6xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Agricultural Products */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 animate-fade-in">
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-[#a4be88] rounded-full flex items-center justify-center mb-6 mx-auto">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-serif text-[#2f3a29] mb-4">Agricultural Solutions</h2>
+      {/* Filters and Search */}
+      <div className="max-w-7xl mx-auto px-4 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Search */}
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+              />
+              <svg className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
             </div>
-            
-            <div className="space-y-6">
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Soil Regenerator</h3>
-                <p className="text-gray-600 mb-3">
-                  Advanced plant-based formula that restores soil microbiome and enhances nutrient availability.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Increases soil organic matter by 30%
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Improves water retention capacity
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Enhances beneficial microbial activity
-                  </li>
-                </ul>
-              </div>
 
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Crop Enhancer</h3>
-                <p className="text-gray-600 mb-3">
-                  Natural bioactive compounds that boost crop resilience and yield.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Increases crop yield by 25-40%
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Enhances disease resistance
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Improves nutritional content
-                  </li>
-                </ul>
-              </div>
+            {/* Category Filter */}
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white"
+            >
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
 
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Plant Defense System</h3>
-                <p className="text-gray-600 mb-3">
-                  Natural plant protection against pests and diseases without harmful chemicals.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    100% organic and biodegradable
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Safe for beneficial insects
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Long-lasting protection
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Pharmaceutical Products */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 animate-fade-in">
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-[#a4be88] rounded-full flex items-center justify-center mb-6 mx-auto">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-serif text-[#2f3a29] mb-4">Wellness Solutions</h2>
-            </div>
-            
-            <div className="space-y-6">
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Natural APIs</h3>
-                <p className="text-gray-600 mb-3">
-                  High-purity active pharmaceutical ingredients derived from rare medicinal plants.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Anti-inflammatory compounds
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Antioxidant molecules
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Immunomodulatory agents
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Nutraceuticals</h3>
-                <p className="text-gray-600 mb-3">
-                  Functional food ingredients that provide health benefits beyond basic nutrition.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Digestive health support
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Cognitive enhancement
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Stress management
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 bg-[#f4f1ee] rounded-lg">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">Cosmeceuticals</h3>
-                <p className="text-gray-600 mb-3">
-                  Plant-based active ingredients for advanced skincare and cosmetic applications.
-                </p>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Anti-aging compounds
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Skin brightening agents
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-[#a4be88] mr-2">•</span>
-                    Natural preservatives
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white"
+            >
+              <option value="name">Sort by Name</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+            </select>
           </div>
         </div>
+      </div>
 
-        {/* CTA Section */}
-        <div className="mt-16 bg-gradient-to-r from-[#a4be88] to-[#d7e7c4] rounded-3xl p-8 text-center">
-          <h2 className="text-3xl font-serif text-[#2f3a29] mb-4">
-            Interested in Our Products?
-          </h2>
-          <p className="text-lg text-[#2f3a29] mb-6">
-            Contact us to learn more about our innovative solutions and how they can benefit your business.
-          </p>
-          <button className="bg-[#2f3a29] hover:bg-[#3d4a35] text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-all hover:scale-105">
-            Contact Sales Team
-          </button>
+      {/* Products Grid */}
+      <div className="max-w-7xl mx-auto px-4 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {sortedProducts.map(product => (
+            <div key={product.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+              {/* Product Image Placeholder */}
+              <div className="h-48 bg-gradient-to-br from-[#a4be88] to-[#d7e7c4] flex items-center justify-center relative">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-2 mx-auto">
+                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <p className="text-white font-semibold text-sm">{product.category}</p>
+                </div>
+                {!product.inStock && (
+                  <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                    Out of Stock
+                  </div>
+                )}
+              </div>
+
+              {/* Product Info */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-[#2f3a29] mb-2">{product.name}</h3>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                
+                {/* Rating */}
+                <div className="flex items-center mb-3">
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-gray-300'}`} viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-gray-600 text-sm ml-2">({product.reviews})</span>
+                </div>
+
+                {/* Price */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl font-bold text-[#2f3a29]">₹{product.price.toLocaleString()}</span>
+                  <span className="text-sm text-gray-500">{product.packaging}</span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <Link
+                    to={`/product/${product.id}`}
+                    className="flex-1 bg-[#2f3a29] hover:bg-[#3d4a35] text-white font-semibold py-2 px-4 rounded-lg transition-all text-center text-sm"
+                  >
+                    View Details
+                  </Link>
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    disabled={!product.inStock}
+                    className={`flex-1 font-semibold py-2 px-4 rounded-lg transition-all text-sm ${
+                      product.inStock
+                        ? 'bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29]'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+
+        {sortedProducts.length === 0 && (
+          <div className="text-center py-12">
+            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">No products found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
       </div>
     </div>
   );

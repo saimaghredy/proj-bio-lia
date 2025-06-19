@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import bioLiaLogo from '../assets/bio_lia_full_logo_final.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { getCartItemsCount } = useCart();
 
   const isActive = (path) => location.pathname === path;
 
@@ -47,15 +49,33 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-[#2f3a29] hover:text-[#a4be88] transition-colors"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        {/* Cart and Mobile Menu */}
+        <div className="flex items-center space-x-4">
+          {/* Cart Icon */}
+          <Link
+            to="/cart"
+            className="relative p-2 text-[#2f3a29] hover:text-[#a4be88] transition-colors"
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+            {getCartItemsCount() > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#a4be88] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                {getCartItemsCount()}
+              </span>
+            )}
+          </Link>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-[#2f3a29] hover:text-[#a4be88] transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
@@ -77,6 +97,20 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                to="/cart"
+                className="block py-2 px-4 rounded-lg transition-colors text-[#2f3a29] hover:bg-[#d7e7c4] flex items-center justify-between"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span>Cart</span>
+                {getCartItemsCount() > 0 && (
+                  <span className="bg-[#a4be88] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                    {getCartItemsCount()}
+                  </span>
+                )}
+              </Link>
+            </li>
           </ul>
         </div>
       )}
