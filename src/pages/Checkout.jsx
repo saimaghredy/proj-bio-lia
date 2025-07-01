@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import LocationSearch from '../components/LocationSearch';
+import OTPVerification from '../components/OTPVerification';
 
 const Checkout = () => {
   const { items, getCartTotal, clearCart } = useCart();
+  const { user, sendOTP, verifyOTP } = useAuth();
+  const navigate = useNavigate();
+  
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Personal Information
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
+    // Personal Information (pre-filled from user account)
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
     
     // Shipping Address
     address: '',
@@ -37,6 +42,13 @@ const Checkout = () => {
 
   const [errors, setErrors] = useState({});
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [otpType, setOtpType] = useState('');
+  const [otpValue, setOtpValue] = useState('');
+  const [verificationStatus, setVerificationStatus] = useState({
+    email: user?.emailVerified || false,
+    phone: user?.phoneVerified || false,
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -94,8 +106,50 @@ const Checkout = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleVerification = async (type) => {
+    const value = type === 'email' ? formData.email : formData.phone;
+    setOtpType(type);
+    setOtpValue(value);
+    
+    try {
+      await sendOTP(type, value);
+      setShowOTP(true);
+    } catch (error) {
+      setErrors({ [type]: error.message });
+    }
+  };
+
+  const handleOTPVerify = async (otp) => {
+    try {
+      await verifyOTP(otpType, otpValue, otp);
+      setVerificationStatus(prev => ({ ...prev, [otpType]: true }));
+      setShowOTP(false);
+      setOtpType('');
+      setOtpValue('');
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleOTPResend = async () => {
+    await sendOTP(otpType, otpValue);
+  };
+
+  const handleOTPCancel = () => {
+    setShowOTP(false);
+    setOtpType('');
+    setOtpValue('');
+  };
+
   const nextStep = () => {
     if (validateStep(currentStep)) {
+      // Check verification requirements before proceeding to payment
+      if (currentStep === 2) {
+        if (!verificationStatus.email || !verificationStatus.phone) {
+          setErrors({ verification: 'Please verify both email and phone number before proceeding to payment.' });
+          return;
+        }
+      }
       setCurrentStep(prev => prev + 1);
     }
   };
@@ -107,6 +161,12 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateStep(3)) {
+      // Check final verification
+      if (!verificationStatus.email || !verificationStatus.phone) {
+        setErrors({ verification: 'Both email and phone must be verified to place order.' });
+        return;
+      }
+      
       // Simulate order processing
       setTimeout(() => {
         setOrderPlaced(true);
@@ -188,7 +248,7 @@ const Checkout = () => {
                 <span className={`ml-2 font-semibold ${
                   currentStep >= step ? 'text-[#a4be88]' : 'text-gray-600'
                 }`}>
-                  {step === 1 ? 'Personal Info' : step === 2 ? 'Address' : 'Payment'}
+                  {step === 1 ? 'Personal Info' : step === 2 ? 'Address & Verification' : 'Payment'}
                 </span>
                 {step < 3 && <div className="w-16 h-0.5 bg-gray-300 ml-4" />}
               </div>
@@ -201,6 +261,13 @@ const Checkout = () => {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <form onSubmit={handleSubmit}>
+                {/* Global Errors */}
+                {errors.verification && (
+                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-600">{errors.verification}</p>
+                  </div>
+                )}
+
                 {/* Step 1: Personal Information */}
                 {currentStep === 1 && (
                   <div>
@@ -258,10 +325,56 @@ const Checkout = () => {
                   </div>
                 )}
 
-                {/* Step 2: Address Information */}
+                {/* Step 2: Address Information & Verification */}
                 {currentStep === 2 && (
                   <div>
-                    <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Shipping Address</h2>
+                    <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Shipping Address & Verification</h2>
+                    
+                    {/* Verification Status */}
+                    <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h3 className="font-semibold text-blue-800 mb-3">Verification Required</h3>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-blue-700">Email: {formData.email}</span>
+                          {verificationStatus.email ? (
+                            <span className="text-green-600 font-semibold flex items-center">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                              Verified
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleVerification('email')}
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-semibold transition-colors"
+                            >
+                              Verify Email
+                            </button>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-blue-700">Phone: {formData.phone}</span>
+                          {verificationStatus.phone ? (
+                            <span className="text-green-600 font-semibold flex items-center">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                              Verified
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleVerification('phone')}
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-semibold transition-colors"
+                            >
+                              Verify Phone
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="space-y-6">
                       <div>
                         <label className="block text-[#2f3a29] font-semibold mb-2">Address *</label>
@@ -565,6 +678,17 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {/* OTP Verification Modal */}
+      {showOTP && (
+        <OTPVerification
+          type={otpType}
+          value={otpValue}
+          onVerify={handleOTPVerify}
+          onResend={handleOTPResend}
+          onCancel={handleOTPCancel}
+        />
+      )}
     </div>
   );
 };
