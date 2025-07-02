@@ -110,6 +110,9 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4] flex items-center justify-center py-12 px-4">
+      {/* reCAPTCHA container for phone verification */}
+      <div id="recaptcha-container"></div>
+      
       <div className="max-w-md w-full">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           {/* Header */}

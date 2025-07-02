@@ -1,0 +1,22 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Users can upload and read their own files
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Product images can be read by anyone, written by admins
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Order documents can be read by order owner or admin
+    match /orders/{orderId}/{allPaths=**} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.metadata.customMetadata.userId || 
+         request.auth.token.admin == true);
+    }
+  }
+}
