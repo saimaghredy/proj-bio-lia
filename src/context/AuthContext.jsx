@@ -77,6 +77,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    dispatch({ type: 'SET_LOADING', payload: true });
+    try {
+      const userData = await firebaseAuthService.signInWithGoogle();
+      dispatch({ type: 'SET_USER', payload: userData });
+      return userData;
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
+  };
+
   const register = async (userData) => {
     dispatch({ type: 'SET_LOADING', payload: true });
     try {
@@ -145,6 +158,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         ...state,
         login,
+        loginWithGoogle,
         register,
         logout,
         sendOTP,
