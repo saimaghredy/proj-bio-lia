@@ -281,6 +281,8 @@ class FirebaseAuthService {
         return 'Sign-in popup was closed before completing';
       case 'auth/cancelled-popup-request':
         return 'Sign-in was cancelled';
+      case 'auth/popup-blocked':
+        return 'Pop-up window blocked. Please allow pop-ups for this site in your browser settings and try again.';
       default:
         return 'An error occurred. Please try again';
     }
