@@ -18,6 +18,7 @@
 4. **IMPORTANT**: Configure authorized domains:
    - Go to Authentication → Settings → Authorized domains
    - Add `localhost` to the authorized domains list
+   - **For Bolt.new preview**: Add the current preview domain (e.g., `*.bolt.new` or the specific subdomain you're using)
    - Add your production domain when deploying
 
 #### Firestore Database
