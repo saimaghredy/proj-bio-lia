@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import firebaseAuthService from '../services/firebaseAuth';
+import firebaseDatabase from '../services/firebaseDatabase';
 
 const AuthContext = createContext();
 
@@ -81,6 +82,16 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'SET_LOADING', payload: true });
     try {
       const userData = await firebaseAuthService.signInWithGoogle();
+      
+      // Ensure user profile exists in database
+      const existingProfile = await firebaseDatabase.getUserProfile(userData.id);
+      if (!existingProfile) {
+        await firebaseDatabase.createUserProfile(userData);
+      } else {
+        // Update last login
+        await firebaseDatabase.updateUserProfile(userData.id, { last_login: new Date() });
+      }
+      
       dispatch({ type: 'SET_USER', payload: userData });
       return userData;
     } catch (error) {
@@ -94,6 +105,10 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'SET_LOADING', payload: true });
     try {
       const userResponse = await firebaseAuthService.register(userData);
+      
+      // Create user profile in database
+      await firebaseDatabase.createUserProfile(userResponse);
+      
       dispatch({ type: 'SET_USER', payload: userResponse });
       return userResponse;
     } catch (error) {
