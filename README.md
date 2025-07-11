@@ -15,7 +15,10 @@
 1. Go to Authentication → Sign-in method
 2. Enable **Email/Password**
 3. Enable **Phone** (for OTP verification)
-4. Configure authorized domains if needed
+4. **IMPORTANT**: Configure authorized domains:
+   - Go to Authentication → Settings → Authorized domains
+   - Add `localhost` to the authorized domains list
+   - Add your production domain when deploying
 
 #### Firestore Database
 1. Go to Firestore Database
