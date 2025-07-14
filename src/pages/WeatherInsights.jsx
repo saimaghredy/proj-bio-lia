@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LocationSearch from '../components/LocationSearch';
 import aiWeatherService from '../services/aiWeatherService';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const WeatherInsights = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,21 @@ const WeatherInsights = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Load form draft on component mount
+  React.useEffect(() => {
+    const draft = optimizedDatabase.getFormDraft('weatherInsights');
+    if (draft) {
+      setFormData(prev => ({ ...prev, ...draft }));
+    }
+  }, []);
+
+  // Save form draft on changes
+  React.useEffect(() => {
+    if (formData.farmerName || formData.contact || formData.location) {
+      optimizedDatabase.saveFormDraft('weatherInsights', formData);
+    }
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,6 +92,10 @@ const WeatherInsights = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Clear form draft on successful submission
+    optimizedDatabase.clearFormDraft('weatherInsights');
+    
     await calculateInsights();
   };
 

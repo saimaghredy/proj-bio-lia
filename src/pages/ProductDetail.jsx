@@ -1,13 +1,51 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = products.find(p => p.id === id);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+
+  // Load product on component mount
+  React.useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        setLoading(true);
+        const productData = await optimizedDatabase.getProduct(id);
+        setProduct(productData);
+      } catch (error) {
+        console.error('Error loading product:', error);
+        // Fallback to static data if needed
+        const { products } = await import('../data/products');
+        const fallbackProduct = products.find(p => p.id === id);
+        setProduct(fallbackProduct);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-[#a4be88] rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <p className="text-[#2f3a29] font-semibold">Loading product...</p>
+          <p className="text-gray-600 text-sm mt-2">📱 Checking cache first</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (

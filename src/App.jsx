@@ -14,6 +14,7 @@ import Checkout from './pages/Checkout';
 import Contact from './pages/Contact';
 import WeatherInsights from './pages/WeatherInsights';
 import Auth from './pages/Auth';
+import CacheMonitor from './components/CacheMonitor';
 import './index.css';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
               />
             </Routes>
           </div>
+          <CacheMonitor />
         </Router>
       </CartProvider>
     </AuthProvider>

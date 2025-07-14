@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { products, categories } from '../data/products';
+import { categories } from '../data/products';
 import { useCart } from '../context/CartContext';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const { addToCart } = useCart();
+
+  // Load products on component mount
+  React.useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        const productsData = await optimizedDatabase.getProducts();
+        setProducts(productsData);
+      } catch (error) {
+        console.error('Error loading products:', error);
+        // Fallback to static data if needed
+        const { products: staticProducts } = await import('../data/products');
+        setProducts(staticProducts);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'All Products' || product.category === selectedCategory;
@@ -47,7 +70,8 @@ const Products = () => {
       </section>
 
       {/* Filters and Search */}
-      <div className="max-w-7xl mx-auto px-4 mb-8">
+      {!loading && (
+        <div className="max-w-7xl mx-auto px-4 mb-8">
         <div className="bg-white rounded-2xl shadow-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
@@ -89,9 +113,23 @@ const Products = () => {
           </div>
         </div>
       </div>
+      )}
 
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-4 pb-16">
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[#a4be88] rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <p className="text-[#2f3a29] font-semibold">Loading products...</p>
+              <p className="text-gray-600 text-sm mt-2">📱 Checking cache first for faster loading</p>
+            </div>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {sortedProducts.map(product => (
             <div key={product.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
@@ -170,6 +208,8 @@ const Products = () => {
             <h3 className="text-xl font-semibold text-gray-600 mb-2">No products found</h3>
             <p className="text-gray-500">Try adjusting your search or filter criteria</p>
           </div>
+        )}
+      </div>
         )}
       </div>
     </div>

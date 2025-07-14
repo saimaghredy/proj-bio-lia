@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { useAuth } from './AuthContext';
-import firebaseDatabase from '../services/firebaseDatabase';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const CartContext = createContext();
 
@@ -60,88 +60,52 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
   const { user, isAuthenticated } = useAuth();
 
-  // Load cart from localStorage on mount
+  // Load cart from cache on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('bioLiaCart');
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        dispatch({ type: 'LOAD_CART', payload: parsedCart });
-      } catch (error) {
-        console.error('Error loading cart from localStorage:', error);
-      }
-    }
+    const cachedCart = optimizedDatabase.getCart();
+    dispatch({ type: 'LOAD_CART', payload: cachedCart });
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // Auto-sync cart changes
   useEffect(() => {
-    if (isAuthenticated && user) {
-      // Save to both localStorage and Firestore for authenticated users
-      localStorage.setItem('bioLiaCart', JSON.stringify(state.items));
-      saveCartToFirestore(state.items);
-    } else {
-      // Save to localStorage only for guest users
-      localStorage.setItem('bioLiaCart', JSON.stringify(state.items));
-    }
+    // Cart is always stored locally for performance
+    // No need to sync to Firestore until checkout
   }, [state.items]);
 
-  // Load cart from Firestore when user logs in
+  // Background sync when user logs in
   useEffect(() => {
     if (isAuthenticated && user) {
-      loadCartFromFirestore();
+      // Start background sync for user data
+      optimizedDatabase.backgroundSync(user.id);
     }
   }, [isAuthenticated, user]);
 
-  const saveCartToFirestore = async (items) => {
-    try {
-      await firebaseDatabase.saveUserCart(user.id, items);
-    } catch (error) {
-      console.error('Error saving cart to Firestore:', error);
-    }
-  };
-
-  const loadCartFromFirestore = async () => {
-    try {
-      const firestoreCart = await firebaseDatabase.getUserCart(user.id);
-      if (firestoreCart && firestoreCart.length > 0) {
-        dispatch({ type: 'LOAD_CART', payload: firestoreCart });
-      }
-    } catch (error) {
-      console.error('Error loading cart from Firestore:', error);
-    }
-  };
-
   const addToCart = (product, quantity = 1) => {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: { ...product, quantity },
-    });
+    const updatedCart = optimizedDatabase.addToCart(product, quantity);
+    dispatch({ type: 'LOAD_CART', payload: updatedCart });
   };
 
   const removeFromCart = (productId) => {
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      payload: productId,
-    });
+    const updatedCart = optimizedDatabase.removeFromCart(productId);
+    dispatch({ type: 'LOAD_CART', payload: updatedCart });
   };
 
   const updateQuantity = (productId, quantity) => {
-    dispatch({
-      type: 'UPDATE_QUANTITY',
-      payload: { id: productId, quantity },
-    });
+    const updatedCart = optimizedDatabase.updateCartQuantity(productId, quantity);
+    dispatch({ type: 'LOAD_CART', payload: updatedCart });
   };
 
   const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    const updatedCart = optimizedDatabase.clearCart();
+    dispatch({ type: 'LOAD_CART', payload: updatedCart });
   };
 
   const getCartTotal = () => {
-    return state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return optimizedDatabase.getCartTotal();
   };
 
   const getCartItemsCount = () => {
-    return state.items.reduce((total, item) => total + item.quantity, 0);
+    return optimizedDatabase.getCartItemsCount();
   };
 
   return (

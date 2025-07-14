@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import firebaseAuthService from '../services/firebaseAuth';
-import firebaseDatabase from '../services/firebaseDatabase';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const AuthContext = createContext();
 
@@ -51,6 +51,12 @@ export const AuthProvider = ({ children }) => {
       if (firebaseUser) {
         try {
           const userData = await firebaseAuthService.getCurrentUserData();
+          
+          // Start background sync for user data
+          if (userData) {
+            optimizedDatabase.backgroundSync(userData.id);
+          }
+          
           dispatch({ type: 'SET_USER', payload: userData });
         } catch (error) {
           console.error('Error getting user data:', error);
@@ -84,13 +90,16 @@ export const AuthProvider = ({ children }) => {
       const userData = await firebaseAuthService.signInWithGoogle();
       
       // Ensure user profile exists in database
-      const existingProfile = await firebaseDatabase.getUserProfile(userData.id);
+      const existingProfile = await optimizedDatabase.getUserProfile(userData.id);
       if (!existingProfile) {
-        await firebaseDatabase.createUserProfile(userData);
+        await optimizedDatabase.originalService.createUserProfile(userData);
       } else {
         // Update last login
-        await firebaseDatabase.updateUserProfile(userData.id, { last_login: new Date() });
+        await optimizedDatabase.updateUserProfile(userData.id, { last_login: new Date() });
       }
+      
+      // Start background sync
+      optimizedDatabase.backgroundSync(userData.id);
       
       dispatch({ type: 'SET_USER', payload: userData });
       return userData;
@@ -107,7 +116,7 @@ export const AuthProvider = ({ children }) => {
       const userResponse = await firebaseAuthService.register(userData);
       
       // Create user profile in database
-      await firebaseDatabase.createUserProfile(userResponse);
+      await optimizedDatabase.originalService.createUserProfile(userResponse);
       
       dispatch({ type: 'SET_USER', payload: userResponse });
       return userResponse;

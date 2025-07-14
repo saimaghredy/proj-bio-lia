@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,21 @@ const Contact = () => {
     company: '',
     message: ''
   });
+
+  // Load form draft on component mount
+  React.useEffect(() => {
+    const draft = optimizedDatabase.getFormDraft('contact');
+    if (draft) {
+      setFormData(prev => ({ ...prev, ...draft }));
+    }
+  }, []);
+
+  // Save form draft on changes
+  React.useEffect(() => {
+    if (formData.name || formData.email || formData.message) {
+      optimizedDatabase.saveFormDraft('contact', formData);
+    }
+  }, [formData]);
 
   const handleChange = (e) => {
     setFormData({
@@ -17,8 +33,13 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // Handle form submission here
     console.log('Form submitted:', formData);
+    
+    // Clear form draft on successful submission
+    optimizedDatabase.clearFormDraft('contact');
+    
     // Reset form
     setFormData({
       name: '',

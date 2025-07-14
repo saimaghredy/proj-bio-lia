@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import LocationSearch from '../components/LocationSearch';
-import firebaseDatabase from '../services/firebaseDatabase';
+import optimizedDatabase from '../services/optimizedFirebaseDatabase';
 
 const Checkout = () => {
   const { items, getCartTotal, clearCart } = useCart();
@@ -50,12 +50,25 @@ const Checkout = () => {
   useEffect(() => {
     if (user) {
       loadSavedShippingAddress();
+      
+      // Load form draft if exists
+      const draft = optimizedDatabase.getFormDraft('checkout');
+      if (draft) {
+        setFormData(prev => ({ ...prev, ...draft }));
+      }
     }
   }, [user]);
 
+  // Save form draft on changes
+  useEffect(() => {
+    if (user && currentStep > 1) {
+      optimizedDatabase.saveFormDraft('checkout', formData);
+    }
+  }, [formData, currentStep, user]);
+
   const loadSavedShippingAddress = async () => {
     try {
-      const savedAddress = await firebaseDatabase.getUserShippingAddress(user.id);
+      const savedAddress = await optimizedDatabase.getUserShippingAddress(user.id);
       if (savedAddress) {
         setFormData(prev => ({
           ...prev,
@@ -190,6 +203,9 @@ const Checkout = () => {
   const processOrder = async () => {
     setLoading(true);
     try {
+      // Clear form draft
+      optimizedDatabase.clearFormDraft('checkout');
+      
       const orderData = {
         userId: user.id,
         items: items,
@@ -226,10 +242,10 @@ const Checkout = () => {
       };
 
       // Create order in Firestore
-      const order = await firebaseDatabase.createOrder(orderData);
+      const order = await optimizedDatabase.createOrder(orderData);
       
       // Save shipping details for future use
-      await firebaseDatabase.saveUserShippingAddress(user.id, orderData.shippingAddress);
+      await optimizedDatabase.saveUserShippingAddress(user.id, orderData.shippingAddress);
       
       // Clear cart after successful order
       clearCart();
