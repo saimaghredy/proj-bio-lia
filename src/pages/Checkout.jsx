@@ -76,16 +76,26 @@ const Checkout = () => {
     }
     
     if (step === 2) {
-      if (!formData.address) newErrors.address = 'Address is required';
+      if (!formData.fullName) newErrors.fullName = 'Full name is required';
+      if (!formData.mobileNumber) newErrors.mobileNumber = 'Mobile number is required';
+      if (!formData.houseDetails) newErrors.houseDetails = 'House/flat details are required';
+      if (!formData.areaDetails) newErrors.areaDetails = 'Area/street details are required';
       if (!formData.city) newErrors.city = 'City is required';
       if (!formData.state) newErrors.state = 'State is required';
       if (!formData.pincode) newErrors.pincode = 'Pincode is required';
       
+      // Validate mobile number (10 digits)
+      if (formData.mobileNumber && !/^\d{10}$/.test(formData.mobileNumber)) {
+        newErrors.mobileNumber = 'Mobile number must be 10 digits';
+      }
+      
+      // Validate pincode (6 digits)
+      if (formData.pincode && !/^\d{6}$/.test(formData.pincode)) {
+        newErrors.pincode = 'Pincode must be 6 digits';
+      }
+      
       if (!formData.sameAsShipping) {
         if (!formData.billingAddress) newErrors.billingAddress = 'Billing address is required';
-        if (!formData.billingCity) newErrors.billingCity = 'Billing city is required';
-        if (!formData.billingState) newErrors.billingState = 'Billing state is required';
-        if (!formData.billingPincode) newErrors.billingPincode = 'Billing pincode is required';
       }
     }
     
