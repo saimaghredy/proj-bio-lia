@@ -13,88 +13,36 @@ import {
   serverTimestamp,
   increment,
   arrayUnion,
-  arrayRemove
+  arrayRemove,
+  setDoc
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 class FirebaseDatabaseService {
-  // ==================== USERS COLLECTION ====================
+  // ==================== USERS COLLECTION (Profile Data Only) ====================
   
-  async saveUserCart(uid, cartItems) {
-    try {
-      const userRef = doc(db, 'users', uid);
-      await updateDoc(userRef, {
-        cart: cartItems,
-        cart_updated_at: serverTimestamp()
-      });
-    } catch (error) {
-      console.error('Error saving user cart:', error);
-      throw new Error('Failed to save cart');
-    }
-  }
-
-  async getUserCart(uid) {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        return userData.cart || [];
-      }
-      return [];
-    } catch (error) {
-      console.error('Error getting user cart:', error);
-      return [];
-    }
-  }
-
-  async saveUserShippingAddress(uid, shippingAddress) {
-    try {
-      const userRef = doc(db, 'users', uid);
-      await updateDoc(userRef, {
-        last_shipping_address: shippingAddress,
-        shipping_updated_at: serverTimestamp()
-      });
-    } catch (error) {
-      console.error('Error saving shipping address:', error);
-    }
-  }
-
-  async getUserShippingAddress(uid) {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        return userData.last_shipping_address || null;
-      }
-      return null;
-    } catch (error) {
-      console.error('Error getting shipping address:', error);
-      return null;
-    }
-  }
-
   async createUserProfile(userData) {
     try {
       const userProfile = {
-        uid: userData.uid,
-        name: `${userData.firstName} ${userData.lastName}`,
-        email: userData.email,
-        phone: userData.phone || '',
-        joined_on: serverTimestamp(),
-        total_points: 0,
-        total_spent: 0,
-        last_login: serverTimestamp(),
-        preferred_products: [],
-        // Additional fields for better user management
         firstName: userData.firstName,
         lastName: userData.lastName,
+        email: userData.email,
+        phone: userData.phone || '',
         emailVerified: userData.emailVerified || false,
         phoneVerified: userData.phoneVerified || false,
         provider: userData.provider || 'email',
-        profile_completed: true
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        lastLogin: serverTimestamp(),
+        // Profile completion status
+        profileCompleted: true,
+        // Loyalty data
+        totalPoints: 0,
+        totalSpent: 0,
+        loyaltyTier: 'Bronze'
       };
 
-      await setDoc(doc(db, 'users', userData.uid), userProfile);
+      await setDoc(doc(db, 'users', userData.uid || userData.id), userProfile);
       return userProfile;
     } catch (error) {
       console.error('Error creating user profile:', error);
@@ -104,11 +52,10 @@ class FirebaseDatabaseService {
 
   async updateUserProfile(uid, updates) {
     try {
-      const { setDoc } = await import('firebase/firestore');
       const userRef = doc(db, 'users', uid);
       await setDoc(userRef, {
         ...updates,
-        last_login: serverTimestamp()
+        updatedAt: serverTimestamp()
       }, { merge: true });
     } catch (error) {
       console.error('Error updating user profile:', error);
@@ -133,7 +80,8 @@ class FirebaseDatabaseService {
     try {
       const userRef = doc(db, 'users', uid);
       await updateDoc(userRef, {
-        total_points: increment(pointsToAdd)
+        totalPoints: increment(pointsToAdd),
+        updatedAt: serverTimestamp()
       });
     } catch (error) {
       console.error('Error updating user points:', error);
@@ -141,12 +89,128 @@ class FirebaseDatabaseService {
     }
   }
 
-  async addPreferredProduct(uid, productId) {
+  async updateUserAfterOrder(uid, amountSpent, pointsEarned) {
     try {
       const userRef = doc(db, 'users', uid);
+      const userDoc = await getDoc(userRef);
+      const currentSpent = userDoc.exists() ? (userDoc.data().totalSpent || 0) : 0;
+      const newTotalSpent = currentSpent + amountSpent;
+      
+      // Calculate loyalty tier
+      let loyaltyTier = 'Bronze';
+      if (newTotalSpent >= 50000) loyaltyTier = 'Platinum';
+      else if (newTotalSpent >= 25000) loyaltyTier = 'Gold';
+      else if (newTotalSpent >= 10000) loyaltyTier = 'Silver';
+
       await updateDoc(userRef, {
-        preferred_products: arrayUnion(productId)
+        totalSpent: increment(amountSpent),
+        totalPoints: increment(pointsEarned),
+        loyaltyTier,
+        lastOrderDate: serverTimestamp(),
+        updatedAt: serverTimestamp()
       });
+    } catch (error) {
+      console.error('Error updating user after order:', error);
+    }
+  }
+
+  // ==================== USER PREFERENCES COLLECTION ====================
+  
+  async saveUserCart(uid, cartItems) {
+    try {
+      const userPrefsRef = doc(db, 'userPreferences', uid);
+      await setDoc(userPrefsRef, {
+        cart: cartItems,
+        cartUpdatedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    } catch (error) {
+      console.error('Error saving user cart:', error);
+      throw new Error('Failed to save cart');
+    }
+  }
+
+  async getUserCart(uid) {
+    try {
+      const userPrefsDoc = await getDoc(doc(db, 'userPreferences', uid));
+      if (userPrefsDoc.exists()) {
+        const data = userPrefsDoc.data();
+        return data.cart || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('Error getting user cart:', error);
+      return [];
+    }
+  }
+
+  async saveUserShippingAddress(uid, shippingAddress) {
+    try {
+      const userPrefsRef = doc(db, 'userPreferences', uid);
+      const userPrefsDoc = await getDoc(userPrefsRef);
+      
+      let addresses = [];
+      if (userPrefsDoc.exists()) {
+        addresses = userPrefsDoc.data().shippingAddresses || [];
+      }
+      
+      // Add new address to the beginning of the array (most recent first)
+      addresses.unshift({
+        ...shippingAddress,
+        savedAt: serverTimestamp(),
+        isDefault: addresses.length === 0 // First address becomes default
+      });
+      
+      // Keep only last 3 addresses
+      if (addresses.length > 3) {
+        addresses = addresses.slice(0, 3);
+      }
+
+      await setDoc(userPrefsRef, {
+        shippingAddresses: addresses,
+        lastShippingAddress: shippingAddress,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    } catch (error) {
+      console.error('Error saving shipping address:', error);
+    }
+  }
+
+  async getUserShippingAddress(uid) {
+    try {
+      const userPrefsDoc = await getDoc(doc(db, 'userPreferences', uid));
+      if (userPrefsDoc.exists()) {
+        const data = userPrefsDoc.data();
+        return data.lastShippingAddress || null;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting shipping address:', error);
+      return null;
+    }
+  }
+
+  async getUserShippingAddresses(uid) {
+    try {
+      const userPrefsDoc = await getDoc(doc(db, 'userPreferences', uid));
+      if (userPrefsDoc.exists()) {
+        const data = userPrefsDoc.data();
+        return data.shippingAddresses || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('Error getting shipping addresses:', error);
+      return [];
+    }
+  }
+
+  async addPreferredProduct(uid, productId) {
+    try {
+      const userPrefsRef = doc(db, 'userPreferences', uid);
+      await setDoc(userPrefsRef, {
+        preferredProducts: arrayUnion(productId),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
     } catch (error) {
       console.error('Error adding preferred product:', error);
       throw new Error('Failed to add preferred product');
@@ -163,52 +227,69 @@ class FirebaseDatabaseService {
       const orderId = `BL${timestamp.toString().slice(-6)}${randomId}`;
       
       const order = {
-        order_id: orderId,
-        client_uid: orderData.userId,
+        orderId: orderId,
+        userId: orderData.userId,
+        
+        // Order Items
         items: orderData.items.map(item => ({
-          product: item.name,
-          product_id: item.id,
+          productId: item.id,
+          productName: item.name,
           category: item.category,
           packaging: item.packaging || 'Standard',
           quantity: item.quantity,
-          unit_price: item.price,
-          total_price: item.price * item.quantity
+          unitPrice: item.price,
+          totalPrice: item.price * item.quantity
         })),
-        total_amount: orderData.totalAmount,
-        tax_amount: orderData.taxAmount,
-        price_paid: orderData.finalAmount,
-        discount_applied: orderData.discount || 0,
-        reward_points_earned: Math.floor(orderData.finalAmount / 100), // 1 point per ₹100
+        
+        // Financial Information
+        subtotal: orderData.totalAmount,
+        taxAmount: orderData.taxAmount,
+        totalAmount: orderData.finalAmount,
+        discountApplied: orderData.discount || 0,
+        rewardPointsEarned: Math.floor(orderData.finalAmount / 100),
+        
+        // Order Status & Tracking
         status: 'Order Confirmed',
-        payment_status: orderData.paymentStatus || 'Pending',
-        date_ordered: serverTimestamp(),
-        estimated_delivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-        date_shipped: null,
-        date_delivered: null,
-        tracking_number: null,
-        shipping_partner: 'Blue Dart', // Default shipping partner
-        review_rating: null,
-        review_comment: null,
+        paymentStatus: orderData.paymentStatus || 'Pending',
+        paymentMethod: orderData.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Card Payment',
         
-        // Shipping Information
-        shipping_address: orderData.shippingAddress,
-        billing_address: orderData.billingAddress,
-        payment_method: orderData.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Card Payment',
+        // Dates & Tracking
+        orderDate: serverTimestamp(),
+        estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        shippedDate: null,
+        deliveredDate: null,
+        trackingNumber: null,
+        shippingPartner: 'Blue Dart',
         
-        // Contact Information
-        customer_name: orderData.customerName,
-        customer_email: orderData.customerEmail,
-        customer_phone: orderData.customerPhone,
+        // Customer Information
+        customerInfo: {
+          name: orderData.customerName,
+          email: orderData.customerEmail,
+          phone: orderData.customerPhone
+        },
         
-        // Additional tracking info
-        order_notes: '',
-        internal_notes: `Order placed via website on ${new Date().toLocaleDateString('en-IN')}`
+        // Addresses
+        shippingAddress: orderData.shippingAddress,
+        billingAddress: orderData.billingAddress,
+        
+        // Additional Info
+        orderNotes: '',
+        internalNotes: `Order placed via website on ${new Date().toLocaleDateString('en-IN')}`,
+        
+        // Review Information
+        reviewRating: null,
+        reviewComment: null,
+        reviewDate: null,
+        
+        // Metadata
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
       };
 
       const docRef = await addDoc(collection(db, 'orders'), order);
       
       // Update user's total spent and points
-      await this.updateUserAfterOrder(orderData.userId, orderData.finalAmount, order.reward_points_earned);
+      await this.updateUserAfterOrder(orderData.userId, orderData.finalAmount, order.rewardPointsEarned);
       
       return { id: docRef.id, ...order };
     } catch (error) {
@@ -217,30 +298,20 @@ class FirebaseDatabaseService {
     }
   }
 
-  async updateUserAfterOrder(uid, amountSpent, pointsEarned) {
-    try {
-      const userRef = doc(db, 'users', uid);
-      await updateDoc(userRef, {
-        total_spent: increment(amountSpent),
-        total_points: increment(pointsEarned)
-      });
-    } catch (error) {
-      console.error('Error updating user after order:', error);
-    }
-  }
-
   async updateOrderStatus(orderId, status, additionalData = {}) {
     try {
       const orderRef = doc(db, 'orders', orderId);
       const updateData = {
         status,
+        updatedAt: serverTimestamp(),
         ...additionalData
       };
 
       if (status === 'Shipped') {
-        updateData.date_shipped = serverTimestamp();
+        updateData.shippedDate = serverTimestamp();
+        updateData.trackingNumber = additionalData.trackingNumber || `TRK${Date.now()}`;
       } else if (status === 'Delivered') {
-        updateData.date_delivered = serverTimestamp();
+        updateData.deliveredDate = serverTimestamp();
       }
 
       await updateDoc(orderRef, updateData);
@@ -250,12 +321,13 @@ class FirebaseDatabaseService {
     }
   }
 
-  async getUserOrders(uid) {
+  async getUserOrders(uid, limitCount = 10) {
     try {
       const q = query(
         collection(db, 'orders'),
-        where('client_uid', '==', uid),
-        orderBy('date_ordered', 'desc')
+        where('userId', '==', uid),
+        orderBy('orderDate', 'desc'),
+        limit(limitCount)
       );
       
       const querySnapshot = await getDocs(q);
@@ -272,53 +344,31 @@ class FirebaseDatabaseService {
     }
   }
 
+  async getOrder(orderId) {
+    try {
+      const orderDoc = await getDoc(doc(db, 'orders', orderId));
+      if (orderDoc.exists()) {
+        return { id: orderDoc.id, ...orderDoc.data() };
+      }
+      throw new Error('Order not found');
+    } catch (error) {
+      console.error('Error getting order:', error);
+      throw new Error('Failed to get order');
+    }
+  }
+
   async addOrderReview(orderId, rating, comment) {
     try {
       const orderRef = doc(db, 'orders', orderId);
       await updateDoc(orderRef, {
-        review_rating: rating,
-        review_comment: comment,
-        review_date: serverTimestamp()
+        reviewRating: rating,
+        reviewComment: comment,
+        reviewDate: serverTimestamp(),
+        updatedAt: serverTimestamp()
       });
     } catch (error) {
       console.error('Error adding order review:', error);
       throw new Error('Failed to add order review');
-    }
-  }
-
-  // ==================== LOYALTY SETTINGS COLLECTION ====================
-
-  async getLoyaltySettings() {
-    try {
-      const settingsDoc = await getDoc(doc(db, 'settings', 'loyalty'));
-      if (settingsDoc.exists()) {
-        return settingsDoc.data();
-      } else {
-        // Return default settings if none exist
-        return {
-          min_order_value: 1000,
-          points_per_rupee: 0.01, // 1 point per ₹100
-          bonus_points: 0,
-          free_shipping_threshold: 2000,
-          point_redemption_value: 1, // 1 point = ₹1
-          max_points_per_order: 500
-        };
-      }
-    } catch (error) {
-      console.error('Error getting loyalty settings:', error);
-      throw new Error('Failed to get loyalty settings');
-    }
-  }
-
-  async updateLoyaltySettings(settings) {
-    try {
-      await setDoc(doc(db, 'settings', 'loyalty'), {
-        ...settings,
-        updated_at: serverTimestamp()
-      });
-    } catch (error) {
-      console.error('Error updating loyalty settings:', error);
-      throw new Error('Failed to update loyalty settings');
     }
   }
 
@@ -356,20 +406,23 @@ class FirebaseDatabaseService {
     }
   }
 
-  // ==================== ANALYTICS & INSIGHTS ====================
+  // ==================== WEATHER INSIGHTS COLLECTION ====================
 
   async saveWeatherInsight(insightData) {
     try {
       const insight = {
-        ...insightData,
-        created_at: serverTimestamp(),
-        location_coordinates: insightData.coordinates,
-        farmer_name: insightData.farmerName,
-        contact_number: insightData.contact,
-        crop_type: insightData.cropType,
-        land_area: insightData.landArea,
-        land_area_unit: insightData.landAreaUnit,
-        soil_type: insightData.soilType
+        userId: insightData.userId || null,
+        farmerName: insightData.farmerName,
+        contactNumber: insightData.contact,
+        location: insightData.location,
+        coordinates: insightData.coordinates,
+        cropType: insightData.cropType,
+        landArea: insightData.landArea,
+        landAreaUnit: insightData.landAreaUnit,
+        soilType: insightData.soilType,
+        weatherData: insightData.weatherData,
+        recommendations: insightData.recommendations,
+        createdAt: serverTimestamp()
       };
 
       const docRef = await addDoc(collection(db, 'weatherInsights'), insight);
@@ -385,7 +438,7 @@ class FirebaseDatabaseService {
       const q = query(
         collection(db, 'weatherInsights'),
         where('userId', '==', uid),
-        orderBy('created_at', 'desc'),
+        orderBy('createdAt', 'desc'),
         limit(10)
       );
       
@@ -403,15 +456,18 @@ class FirebaseDatabaseService {
     }
   }
 
-  // ==================== CONTACT FORMS ====================
+  // ==================== CONTACT FORMS COLLECTION ====================
 
   async saveContactForm(formData) {
     try {
       const contact = {
-        ...formData,
-        created_at: serverTimestamp(),
+        name: formData.name,
+        email: formData.email,
+        company: formData.company || '',
+        message: formData.message,
         status: 'new',
-        responded: false
+        responded: false,
+        createdAt: serverTimestamp()
       };
 
       const docRef = await addDoc(collection(db, 'contactForms'), contact);
@@ -422,14 +478,50 @@ class FirebaseDatabaseService {
     }
   }
 
+  // ==================== SETTINGS COLLECTION ====================
+
+  async getLoyaltySettings() {
+    try {
+      const settingsDoc = await getDoc(doc(db, 'settings', 'loyalty'));
+      if (settingsDoc.exists()) {
+        return settingsDoc.data();
+      } else {
+        // Return default settings if none exist
+        return {
+          minOrderValue: 1000,
+          pointsPerRupee: 0.01, // 1 point per ₹100
+          bonusPoints: 0,
+          freeShippingThreshold: 2000,
+          pointRedemptionValue: 1, // 1 point = ₹1
+          maxPointsPerOrder: 500
+        };
+      }
+    } catch (error) {
+      console.error('Error getting loyalty settings:', error);
+      throw new Error('Failed to get loyalty settings');
+    }
+  }
+
+  async updateLoyaltySettings(settings) {
+    try {
+      await setDoc(doc(db, 'settings', 'loyalty'), {
+        ...settings,
+        updatedAt: serverTimestamp()
+      });
+    } catch (error) {
+      console.error('Error updating loyalty settings:', error);
+      throw new Error('Failed to update loyalty settings');
+    }
+  }
+
   // ==================== ADMIN FUNCTIONS ====================
 
-  async getAllOrders(limit = 50) {
+  async getAllOrders(limitCount = 50) {
     try {
       const q = query(
         collection(db, 'orders'),
-        orderBy('date_ordered', 'desc'),
-        limit(limit)
+        orderBy('orderDate', 'desc'),
+        limit(limitCount)
       );
       
       const querySnapshot = await getDocs(q);
@@ -446,12 +538,12 @@ class FirebaseDatabaseService {
     }
   }
 
-  async getAllUsers(limit = 100) {
+  async getAllUsers(limitCount = 100) {
     try {
       const q = query(
         collection(db, 'users'),
-        orderBy('joined_on', 'desc'),
-        limit(limit)
+        orderBy('createdAt', 'desc'),
+        limit(limitCount)
       );
       
       const querySnapshot = await getDocs(q);
@@ -480,7 +572,7 @@ class FirebaseDatabaseService {
       
       ordersSnapshot.forEach((doc) => {
         const order = doc.data();
-        totalRevenue += order.price_paid || 0;
+        totalRevenue += order.totalAmount || 0;
         totalOrders++;
         
         const status = order.status || 'Unknown';
