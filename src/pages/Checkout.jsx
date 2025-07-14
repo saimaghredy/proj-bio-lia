@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import LocationSearch from '../components/LocationSearch';
+import firebaseDatabase from '../services/firebaseDatabase';
 
 const Checkout = () => {
   const { items, getCartTotal, clearCart } = useCart();
