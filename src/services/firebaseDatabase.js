@@ -20,6 +20,59 @@ import { db } from '../config/firebase';
 class FirebaseDatabaseService {
   // ==================== USERS COLLECTION ====================
   
+  async saveUserCart(uid, cartItems) {
+    try {
+      const userRef = doc(db, 'users', uid);
+      await updateDoc(userRef, {
+        cart: cartItems,
+        cart_updated_at: serverTimestamp()
+      });
+    } catch (error) {
+      console.error('Error saving user cart:', error);
+      throw new Error('Failed to save cart');
+    }
+  }
+
+  async getUserCart(uid) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData.cart || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('Error getting user cart:', error);
+      return [];
+    }
+  }
+
+  async saveUserShippingAddress(uid, shippingAddress) {
+    try {
+      const userRef = doc(db, 'users', uid);
+      await updateDoc(userRef, {
+        last_shipping_address: shippingAddress,
+        shipping_updated_at: serverTimestamp()
+      });
+    } catch (error) {
+      console.error('Error saving shipping address:', error);
+    }
+  }
+
+  async getUserShippingAddress(uid) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData.last_shipping_address || null;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting shipping address:', error);
+      return null;
+    }
+  }
+
   async createUserProfile(userData) {
     try {
       const userProfile = {
@@ -104,37 +157,52 @@ class FirebaseDatabaseService {
 
   async createOrder(orderData) {
     try {
+      // Generate unique order ID
+      const timestamp = Date.now();
+      const randomId = Math.random().toString(36).substr(2, 9).toUpperCase();
+      const orderId = `BL${timestamp.toString().slice(-6)}${randomId}`;
+      
       const order = {
-        order_id: `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        order_id: orderId,
         client_uid: orderData.userId,
         items: orderData.items.map(item => ({
           product: item.name,
           product_id: item.id,
-          size: item.packaging || 'Standard',
+          category: item.category,
+          packaging: item.packaging || 'Standard',
           quantity: item.quantity,
           unit_price: item.price,
           total_price: item.price * item.quantity
         })),
         total_amount: orderData.totalAmount,
+        tax_amount: orderData.taxAmount,
         price_paid: orderData.finalAmount,
         discount_applied: orderData.discount || 0,
         reward_points_earned: Math.floor(orderData.finalAmount / 100), // 1 point per ₹100
-        status: 'Pending',
+        status: 'Order Confirmed',
+        payment_status: orderData.paymentStatus || 'Pending',
         date_ordered: serverTimestamp(),
+        estimated_delivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
         date_shipped: null,
         date_delivered: null,
+        tracking_number: null,
+        shipping_partner: 'Blue Dart', // Default shipping partner
         review_rating: null,
         review_comment: null,
         
         // Shipping Information
         shipping_address: orderData.shippingAddress,
         billing_address: orderData.billingAddress,
-        payment_method: orderData.paymentMethod,
+        payment_method: orderData.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Card Payment',
         
         // Contact Information
         customer_name: orderData.customerName,
         customer_email: orderData.customerEmail,
-        customer_phone: orderData.customerPhone
+        customer_phone: orderData.customerPhone,
+        
+        // Additional tracking info
+        order_notes: '',
+        internal_notes: `Order placed via website on ${new Date().toLocaleDateString('en-IN')}`
       };
 
       const docRef = await addDoc(collection(db, 'orders'), order);

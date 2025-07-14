@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import { useAuth } from './AuthContext';
+import firebaseDatabase from '../services/firebaseDatabase';
 
 const CartContext = createContext();
 
@@ -56,6 +58,7 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const { user, isAuthenticated } = useAuth();
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -72,8 +75,41 @@ export const CartProvider = ({ children }) => {
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('bioLiaCart', JSON.stringify(state.items));
+    if (isAuthenticated && user) {
+      // Save to both localStorage and Firestore for authenticated users
+      localStorage.setItem('bioLiaCart', JSON.stringify(state.items));
+      saveCartToFirestore(state.items);
+    } else {
+      // Save to localStorage only for guest users
+      localStorage.setItem('bioLiaCart', JSON.stringify(state.items));
+    }
   }, [state.items]);
+
+  // Load cart from Firestore when user logs in
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      loadCartFromFirestore();
+    }
+  }, [isAuthenticated, user]);
+
+  const saveCartToFirestore = async (items) => {
+    try {
+      await firebaseDatabase.saveUserCart(user.id, items);
+    } catch (error) {
+      console.error('Error saving cart to Firestore:', error);
+    }
+  };
+
+  const loadCartFromFirestore = async () => {
+    try {
+      const firestoreCart = await firebaseDatabase.getUserCart(user.id);
+      if (firestoreCart && firestoreCart.length > 0) {
+        dispatch({ type: 'LOAD_CART', payload: firestoreCart });
+      }
+    } catch (error) {
+      console.error('Error loading cart from Firestore:', error);
+    }
+  };
 
   const addToCart = (product, quantity = 1) => {
     dispatch({

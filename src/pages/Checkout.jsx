@@ -43,6 +43,36 @@ const Checkout = () => {
 
   const [errors, setErrors] = useState({});
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Load saved shipping address on component mount
+  useEffect(() => {
+    if (user) {
+      loadSavedShippingAddress();
+    }
+  }, [user]);
+
+  const loadSavedShippingAddress = async () => {
+    try {
+      const savedAddress = await firebaseDatabase.getUserShippingAddress(user.id);
+      if (savedAddress) {
+        setFormData(prev => ({
+          ...prev,
+          fullName: savedAddress.fullName || '',
+          mobileNumber: savedAddress.mobileNumber || '',
+          houseDetails: savedAddress.houseDetails || '',
+          areaDetails: savedAddress.areaDetails || '',
+          landmark: savedAddress.landmark || '',
+          city: savedAddress.city || '',
+          state: savedAddress.state || '',
+          pincode: savedAddress.pincode || '',
+          addressType: savedAddress.addressType || 'home'
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading saved address:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -152,13 +182,70 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateStep(3)) {
-      // Simulate order processing
-      setTimeout(() => {
-        setOrderPlaced(true);
-        clearCart();
-      }, 2000);
+      processOrder();
     }
   };
+
+  const processOrder = async () => {
+    setLoading(true);
+    try {
+      const orderData = {
+        userId: user.id,
+        items: items,
+        totalAmount: totalAmount,
+        taxAmount: taxAmount,
+        finalAmount: finalAmount,
+        
+        // Customer Information
+        customerName: `${formData.firstName} ${formData.lastName}`,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        
+        // Shipping Address
+        shippingAddress: {
+          fullName: formData.fullName,
+          mobileNumber: formData.mobileNumber,
+          houseDetails: formData.houseDetails,
+          areaDetails: formData.areaDetails,
+          landmark: formData.landmark,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
+          addressType: formData.addressType
+        },
+        
+        // Billing Address
+        billingAddress: formData.sameAsShipping ? 
+          `${formData.houseDetails}, ${formData.areaDetails}, ${formData.city}, ${formData.state} - ${formData.pincode}` :
+          formData.billingAddress,
+        
+        // Payment Information
+        paymentMethod: formData.paymentMethod,
+        paymentStatus: formData.paymentMethod === 'cod' ? 'Pending' : 'Paid'
+      };
+
+      // Create order in Firestore
+      const order = await firebaseDatabase.createOrder(orderData);
+      
+      // Save shipping details for future use
+      await firebaseDatabase.saveUserShippingAddress(user.id, orderData.shippingAddress);
+      
+      // Clear cart after successful order
+      clearCart();
+      
+      // Set order placed with order details
+      setOrderData(order);
+      setOrderPlaced(true);
+      
+    } catch (error) {
+      console.error('Error processing order:', error);
+      setErrors({ submit: 'Failed to place order. Please try again.' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [orderData, setOrderData] = useState(null);
 
   if (items.length === 0 && !orderPlaced) {
     return (
@@ -180,14 +267,28 @@ const Checkout = () => {
   if (orderPlaced) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4] flex items-center justify-center">
-        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md">
+        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-lg">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </div>
           <h2 className="text-3xl font-serif text-[#2f3a29] mb-4">Order Placed Successfully!</h2>
-          <p className="text-gray-600 mb-6">Thank you for your order. We'll send you a confirmation email shortly.</p>
+          
+          {orderData && (
+            <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+              <h3 className="font-semibold text-[#2f3a29] mb-3">Order Details:</h3>
+              <div className="space-y-2 text-sm">
+                <p><span className="font-medium">Order ID:</span> {orderData.order_id}</p>
+                <p><span className="font-medium">Total Amount:</span> ₹{orderData.price_paid?.toLocaleString()}</p>
+                <p><span className="font-medium">Payment Method:</span> {orderData.payment_method === 'cod' ? 'Cash on Delivery' : 'Card Payment'}</p>
+                <p><span className="font-medium">Status:</span> <span className="text-orange-600 font-medium">{orderData.status}</span></p>
+                <p><span className="font-medium">Estimated Delivery:</span> 3-5 business days</p>
+              </div>
+            </div>
+          )}
+          
+          <p className="text-gray-600 mb-6">Thank you for your order! We'll send you a confirmation email and SMS with tracking details shortly.</p>
           <div className="space-y-3">
             <Link
               to="/products"
@@ -643,9 +744,10 @@ const Checkout = () => {
                   ) : (
                     <button
                       type="submit"
+                      disabled={loading}
                       className="bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold py-3 px-6 rounded-lg transition-all ml-auto"
                     >
-                      Place Order
+                      {loading ? 'Processing Order...' : 'Place Order'}
                     </button>
                   )}
                 </div>
