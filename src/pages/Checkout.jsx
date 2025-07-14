@@ -236,7 +236,7 @@ const Checkout = () => {
                           name="firstName"
                           value={formData.firstName}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none bg-white`}
                           placeholder="Enter your first name"
                         />
                         {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
@@ -248,7 +248,7 @@ const Checkout = () => {
                           name="lastName"
                           value={formData.lastName}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none bg-white`}
                           placeholder="Enter your last name"
                         />
                         {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}

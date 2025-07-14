@@ -26,9 +26,10 @@ class FirebaseAuthService {
       if (!userDoc.exists()) {
         // Create user document if it doesn't exist
         const displayName = user.displayName || '';
-        const nameParts = displayName.split(' ');
+        const nameParts = displayName.trim().split(' ');
         const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
+        // For Indian names, typically last part is surname
+        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 
         await setDoc(doc(db, 'users', user.uid), {
           firstName,
@@ -45,13 +46,13 @@ class FirebaseAuthService {
       // Get user data
       const userData = userDoc.exists() ? userDoc.data() : {};
       const displayName = user.displayName || '';
-      const nameParts = displayName.split(' ');
+      const nameParts = displayName.trim().split(' ');
 
       return {
         id: user.uid,
         email: user.email,
         firstName: userData.firstName || nameParts[0] || '',
-        lastName: userData.lastName || nameParts.slice(1).join(' ') || '',
+        lastName: userData.lastName || (nameParts.length > 1 ? nameParts[nameParts.length - 1] : ''),
         phone: userData.phone || user.phoneNumber || '',
         emailVerified: user.emailVerified,
         phoneVerified: userData.phoneVerified || !!user.phoneNumber
