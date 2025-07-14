@@ -3,11 +3,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  sendEmailVerification,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  PhoneAuthProvider,
-  signInWithCredential,
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth';
@@ -16,24 +11,7 @@ import { auth, db } from '../config/firebase';
 
 class FirebaseAuthService {
   constructor() {
-    this.recaptchaVerifier = null;
     this.googleProvider = new GoogleAuthProvider();
-  }
-
-  // Initialize reCAPTCHA for phone verification
-  initializeRecaptcha(containerId = 'recaptcha-container') {
-    if (!this.recaptchaVerifier) {
-      this.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
-        size: 'invisible',
-        callback: (response) => {
-          console.log('reCAPTCHA solved');
-        },
-        'expired-callback': () => {
-          console.log('reCAPTCHA expired');
-        }
-      });
-    }
-    return this.recaptchaVerifier;
   }
 
   // Google Sign-In
@@ -58,7 +36,6 @@ class FirebaseAuthService {
           email: user.email,
           phone: user.phoneNumber || '',
           emailVerified: user.emailVerified,
-          phoneVerified: !!user.phoneNumber,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           provider: 'google'
@@ -112,9 +89,6 @@ class FirebaseAuthService {
         provider: 'email'
       });
 
-      // Send email verification
-      await sendEmailVerification(user);
-
       return {
         id: user.uid,
         email: user.email,
@@ -122,7 +96,6 @@ class FirebaseAuthService {
         lastName,
         phone,
         emailVerified: user.emailVerified,
-        phoneVerified: false
       };
     } catch (error) {
       console.error('Registration error:', error);
@@ -147,7 +120,6 @@ class FirebaseAuthService {
         lastName: userData?.lastName || '',
         phone: userData?.phone || '',
         emailVerified: user.emailVerified,
-        phoneVerified: userData?.phoneVerified || false
       };
     } catch (error) {
       console.error('Login error:', error);
@@ -162,78 +134,6 @@ class FirebaseAuthService {
     } catch (error) {
       console.error('Logout error:', error);
       throw new Error('Failed to sign out');
-    }
-  }
-
-  // Send phone OTP
-  async sendPhoneOTP(phoneNumber) {
-    try {
-      // Ensure phone number is in international format
-      const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
-      
-      const recaptchaVerifier = this.initializeRecaptcha();
-      const confirmationResult = await signInWithPhoneNumber(auth, formattedPhone, recaptchaVerifier);
-      
-      return confirmationResult;
-    } catch (error) {
-      console.error('Phone OTP error:', error);
-      throw new Error('Failed to send phone OTP');
-    }
-  }
-
-  // Verify phone OTP
-  async verifyPhoneOTP(confirmationResult, otp) {
-    try {
-      const result = await confirmationResult.confirm(otp);
-      const user = result.user;
-
-      // Update phone verification status in Firestore
-      await updateDoc(doc(db, 'users', user.uid), {
-        phoneVerified: true,
-        updatedAt: new Date().toISOString()
-      });
-
-      return { success: true, message: 'Phone verified successfully' };
-    } catch (error) {
-      console.error('Phone verification error:', error);
-      throw new Error('Invalid OTP');
-    }
-  }
-
-  // Send email verification
-  async sendEmailVerification() {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        await sendEmailVerification(user);
-        return { success: true, message: 'Verification email sent' };
-      }
-      throw new Error('No user logged in');
-    } catch (error) {
-      console.error('Email verification error:', error);
-      throw new Error('Failed to send verification email');
-    }
-  }
-
-  // Check if email is verified
-  async checkEmailVerification() {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        await user.reload();
-        if (user.emailVerified) {
-          // Update verification status in Firestore
-          await updateDoc(doc(db, 'users', user.uid), {
-            emailVerified: true,
-            updatedAt: new Date().toISOString()
-          });
-        }
-        return user.emailVerified;
-      }
-      return false;
-    } catch (error) {
-      console.error('Email verification check error:', error);
-      return false;
     }
   }
 
@@ -252,7 +152,6 @@ class FirebaseAuthService {
           lastName: userData?.lastName || '',
           phone: userData?.phone || '',
           emailVerified: user.emailVerified,
-          phoneVerified: userData?.phoneVerified || false
         };
       }
       return null;

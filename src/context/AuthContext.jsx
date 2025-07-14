@@ -127,47 +127,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const sendOTP = async (type, value) => {
-    try {
-      if (type === 'email') {
-        return await firebaseAuthService.sendEmailVerification();
-      } else if (type === 'phone') {
-        const confirmationResult = await firebaseAuthService.sendPhoneOTP(value);
-        // Store confirmation result for verification
-        window.confirmationResult = confirmationResult;
-        return { success: true, message: `OTP sent to ${value}` };
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const verifyOTP = async (type, value, otp) => {
-    try {
-      if (type === 'email') {
-        // For email, we check if the user has verified their email
-        const isVerified = await firebaseAuthService.checkEmailVerification();
-        if (isVerified) {
-          dispatch({ type: 'UPDATE_VERIFICATION', payload: { emailVerified: true } });
-          return { success: true, message: 'Email verified successfully' };
-        } else {
-          throw new Error('Please check your email and click the verification link');
-        }
-      } else if (type === 'phone') {
-        const confirmationResult = window.confirmationResult;
-        if (confirmationResult) {
-          const result = await firebaseAuthService.verifyPhoneOTP(confirmationResult, otp);
-          dispatch({ type: 'UPDATE_VERIFICATION', payload: { phoneVerified: true } });
-          return result;
-        } else {
-          throw new Error('Please request a new OTP');
-        }
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -176,8 +135,6 @@ export const AuthProvider = ({ children }) => {
         loginWithGoogle,
         register,
         logout,
-        sendOTP,
-        verifyOTP,
       }}
     >
       {children}

@@ -18,8 +18,8 @@ const Auth = () => {
   const [showOTP, setShowOTP] = useState(false);
   const [otpType, setOtpType] = useState('');
   const [otpValue, setOtpValue] = useState('');
-
-  const { login, loginWithGoogle, register, sendOTP, verifyOTP } = useAuth();
+  
+  const { login, loginWithGoogle, register } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -70,11 +70,8 @@ const Auth = () => {
         navigate(from, { replace: true });
       } else {
         await register(formData);
-        // After registration, verify email
-        setOtpType('email');
-        setOtpValue(formData.email);
-        await sendOTP('email', formData.email);
-        setShowOTP(true);
+        // Registration complete, navigate to home
+        navigate(from, { replace: true });
       }
     } catch (error) {
       setErrors({ submit: error.message });
@@ -95,36 +92,8 @@ const Auth = () => {
     }
   };
 
-  const handleOTPVerify = async (otp) => {
-    await verifyOTP(otpType, otpValue, otp);
-    
-    if (otpType === 'email') {
-      // After email verification, verify phone
-      setOtpType('phone');
-      setOtpValue(formData.phone);
-      await sendOTP('phone', formData.phone);
-    } else {
-      // Both verifications complete
-      setShowOTP(false);
-      navigate(from, { replace: true });
-    }
-  };
-
-  const handleOTPResend = async () => {
-    await sendOTP(otpType, otpValue);
-  };
-
-  const handleOTPCancel = () => {
-    setShowOTP(false);
-    setOtpType('');
-    setOtpValue('');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4] flex items-center justify-center py-12 px-4">
-      {/* reCAPTCHA container for phone verification */}
-      <div id="recaptcha-container"></div>
-      
       <div className="max-w-md w-full">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           {/* Header */}
@@ -260,7 +229,7 @@ const Auth = () => {
             {!isLogin && (
               <div>
                 <label className="block text-[#2f3a29] text-sm font-semibold mb-2">
-                  Phone Number *
+                  Phone Number
                 </label>
                 <input
                   type="tel"
@@ -336,17 +305,6 @@ const Auth = () => {
           </div>
         </div>
       </div>
-
-      {/* OTP Verification Modal */}
-      {showOTP && (
-        <OTPVerification
-          type={otpType}
-          value={otpValue}
-          onVerify={handleOTPVerify}
-          onResend={handleOTPResend}
-          onCancel={handleOTPCancel}
-        />
-      )}
     </div>
   );
 };
