@@ -51,11 +51,12 @@ class FirebaseDatabaseService {
 
   async updateUserProfile(uid, updates) {
     try {
+      const { setDoc } = await import('firebase/firestore');
       const userRef = doc(db, 'users', uid);
-      await updateDoc(userRef, {
+      await setDoc(userRef, {
         ...updates,
         last_login: serverTimestamp()
-      });
+      }, { merge: true });
     } catch (error) {
       console.error('Error updating user profile:', error);
       throw new Error('Failed to update user profile');

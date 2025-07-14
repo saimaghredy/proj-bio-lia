@@ -112,10 +112,39 @@ const Checkout = () => {
 
   const nextStep = () => {
     if (validateStep(currentStep)) {
+      // Update user profile when moving from step 1
+      if (currentStep === 1) {
+        updateUserProfile();
+      }
       setCurrentStep(prev => prev + 1);
     }
   };
 
+  const updateUserProfile = async () => {
+    try {
+      // Import the auth service
+      const { useAuth } = await import('../context/AuthContext');
+      
+      // Update user profile in Firestore if data has changed
+      if (user && (
+        formData.firstName !== user.firstName ||
+        formData.lastName !== user.lastName ||
+        formData.phone !== user.phone
+      )) {
+        const firebaseDatabase = (await import('../services/firebaseDatabase')).default;
+        await firebaseDatabase.updateUserProfile(user.id, {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          updatedAt: new Date().toISOString()
+        });
+        
+        console.log('User profile updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+    }
+  };
   const prevStep = () => {
     setCurrentStep(prev => prev - 1);
   };
@@ -228,6 +257,11 @@ const Checkout = () => {
                 {currentStep === 1 && (
                   <div>
                     <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Personal Information</h2>
+                    <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-blue-700 text-sm">
+                        💡 You can edit your personal information here. Changes will be saved to your profile.
+                      </p>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-[#2f3a29] font-semibold mb-2">First Name *</label>
@@ -260,7 +294,7 @@ const Checkout = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none bg-white`}
                           placeholder="Enter your email"
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -272,7 +306,7 @@ const Checkout = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none bg-white`}
                           placeholder="Enter your phone number"
                         />
                         {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
