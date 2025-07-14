@@ -689,6 +689,9 @@ const Checkout = () => {
           onCancel={handleOTPCancel}
         />
       )}
+
+      {/* reCAPTCHA container required for phone OTP */}
+      <div id="recaptcha-container"></div>
     </div>
   );
 };
