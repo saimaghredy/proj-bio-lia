@@ -14,12 +14,38 @@
 #### Authentication
 1. Go to Authentication → Sign-in method
 2. Enable **Email/Password**
-3. Enable **Phone** (for OTP verification)
+3. Enable **Phone** (for OTP verification) - **REQUIRES BLAZE PLAN**
 4. **IMPORTANT**: Configure authorized domains:
    - Go to Authentication → Settings → Authorized domains
    - Add `localhost` to the authorized domains list
    - **For Bolt.new preview**: Add the current preview domain (e.g., `*.bolt.new` or the specific subdomain you're using)
    - Add your production domain when deploying
+
+### ⚠️ **CRITICAL: Firebase Billing Plan Required**
+
+**Phone Authentication requires Firebase Blaze Plan (Pay-as-you-go)**
+
+The error `auth/billing-not-enabled` occurs because:
+- Phone Authentication is NOT available on the free Spark plan
+- You must upgrade to Blaze plan to use Phone/SMS OTP features
+
+**To Fix This Error:**
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Select your project (`bio-lia-authentication`)
+3. Click **Usage and billing** in left sidebar
+4. Click **Modify plan**
+5. Select **Blaze (Pay as you go)** plan
+6. Complete billing setup
+
+**Alternative Solutions:**
+- **Option 1**: Upgrade to Blaze plan (recommended for production)
+- **Option 2**: Disable phone verification temporarily and use email-only authentication
+- **Option 3**: Use a different OTP service (Twilio, etc.) with custom implementation
+
+**Blaze Plan Costs:**
+- Phone Authentication: $0.01 per verification
+- Most other Firebase services remain free within generous limits
+- You only pay for what you use beyond free tier
 
 #### Firestore Database
 1. Go to Firestore Database
