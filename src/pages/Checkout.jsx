@@ -19,16 +19,18 @@ const Checkout = () => {
     
     // Shipping Address
     address: '',
-    coordinates: { lat: null, lng: null },
+   fullName: '',
+   mobileNumber: '',
+   houseDetails: '',
+   areaDetails: '',
+   landmark: '',
     city: '',
     state: '',
     pincode: '',
+   addressType: 'home',
     
     // Billing Address
     billingAddress: '',
-    billingCity: '',
-    billingState: '',
-    billingPincode: '',
     sameAsShipping: true,
     
     // Payment
@@ -275,47 +277,182 @@ const Checkout = () => {
                     <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Shipping Address</h2>
 
                     <div className="space-y-6">
+                      {/* Full Name */}
                       <div>
-                        <label className="block text-[#2f3a29] font-semibold mb-2">Address *</label>
-                        <LocationSearch onLocationSelect={handleLocationSelect} />
-                        {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Full Name *</label>
+                        <input
+                          type="text"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          placeholder="Enter full name for delivery"
+                        />
+                        {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                      {/* Mobile Number */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Mobile Number *</label>
+                        <input
+                          type="tel"
+                          name="mobileNumber"
+                          value={formData.mobileNumber}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.mobileNumber ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          placeholder="10-digit mobile number"
+                          maxLength={10}
+                        />
+                        {errors.mobileNumber && <p className="text-red-500 text-sm mt-1">{errors.mobileNumber}</p>}
+                      </div>
+
+                      {/* Pincode First (for auto-fill) */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Pincode *</label>
+                        <input
+                          type="text"
+                          name="pincode"
+                          value={formData.pincode}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.pincode ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          placeholder="6-digit pincode"
+                          maxLength={6}
+                        />
+                        {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
+                        <p className="text-sm text-gray-600 mt-1">Enter pincode to auto-fill city and state</p>
+                      </div>
+
+                      {/* House/Flat Details */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Flat, House no., Building, Company, Apartment *</label>
+                        <input
+                          type="text"
+                          name="houseDetails"
+                          value={formData.houseDetails}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.houseDetails ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          placeholder="e.g., Flat 201, ABC Apartments"
+                        />
+                        {errors.houseDetails && <p className="text-red-500 text-sm mt-1">{errors.houseDetails}</p>}
+                      </div>
+
+                      {/* Area/Street Details */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Area, Street, Sector, Village *</label>
+                        <input
+                          type="text"
+                          name="areaDetails"
+                          value={formData.areaDetails}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-3 rounded-lg border ${errors.areaDetails ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
+                          placeholder="e.g., MG Road, Sector 15"
+                        />
+                        {errors.areaDetails && <p className="text-red-500 text-sm mt-1">{errors.areaDetails}</p>}
+                      </div>
+
+                      {/* Landmark (Optional) */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-2">Landmark (Optional)</label>
+                        <input
+                          type="text"
+                          name="landmark"
+                          value={formData.landmark}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                          placeholder="e.g., Near Metro Station, Opposite Mall"
+                        />
+                      </div>
+
+                      {/* City and State (Auto-filled from pincode) */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-[#2f3a29] font-semibold mb-2">City *</label>
+                          <label className="block text-[#2f3a29] font-semibold mb-2">City/District/Town *</label>
                           <input
                             type="text"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
                             className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                            placeholder="Enter city"
+                            placeholder="Enter city/district"
                           />
                           {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                         </div>
                         <div>
                           <label className="block text-[#2f3a29] font-semibold mb-2">State *</label>
-                          <input
-                            type="text"
+                          <select
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
-                            className={`w-full px-4 py-3 rounded-lg border ${errors.state ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                            placeholder="Enter state"
-                          />
+                            className={`w-full px-4 py-3 rounded-lg border ${errors.state ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white`}
+                          >
+                            <option value="">Select State</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                            <option value="Chandigarh">Chandigarh</option>
+                            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Lakshadweep">Lakshadweep</option>
+                            <option value="Puducherry">Puducherry</option>
+                          </select>
                           {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
                         </div>
-                        <div>
-                          <label className="block text-[#2f3a29] font-semibold mb-2">Pincode *</label>
-                          <input
-                            type="text"
-                            name="pincode"
-                            value={formData.pincode}
-                            onChange={handleChange}
-                            className={`w-full px-4 py-3 rounded-lg border ${errors.pincode ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                            placeholder="Enter pincode"
-                          />
-                          {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
+                      </div>
+
+                      {/* Address Type */}
+                      <div>
+                        <label className="block text-[#2f3a29] font-semibold mb-3">Address Type</label>
+                        <div className="flex gap-4">
+                          <label className="flex items-center">
+                            <input
+                              type="radio"
+                              name="addressType"
+                              value="home"
+                              checked={formData.addressType === 'home'}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            <span className="text-[#2f3a29]">🏠 Home</span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="radio"
+                              name="addressType"
+                              value="work"
+                              checked={formData.addressType === 'work'}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            <span className="text-[#2f3a29]">🏢 Work</span>
+                          </label>
                         </div>
                       </div>
 
@@ -335,56 +472,16 @@ const Checkout = () => {
                         {!formData.sameAsShipping && (
                           <div className="space-y-4">
                             <h3 className="text-lg font-semibold text-[#2f3a29]">Billing Address</h3>
-                            <div>
-                              <label className="block text-[#2f3a29] font-semibold mb-2">Billing Address *</label>
-                              <input
-                                type="text"
-                                name="billingAddress"
-                                value={formData.billingAddress}
-                                onChange={handleChange}
-                                className={`w-full px-4 py-3 rounded-lg border ${errors.billingAddress ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                                placeholder="Enter billing address"
-                              />
-                              {errors.billingAddress && <p className="text-red-500 text-sm mt-1">{errors.billingAddress}</p>}
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-[#2f3a29] font-semibold mb-2">City *</label>
-                                <input
-                                  type="text"
-                                  name="billingCity"
-                                  value={formData.billingCity}
-                                  onChange={handleChange}
-                                  className={`w-full px-4 py-3 rounded-lg border ${errors.billingCity ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                                  placeholder="Enter city"
-                                />
-                                {errors.billingCity && <p className="text-red-500 text-sm mt-1">{errors.billingCity}</p>}
-                              </div>
-                              <div>
-                                <label className="block text-[#2f3a29] font-semibold mb-2">State *</label>
-                                <input
-                                  type="text"
-                                  name="billingState"
-                                  value={formData.billingState}
-                                  onChange={handleChange}
-                                  className={`w-full px-4 py-3 rounded-lg border ${errors.billingState ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                                  placeholder="Enter state"
-                                />
-                                {errors.billingState && <p className="text-red-500 text-sm mt-1">{errors.billingState}</p>}
-                              </div>
-                              <div>
-                                <label className="block text-[#2f3a29] font-semibold mb-2">Pincode *</label>
-                                <input
-                                  type="text"
-                                  name="billingPincode"
-                                  value={formData.billingPincode}
-                                  onChange={handleChange}
-                                  className={`w-full px-4 py-3 rounded-lg border ${errors.billingPincode ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none`}
-                                  placeholder="Enter pincode"
-                                />
-                                {errors.billingPincode && <p className="text-red-500 text-sm mt-1">{errors.billingPincode}</p>}
-                              </div>
-                            </div>
+                            <p className="text-gray-600 text-sm">Please enter your complete billing address details</p>
+                            <textarea
+                              name="billingAddress"
+                              value={formData.billingAddress}
+                              onChange={handleChange}
+                              rows={4}
+                              className={`w-full px-4 py-3 rounded-lg border ${errors.billingAddress ? 'border-red-500' : 'border-gray-300'} focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none resize-vertical`}
+                              placeholder="Enter complete billing address with pincode"
+                            />
+                            {errors.billingAddress && <p className="text-red-500 text-sm mt-1">{errors.billingAddress}</p>}
                           </div>
                         )}
                       </div>
