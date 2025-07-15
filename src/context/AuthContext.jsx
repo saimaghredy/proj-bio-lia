@@ -43,10 +43,19 @@ export const AuthProvider = ({ children }) => {
   // Listen to auth state changes
   useEffect(() => {
     let mounted = true;
+    let timeoutId;
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (!mounted) return;
+        
+        // Set a timeout to prevent infinite loading
+        timeoutId = setTimeout(() => {
+          if (mounted) {
+            console.warn('Auth loading timeout - setting loading to false');
+            dispatch({ type: 'SET_LOADING', payload: false });
+          }
+        }, 8000); // 8 second timeout
         
         try {
           if (session?.user) {
@@ -55,6 +64,7 @@ export const AuthProvider = ({ children }) => {
               const profile = await supabaseDatabase.getUserProfile(session.user.id);
               
               if (profile && mounted) {
+                clearTimeout(timeoutId);
                 dispatch({ 
                   type: 'SET_USER', 
                   payload: {
@@ -79,6 +89,7 @@ export const AuthProvider = ({ children }) => {
               } else {
                 // Create profile if it doesn't exist
                 if (mounted) {
+                  clearTimeout(timeoutId);
                   await createUserProfile(session.user);
                 }
               }
@@ -86,11 +97,13 @@ export const AuthProvider = ({ children }) => {
               console.error('Error loading user profile:', error);
               // Create profile if there's an error (likely user doesn't exist)
               if (mounted) {
+                clearTimeout(timeoutId);
                 await createUserProfile(session.user);
               }
             }
           } else {
             if (mounted) {
+              clearTimeout(timeoutId);
               dispatch({ type: 'SET_USER', payload: null });
             }
           }
@@ -98,6 +111,7 @@ export const AuthProvider = ({ children }) => {
           console.error('Auth state change error:', error);
         } finally {
           if (mounted) {
+            clearTimeout(timeoutId);
             dispatch({ type: 'SET_LOADING', payload: false });
           }
         }
@@ -106,6 +120,7 @@ export const AuthProvider = ({ children }) => {
 
     return () => {
       mounted = false;
+      if (timeoutId) clearTimeout(timeoutId);
       subscription.unsubscribe();
     };
   }, []);

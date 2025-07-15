@@ -58,18 +58,11 @@ class SupabaseDatabaseService {
 
   async getUserProfile(uid) {
     try {
-      // Add timeout to prevent infinite loading
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 10000)
-      );
-      
-      const queryPromise = supabase
+      const { data, error } = await supabase
         .from('users')
         .select('*')
         .eq('id', uid)
         .single();
-      
-      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
       
       if (error) {
         // If user doesn't exist, return null instead of throwing
@@ -83,10 +76,10 @@ class SupabaseDatabaseService {
     } catch (error) {
       console.error('Error getting user profile:', error);
       // Return null for missing user instead of throwing
-      if (error.message === 'Request timeout' || error.code === 'PGRST116') {
+      if (error.code === 'PGRST116') {
         return null;
       }
-      throw new Error('Failed to get user profile');
+      return null; // Return null instead of throwing to prevent infinite loading
     }
   }
 
