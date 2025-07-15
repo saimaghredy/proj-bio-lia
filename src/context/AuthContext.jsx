@@ -37,11 +37,12 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
     isAuthenticated: false,
-    loading: true,
+    loading: false,
   });
 
   // Listen to auth state changes
   useEffect(() => {
+    dispatch({ type: 'SET_LOADING', payload: true });
     let mounted = true;
     let timeoutId;
     
@@ -86,6 +87,7 @@ export const AuthProvider = ({ children }) => {
                     loyaltyTier: profile.loyalty_tier
                   }
                 });
+                dispatch({ type: 'SET_LOADING', payload: false });
               } else {
                 // Create profile if it doesn't exist
                 if (mounted) {
@@ -105,14 +107,17 @@ export const AuthProvider = ({ children }) => {
             if (mounted) {
               clearTimeout(timeoutId);
               dispatch({ type: 'SET_USER', payload: null });
+              dispatch({ type: 'SET_LOADING', payload: false });
             }
           }
         } catch (error) {
           console.error('Auth state change error:', error);
+          if (mounted) {
+            dispatch({ type: 'SET_LOADING', payload: false });
+          }
         } finally {
           if (mounted) {
             clearTimeout(timeoutId);
-            dispatch({ type: 'SET_LOADING', payload: false });
           }
         }
       }
@@ -159,6 +164,7 @@ export const AuthProvider = ({ children }) => {
           }
         });
       }
+      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (error) {
       console.error('Error creating user profile:', error);
       // Set loading to false even if profile creation fails
