@@ -1,8 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../config/firebase';
-import firebaseAuthService from '../services/firebaseAuth';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import { supabase, handleSupabaseError } from '../config/supabase';
 
 const AuthContext = createContext();
 
@@ -25,13 +22,10 @@ const authReducer = (state, action) => {
         ...state,
         loading: action.payload,
       };
-    case 'UPDATE_VERIFICATION':
+    case 'UPDATE_PROFILE':
       return {
         ...state,
-        user: state.user ? {
-          ...state.user,
-          ...action.payload
-        } : null,
+        user: state.user ? { ...state.user, ...action.payload } : null,
       };
     default:
       return state;
@@ -45,94 +39,248 @@ export const AuthProvider = ({ children }) => {
     loading: true,
   });
 
-  // Listen to Firebase auth state changes
+  // Listen to auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const userData = await firebaseAuthService.getCurrentUserData();
-          
-          // Start background sync for user data
-          if (userData) {
-            optimizedDatabase.backgroundSync(userData.id);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          // Get user profile from our users table
+          const { data: profile, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profile && !error) {
+            dispatch({ 
+              type: 'SET_USER', 
+              payload: {
+                id: profile.id,
+                email: profile.email,
+                firstName: profile.first_name,
+                lastName: profile.last_name,
+                phone: profile.phone_number,
+                emailVerified: profile.email_verified,
+                phoneVerified: profile.phone_verified,
+                role: profile.role,
+                farmLocation: profile.farm_location,
+                farmSize: profile.farm_size,
+                primaryCrops: profile.primary_crops,
+                soilType: profile.soil_type,
+                profileCompleted: profile.profile_completed
+              }
+            });
+          } else {
+            // Create profile if it doesn't exist
+            await createUserProfile(session.user);
           }
-          
-          dispatch({ type: 'SET_USER', payload: userData });
-        } catch (error) {
-          console.error('Error getting user data:', error);
+        } else {
           dispatch({ type: 'SET_USER', payload: null });
         }
-      } else {
-        dispatch({ type: 'SET_USER', payload: null });
+        dispatch({ type: 'SET_LOADING', payload: false });
       }
-      dispatch({ type: 'SET_LOADING', payload: false });
-    });
+    );
 
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
-  const login = async (email, password) => {
-    dispatch({ type: 'SET_LOADING', payload: true });
+  // Create user profile in our users table
+  const createUserProfile = async (authUser) => {
     try {
-      const userData = await firebaseAuthService.login(email, password);
-      dispatch({ type: 'SET_USER', payload: userData });
-      return userData;
-    } catch (error) {
-      throw error;
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
+      const { data, error } = await supabase
+        .from('users')
+        .insert([
+          {
+            id: authUser.id,
+            email: authUser.email,
+            first_name: authUser.user_metadata?.first_name || '',
+            last_name: authUser.user_metadata?.last_name || '',
+            phone_number: authUser.phone || '',
+            email_verified: authUser.email_confirmed_at ? true : false,
+            provider: authUser.app_metadata?.provider || 'email',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }
+        ])
+        .select()
+        .single();
 
-  const loginWithGoogle = async () => {
-    dispatch({ type: 'SET_LOADING', payload: true });
-    try {
-      const userData = await firebaseAuthService.signInWithGoogle();
-      
-      // Ensure user profile exists in database
-      const existingProfile = await optimizedDatabase.getUserProfile(userData.id);
-      if (!existingProfile) {
-        await optimizedDatabase.originalService.createUserProfile(userData);
-      } else {
-        // Update last login
-        await optimizedDatabase.updateUserProfile(userData.id, { last_login: new Date() });
+      if (data && !error) {
+        dispatch({ 
+          type: 'SET_USER', 
+          payload: {
+            id: data.id,
+            email: data.email,
+            firstName: data.first_name,
+            lastName: data.last_name,
+            phone: data.phone_number,
+            emailVerified: data.email_verified,
+            phoneVerified: data.phone_verified,
+            role: data.role,
+            profileCompleted: data.profile_completed
+          }
+        });
       }
-      
-      // Start background sync
-      optimizedDatabase.backgroundSync(userData.id);
-      
-      dispatch({ type: 'SET_USER', payload: userData });
-      return userData;
     } catch (error) {
-      throw error;
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
+      console.error('Error creating user profile:', error);
     }
   };
 
+  // Register new user
   const register = async (userData) => {
-    dispatch({ type: 'SET_LOADING', payload: true });
     try {
-      const userResponse = await firebaseAuthService.register(userData);
-      
-      // Create user profile in database
-      await optimizedDatabase.originalService.createUserProfile(userResponse);
-      
-      dispatch({ type: 'SET_USER', payload: userResponse });
-      return userResponse;
+      const { data, error } = await supabase.auth.signUp({
+        email: userData.email,
+        password: userData.password,
+        options: {
+          data: {
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            phone: userData.phone
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      return data.user;
     } catch (error) {
-      throw error;
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
+      throw new Error(handleSupabaseError(error));
     }
   };
 
+  // Login user
+  const login = async (email, password) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+
+      return data.user;
+    } catch (error) {
+      throw new Error(handleSupabaseError(error));
+    }
+  };
+
+  // Google Sign-in
+  const loginWithGoogle = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      throw new Error(handleSupabaseError(error));
+    }
+  };
+
+  // Logout
   const logout = async () => {
     try {
-      await firebaseAuthService.logout();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
       dispatch({ type: 'LOGOUT' });
     } catch (error) {
       console.error('Logout error:', error);
+    }
+  };
+
+  // Send phone OTP using MSG91
+  const sendPhoneOTP = async (phoneNumber) => {
+    try {
+      // Call your edge function or API endpoint for MSG91
+      const response = await fetch('/api/send-phone-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        },
+        body: JSON.stringify({ 
+          phone_number: phoneNumber,
+          user_id: state.user?.id 
+        })
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send OTP');
+      }
+
+      return result;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to send OTP');
+    }
+  };
+
+  // Verify phone OTP
+  const verifyPhoneOTP = async (phoneNumber, otp) => {
+    try {
+      const response = await fetch('/api/verify-phone-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        },
+        body: JSON.stringify({ 
+          phone_number: phoneNumber,
+          otp: otp,
+          user_id: state.user?.id 
+        })
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Verification failed');
+      }
+
+      // Update user profile if verification successful
+      if (result.verified) {
+        dispatch({ 
+          type: 'UPDATE_PROFILE', 
+          payload: { 
+            phoneVerified: true,
+            phone: phoneNumber 
+          } 
+        });
+      }
+
+      return result;
+    } catch (error) {
+      throw new Error(error.message || 'Verification failed');
+    }
+  };
+
+  // Update user profile
+  const updateProfile = async (updates) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .update({
+          ...updates,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', state.user.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      dispatch({ type: 'UPDATE_PROFILE', payload: updates });
+      return data;
+    } catch (error) {
+      throw new Error(handleSupabaseError(error));
     }
   };
 
@@ -140,10 +288,13 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         ...state,
+        register,
         login,
         loginWithGoogle,
-        register,
         logout,
+        sendPhoneOTP,
+        verifyPhoneOTP,
+        updateProfile,
       }}
     >
       {children}
