@@ -199,7 +199,7 @@ const Products = () => {
           </div>
         )}
 
-        {!loading && sortedProducts.length === 0 && (
+        {sortedProducts.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
