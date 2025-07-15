@@ -90,17 +90,6 @@ class SupabaseDatabaseService {
     }
   }
 
-  async createUserProfile(userData) {
-    try {
-      // Add timeout to prevent infinite loading
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 10000)
-      );
-      
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-  }
 
   // ==================== PRODUCTS OPERATIONS ====================
 
