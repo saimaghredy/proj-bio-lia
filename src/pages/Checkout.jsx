@@ -166,17 +166,14 @@ const Checkout = () => {
 
   const updateUserProfile = async () => {
     try {
-      // Import the auth service
-      const { useAuth } = await import('../context/AuthContext');
-      
       // Update user profile in Firestore if data has changed
       if (user && (
         formData.firstName !== user.firstName ||
         formData.lastName !== user.lastName ||
         formData.phone !== user.phone
       )) {
-        const firebaseDatabase = (await import('../services/firebaseDatabase')).default;
-        await firebaseDatabase.updateUserProfile(user.id, {
+        // Use the updateProfile function from AuthContext
+        await updateProfile({
           firstName: formData.firstName,
           lastName: formData.lastName,
           phone: formData.phone,
