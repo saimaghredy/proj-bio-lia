@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { supabase, handleSupabaseError } from '../config/supabase';
+import supabaseDatabase from '../services/supabaseDatabase';
 
 const AuthContext = createContext();
 
@@ -45,33 +46,38 @@ export const AuthProvider = ({ children }) => {
       async (event, session) => {
         if (session?.user) {
           // Get user profile from our users table
-          const { data: profile, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-
-          if (profile && !error) {
-            dispatch({ 
-              type: 'SET_USER', 
-              payload: {
-                id: profile.id,
-                email: profile.email,
-                firstName: profile.first_name,
-                lastName: profile.last_name,
-                phone: profile.phone_number,
-                emailVerified: profile.email_verified,
-                phoneVerified: profile.phone_verified,
-                role: profile.role,
-                farmLocation: profile.farm_location,
-                farmSize: profile.farm_size,
-                primaryCrops: profile.primary_crops,
-                soilType: profile.soil_type,
-                profileCompleted: profile.profile_completed
-              }
-            });
-          } else {
-            // Create profile if it doesn't exist
+          try {
+            const profile = await supabaseDatabase.getUserProfile(session.user.id);
+            
+            if (profile) {
+              dispatch({ 
+                type: 'SET_USER', 
+                payload: {
+                  id: profile.id,
+                  email: profile.email,
+                  firstName: profile.first_name,
+                  lastName: profile.last_name,
+                  phone: profile.phone_number,
+                  emailVerified: profile.email_verified,
+                  phoneVerified: profile.phone_verified,
+                  role: profile.role,
+                  farmLocation: profile.farm_location,
+                  farmSize: profile.farm_size,
+                  primaryCrops: profile.primary_crops,
+                  soilType: profile.soil_type,
+                  profileCompleted: profile.profile_completed,
+                  totalPoints: profile.total_points,
+                  totalSpent: profile.total_spent,
+                  loyaltyTier: profile.loyalty_tier
+                }
+              });
+            } else {
+              // Create profile if it doesn't exist
+              await createUserProfile(session.user);
+            }
+          } catch (error) {
+            console.error('Error loading user profile:', error);
+            // Create profile if there's an error (likely user doesn't exist)
             await createUserProfile(session.user);
           }
         } else {
@@ -87,37 +93,34 @@ export const AuthProvider = ({ children }) => {
   // Create user profile in our users table
   const createUserProfile = async (authUser) => {
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .insert([
-          {
-            id: authUser.id,
-            email: authUser.email,
-            first_name: authUser.user_metadata?.first_name || '',
-            last_name: authUser.user_metadata?.last_name || '',
-            phone_number: authUser.phone || '',
-            email_verified: authUser.email_confirmed_at ? true : false,
-            provider: authUser.app_metadata?.provider || 'email',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          }
-        ])
-        .select()
-        .single();
+      const userData = {
+        id: authUser.id,
+        email: authUser.email,
+        firstName: authUser.user_metadata?.first_name || '',
+        lastName: authUser.user_metadata?.last_name || '',
+        phone: authUser.phone || '',
+        emailVerified: authUser.email_confirmed_at ? true : false,
+        provider: authUser.app_metadata?.provider || 'email'
+      };
 
-      if (data && !error) {
+      const profile = await supabaseDatabase.createUserProfile(userData);
+      
+      if (profile) {
         dispatch({ 
           type: 'SET_USER', 
           payload: {
-            id: data.id,
-            email: data.email,
-            firstName: data.first_name,
-            lastName: data.last_name,
-            phone: data.phone_number,
-            emailVerified: data.email_verified,
-            phoneVerified: data.phone_verified,
-            role: data.role,
-            profileCompleted: data.profile_completed
+            id: profile.id,
+            email: profile.email,
+            firstName: profile.first_name,
+            lastName: profile.last_name,
+            phone: profile.phone_number,
+            emailVerified: profile.email_verified,
+            phoneVerified: profile.phone_verified,
+            role: profile.role,
+            profileCompleted: profile.profile_completed,
+            totalPoints: profile.total_points,
+            totalSpent: profile.total_spent,
+            loyaltyTier: profile.loyalty_tier
           }
         });
       }
@@ -142,7 +145,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (error) throw error;
-
       return data.user;
     } catch (error) {
       throw new Error(handleSupabaseError(error));
@@ -158,7 +160,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (error) throw error;
-
       return data.user;
     } catch (error) {
       throw new Error(handleSupabaseError(error));
@@ -171,12 +172,11 @@ export const AuthProvider = ({ children }) => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${window.location.origin}`
         }
       });
 
       if (error) throw error;
-
       return data;
     } catch (error) {
       throw new Error(handleSupabaseError(error));
@@ -195,28 +195,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Send phone OTP using MSG91
+  // Send phone OTP using MSG91 via Supabase Edge Function
   const sendPhoneOTP = async (phoneNumber) => {
     try {
-      // Call your edge function or API endpoint for MSG91
-      const response = await fetch('/api/send-phone-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
-        },
-        body: JSON.stringify({ 
-          phone_number: phoneNumber,
-          user_id: state.user?.id 
-        })
-      });
-
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to send OTP');
-      }
-
+      const result = await supabaseDatabase.sendPhoneOTP(phoneNumber, state.user?.id);
       return result;
     } catch (error) {
       throw new Error(error.message || 'Failed to send OTP');
@@ -226,24 +208,7 @@ export const AuthProvider = ({ children }) => {
   // Verify phone OTP
   const verifyPhoneOTP = async (phoneNumber, otp) => {
     try {
-      const response = await fetch('/api/verify-phone-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
-        },
-        body: JSON.stringify({ 
-          phone_number: phoneNumber,
-          otp: otp,
-          user_id: state.user?.id 
-        })
-      });
-
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Verification failed');
-      }
+      const result = await supabaseDatabase.verifyPhoneOTP(phoneNumber, otp, state.user?.id);
 
       // Update user profile if verification successful
       if (result.verified) {
@@ -265,17 +230,16 @@ export const AuthProvider = ({ children }) => {
   // Update user profile
   const updateProfile = async (updates) => {
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .update({
-          ...updates,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', state.user.id)
-        .select()
-        .single();
-
-      if (error) throw error;
+      const data = await supabaseDatabase.updateUserProfile(state.user.id, {
+        first_name: updates.firstName,
+        last_name: updates.lastName,
+        phone_number: updates.phone,
+        farm_location: updates.farmLocation,
+        farm_size: updates.farmSize,
+        primary_crops: updates.primaryCrops,
+        soil_type: updates.soilType,
+        profile_completed: updates.profileCompleted
+      });
 
       dispatch({ type: 'UPDATE_PROFILE', payload: updates });
       return data;

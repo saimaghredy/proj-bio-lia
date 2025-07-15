@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const CacheMonitor = () => {
   const [cacheStats, setCacheStats] = useState({});

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { categories } from '../data/products';
 import { useCart } from '../context/CartContext';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const Products = () => {
   const [products, setProducts] = useState([]);

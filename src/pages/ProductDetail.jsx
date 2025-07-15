@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const ProductDetail = () => {
   const { id } = useParams();

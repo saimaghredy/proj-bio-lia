@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { useAuth } from './AuthContext';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const CartContext = createContext();
 

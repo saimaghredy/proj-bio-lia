@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

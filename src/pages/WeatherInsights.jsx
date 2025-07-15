@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LocationSearch from '../components/LocationSearch';
 import aiWeatherService from '../services/aiWeatherService';
-import optimizedDatabase from '../services/optimizedFirebaseDatabase';
+import optimizedDatabase from '../services/optimizedSupabaseDatabase';
 
 const WeatherInsights = () => {
   const [formData, setFormData] = useState({
