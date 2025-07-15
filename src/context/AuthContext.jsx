@@ -42,52 +42,72 @@ export const AuthProvider = ({ children }) => {
 
   // Listen to auth state changes
   useEffect(() => {
+    let mounted = true;
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (session?.user) {
-          // Get user profile from our users table
-          try {
-            const profile = await supabaseDatabase.getUserProfile(session.user.id);
-            
-            if (profile) {
-              dispatch({ 
-                type: 'SET_USER', 
-                payload: {
-                  id: profile.id,
-                  email: profile.email,
-                  firstName: profile.first_name,
-                  lastName: profile.last_name,
-                  phone: profile.phone_number,
-                  emailVerified: profile.email_verified,
-                  phoneVerified: profile.phone_verified,
-                  role: profile.role,
-                  farmLocation: profile.farm_location,
-                  farmSize: profile.farm_size,
-                  primaryCrops: profile.primary_crops,
-                  soilType: profile.soil_type,
-                  profileCompleted: profile.profile_completed,
-                  totalPoints: profile.total_points,
-                  totalSpent: profile.total_spent,
-                  loyaltyTier: profile.loyalty_tier
+        if (!mounted) return;
+        
+        try {
+          if (session?.user) {
+            // Get user profile from our users table
+            try {
+              const profile = await supabaseDatabase.getUserProfile(session.user.id);
+              
+              if (profile && mounted) {
+                dispatch({ 
+                  type: 'SET_USER', 
+                  payload: {
+                    id: profile.id,
+                    email: profile.email,
+                    firstName: profile.first_name,
+                    lastName: profile.last_name,
+                    phone: profile.phone_number,
+                    emailVerified: profile.email_verified,
+                    phoneVerified: profile.phone_verified,
+                    role: profile.role,
+                    farmLocation: profile.farm_location,
+                    farmSize: profile.farm_size,
+                    primaryCrops: profile.primary_crops,
+                    soilType: profile.soil_type,
+                    profileCompleted: profile.profile_completed,
+                    totalPoints: profile.total_points,
+                    totalSpent: profile.total_spent,
+                    loyaltyTier: profile.loyalty_tier
+                  }
+                });
+              } else {
+                // Create profile if it doesn't exist
+                if (mounted) {
+                  await createUserProfile(session.user);
                 }
-              });
-            } else {
-              // Create profile if it doesn't exist
-              await createUserProfile(session.user);
+              }
+            } catch (error) {
+              console.error('Error loading user profile:', error);
+              // Create profile if there's an error (likely user doesn't exist)
+              if (mounted) {
+                await createUserProfile(session.user);
+              }
             }
-          } catch (error) {
-            console.error('Error loading user profile:', error);
-            // Create profile if there's an error (likely user doesn't exist)
-            await createUserProfile(session.user);
+          } else {
+            if (mounted) {
+              dispatch({ type: 'SET_USER', payload: null });
+            }
           }
-        } else {
-          dispatch({ type: 'SET_USER', payload: null });
+        } catch (error) {
+          console.error('Auth state change error:', error);
+        } finally {
+          if (mounted) {
+            dispatch({ type: 'SET_LOADING', payload: false });
+          }
         }
-        dispatch({ type: 'SET_LOADING', payload: false });
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   // Create user profile in our users table
@@ -126,6 +146,8 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error creating user profile:', error);
+      // Set loading to false even if profile creation fails
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 

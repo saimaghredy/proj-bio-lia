@@ -58,18 +58,48 @@ class SupabaseDatabaseService {
 
   async getUserProfile(uid) {
     try {
-      const { data, error } = await supabase
+      // Add timeout to prevent infinite loading
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 10000)
+      );
+      
+      const queryPromise = supabase
         .from('users')
         .select('*')
         .eq('id', uid)
         .single();
-
-      if (error) throw error;
+      
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
+      
+      if (error) {
+        // If user doesn't exist, return null instead of throwing
+        if (error.code === 'PGRST116') {
+          return null;
+        }
+        throw error;
+      }
+      
       return data;
     } catch (error) {
       console.error('Error getting user profile:', error);
+      // Return null for missing user instead of throwing
+      if (error.message === 'Request timeout' || error.code === 'PGRST116') {
+        return null;
+      }
       throw new Error('Failed to get user profile');
     }
+  }
+
+  async createUserProfile(userData) {
+    try {
+      // Add timeout to prevent infinite loading
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 10000)
+      );
+      
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
   }
 
   // ==================== PRODUCTS OPERATIONS ====================
@@ -146,7 +176,7 @@ class SupabaseDatabaseService {
         updated_at: new Date().toISOString()
       };
 
-      const { data, error } = await supabase
+      const queryPromise = supabase
         .from('orders')
         .insert([order])
         .select()
@@ -245,6 +275,8 @@ class SupabaseDatabaseService {
         })
         .select()
         .single();
+      
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
 
       if (error) throw error;
       return data;
@@ -299,15 +331,9 @@ class SupabaseDatabaseService {
       return data.id;
     } catch (error) {
       console.error('Error saving weather insight:', error);
-      throw new Error('Failed to save weather insight');
+      // Don't throw error, return null to prevent infinite loading
+      return null;
     }
-  }
-
-  async getUserWeatherInsights(uid) {
-    try {
-      const { data, error } = await supabase
-        .from('weather_insights')
-        .select('*')
         .eq('user_id', uid)
         .order('created_at', { ascending: false })
         .limit(10);
