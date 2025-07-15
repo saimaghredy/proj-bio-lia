@@ -165,7 +165,7 @@ class SupabaseDatabaseService {
         updated_at: new Date().toISOString()
       };
 
-      const queryPromise = supabase
+      const { data, error } = await supabase
         .from('orders')
         .insert([order])
         .select()
@@ -255,7 +255,7 @@ class SupabaseDatabaseService {
 
   async saveUserShippingAddress(uid, shippingAddress) {
     try {
-      const { data, error } = await supabase
+      const queryPromise = supabase
         .from('user_preferences')
         .upsert({
           user_id: uid,
@@ -264,6 +264,10 @@ class SupabaseDatabaseService {
         })
         .select()
         .single();
+
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 10000)
+      );
       
       const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
 
@@ -323,6 +327,13 @@ class SupabaseDatabaseService {
       // Don't throw error, return null to prevent infinite loading
       return null;
     }
+  }
+
+  async getUserWeatherInsights(uid) {
+    try {
+      const { data, error } = await supabase
+        .from('weather_insights')
+        .select('*')
         .eq('user_id', uid)
         .order('created_at', { ascending: false })
         .limit(10);
