@@ -6,51 +6,8 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART':
-      const existingItem = state.items.find(item => item.id === action.payload.id);
-      if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map(item =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + action.payload.quantity }
-              : item
-          ),
-        };
-      }
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
-
-    case 'REMOVE_FROM_CART':
-      return {
-        ...state,
-        items: state.items.filter(item => item.id !== action.payload),
-      };
-
-    case 'UPDATE_QUANTITY':
-      return {
-        ...state,
-        items: state.items.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: Math.max(0, action.payload.quantity) }
-            : item
-        ).filter(item => item.quantity > 0),
-      };
-
-    case 'CLEAR_CART':
-      return {
-        ...state,
-        items: [],
-      };
-
     case 'LOAD_CART':
-      return {
-        ...state,
-        items: action.payload || [],
-      };
-
+      return { ...state, items: action.payload || [] };
     default:
       return state;
   }
@@ -60,22 +17,13 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
   const { user, isAuthenticated } = useAuth();
 
-  // Load cart from cache on mount
   useEffect(() => {
     const cachedCart = optimizedDatabase.getCart();
     dispatch({ type: 'LOAD_CART', payload: cachedCart });
   }, []);
 
-  // Auto-sync cart changes
-  useEffect(() => {
-    // Cart is always stored locally for performance
-    // No need to sync to Firestore until checkout
-  }, [state.items]);
-
-  // Background sync when user logs in
   useEffect(() => {
     if (isAuthenticated && user) {
-      // Start background sync for user data
       optimizedDatabase.backgroundSync(user.id);
     }
   }, [isAuthenticated, user]);

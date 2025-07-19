@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
     loading: false,
   });
 
-  // Listen to auth state changes
   useEffect(() => {
     dispatch({ type: 'SET_LOADING', payload: true });
     let mounted = true;
@@ -50,17 +49,15 @@ export const AuthProvider = ({ children }) => {
       async (event, session) => {
         if (!mounted) return;
         
-        // Set a timeout to prevent infinite loading
         timeoutId = setTimeout(() => {
           if (mounted) {
             console.warn('Auth loading timeout - setting loading to false');
             dispatch({ type: 'SET_LOADING', payload: false });
           }
-        }, 8000); // 8 second timeout
+        }, 8000);
         
         try {
           if (session?.user) {
-            // Get user profile from our users table
             try {
               const profile = await supabaseDatabase.getUserProfile(session.user.id);
               
@@ -89,7 +86,6 @@ export const AuthProvider = ({ children }) => {
                 });
                 dispatch({ type: 'SET_LOADING', payload: false });
               } else {
-                // Create profile if it doesn't exist
                 if (mounted) {
                   clearTimeout(timeoutId);
                   await createUserProfile(session.user);
@@ -97,7 +93,6 @@ export const AuthProvider = ({ children }) => {
               }
             } catch (error) {
               console.error('Error loading user profile:', error);
-              // Create profile if there's an error (likely user doesn't exist)
               if (mounted) {
                 clearTimeout(timeoutId);
                 await createUserProfile(session.user);
@@ -130,7 +125,6 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // Create user profile in our users table
   const createUserProfile = async (authUser) => {
     try {
       const userData = {
@@ -167,12 +161,10 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: false });
     } catch (error) {
       console.error('Error creating user profile:', error);
-      // Set loading to false even if profile creation fails
       dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
-  // Register new user
   const register = async (userData) => {
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -194,7 +186,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login user
   const login = async (email, password) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -209,7 +200,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Google Sign-in
   const loginWithGoogle = async () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -226,7 +216,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout
   const logout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
@@ -238,7 +227,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Send phone OTP using MSG91 via Supabase Edge Function
   const sendPhoneOTP = async (phoneNumber) => {
     try {
       const result = await supabaseDatabase.sendPhoneOTP(phoneNumber, state.user?.id);
@@ -248,12 +236,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Verify phone OTP
   const verifyPhoneOTP = async (phoneNumber, otp) => {
     try {
       const result = await supabaseDatabase.verifyPhoneOTP(phoneNumber, otp, state.user?.id);
 
-      // Update user profile if verification successful
       if (result.verified) {
         dispatch({ 
           type: 'UPDATE_PROFILE', 
@@ -270,7 +256,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Update user profile
   const updateProfile = async (updates) => {
     try {
       const data = await supabaseDatabase.updateUserProfile(state.user.id, {
