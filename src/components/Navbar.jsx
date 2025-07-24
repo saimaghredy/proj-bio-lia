@@ -10,68 +10,86 @@ const Navbar = () => {
   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/products', label: 'Products' },
-    { path: '/farmer-support', label: 'Farm Support' },
+    { path: '/farmer-support', label: 'Get Support' },
     { path: '/contact', label: 'Contact' }
   ];
 
   return (
-    <nav className="w-full bg-[#f4f1ee] border-b border-[#e9e7e3] px-8 py-6 shadow-md sticky top-0 z-50">
-      <div className="flex items-center justify-between">
+    <nav className="w-full bg-white/95 backdrop-blur-sm border-b border-[#e9e7e3] px-8 py-4 shadow-lg sticky top-0 z-50">
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Logo */}
         <div className="flex items-center space-x-4">
-          <Link to="/" className="flex items-center">
-            <div className="h-16 w-32 bg-[#a4be88] rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              Bio Lia
+          <Link to="/" className="flex items-center group">
+            <div className="relative">
+              <div className="h-14 w-40 bg-gradient-to-r from-[#2f3a29] to-[#4a5741] rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <span className="text-[#a4be88]">Bio</span>
+                <span className="text-white">lia</span>
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#a4be88] rounded-full"></div>
             </div>
           </Link>
+          <div className="hidden md:block">
+            <div className="text-xs text-gray-600 font-medium">Bio-Organic Solutions</div>
+            <div className="text-xs text-[#a4be88] font-semibold">for Indian Farmers</div>
+          </div>
         </div>
 
-        <ul className="hidden md:flex space-x-8 text-[#2f3a29] font-semibold text-lg">
+        {/* Desktop Navigation */}
+        <ul className="hidden lg:flex space-x-8 text-[#2f3a29] font-semibold text-lg">
           {navItems.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`hover:text-[#a4be88] transition-colors border-b-2 pb-1 ${
+                className={`hover:text-[#a4be88] transition-all duration-300 border-b-2 pb-1 relative group ${
                   isActive(item.path)
                     ? 'border-[#a4be88] text-[#a4be88]'
                     : 'border-transparent hover:border-[#a4be88]'
                 }`}
               >
                 {item.label}
+                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-[#a4be88] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
             </li>
           ))}
         </ul>
 
+        {/* CTA Button & Mobile Menu */}
         <div className="flex items-center space-x-4">
           <Link
             to="/farmer-support"
-            className="hidden md:block bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold px-4 py-2 rounded-lg transition-all hover:scale-105"
+            className="hidden md:block bg-gradient-to-r from-[#a4be88] to-[#d7e7c4] hover:from-[#d7e7c4] hover:to-[#a4be88] text-[#2f3a29] font-bold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
           >
-            Get Consultation
+            🌾 Free Consultation
           </Link>
 
+          {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-[#2f3a29] hover:text-[#a4be88] transition-colors"
+            className="lg:hidden text-[#2f3a29] hover:text-[#a4be88] transition-colors p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
             </svg>
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 pb-4">
-          <ul className="flex flex-col space-y-2">
+        <div className="lg:hidden mt-4 pb-4 border-t border-[#e9e7e3]">
+          <ul className="flex flex-col space-y-2 pt-4">
             {navItems.map((item) => (
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`block py-2 px-4 rounded-lg transition-colors ${
+                  className={`block py-3 px-4 rounded-xl transition-all duration-300 ${
                     isActive(item.path)
-                      ? 'bg-[#a4be88] text-[#2f3a29]'
-                      : 'text-[#2f3a29] hover:bg-[#d7e7c4]'
+                      ? 'bg-[#a4be88] text-[#2f3a29] font-semibold'
+                      : 'text-[#2f3a29] hover:bg-[#f4f1ee] hover:text-[#a4be88]'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -79,13 +97,13 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
-            <li>
+            <li className="pt-2">
               <Link
                 to="/farmer-support"
-                className="block py-2 px-4 rounded-lg transition-colors bg-[#a4be88] text-[#2f3a29] font-semibold text-center"
+                className="block py-3 px-4 rounded-xl transition-all duration-300 bg-gradient-to-r from-[#a4be88] to-[#d7e7c4] text-[#2f3a29] font-bold text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Get Consultation
+                🌾 Get Free Consultation
               </Link>
             </li>
           </ul>
