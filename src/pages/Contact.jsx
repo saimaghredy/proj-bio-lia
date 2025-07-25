@@ -205,19 +205,19 @@ const Contact = () => {
             {/* Downloadable Resources */}
             <div className="bg-white rounded-3xl shadow-2xl p-8">
               <h2 className="text-2xl font-serif text-forest-800 mb-6">Download Resources</h2>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-3">
                 {downloadableResources.map((resource, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-sage-50 rounded-xl hover:bg-sage-100 transition-all duration-300 cursor-pointer group">
-                    <div className="flex items-center space-x-4">
-                      <div className="text-2xl">{resource.icon}</div>
+                  <div key={index} className="flex items-center justify-between p-3 bg-sage-50 rounded-lg hover:bg-sage-100 transition-all duration-300 cursor-pointer group">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-lg">{resource.icon}</div>
                       <div>
-                        <h3 className="font-semibold text-forest-800 group-hover:text-sage-600 transition-colors">{resource.title}</h3>
-                        <p className="text-sm text-forest-600">{resource.subtitle}</p>
+                        <h3 className="font-semibold text-forest-800 group-hover:text-sage-600 transition-colors text-sm">{resource.title}</h3>
+                        <p className="text-xs text-forest-600">{resource.subtitle}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-forest-500">{resource.size}</div>
-                      <div className="text-sage-600 font-semibold text-sm">Download</div>
+                      <div className="text-xs text-forest-500 mb-1">{resource.size}</div>
+                      <div className="text-sage-600 font-semibold text-xs">Download</div>
                     </div>
                   </div>
                 ))}
@@ -226,7 +226,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 h-fit">
             <h2 className="text-3xl font-serif text-forest-800 mb-8">Send us a Message</h2>
             
             {error && (
