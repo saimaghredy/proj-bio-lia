@@ -58,24 +58,24 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="p-6">
-              <div className="text-5xl font-bold text-sage-600 mb-2">15,000+</div>
-              <div className="text-lg font-semibold text-forest-800 mb-2">Happy Farmers</div>
-              <p className="text-forest-600 text-sm">Across South India</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">20+</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Products Available</div>
+              <p className="text-forest-600 text-sm">For different crop stages</p>
+            </div>
+            <div className="p-6">
+              <div className="text-5xl font-bold text-sage-600 mb-2">5+</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Curated Kits</div>
+              <p className="text-forest-600 text-sm">For common farming systems</p>
+            </div>
+            <div className="p-6">
+              <div className="text-5xl font-bold text-sage-600 mb-2">10+</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">States Tested</div>
+              <p className="text-forest-600 text-sm">Under various soil types</p>
             </div>
             <div className="p-6">
               <div className="text-5xl font-bold text-sage-600 mb-2">45%</div>
               <div className="text-lg font-semibold text-forest-800 mb-2">Yield Increase</div>
               <p className="text-forest-600 text-sm">Average improvement</p>
-            </div>
-            <div className="p-6">
-              <div className="text-5xl font-bold text-sage-600 mb-2">100%</div>
-              <div className="text-lg font-semibold text-forest-800 mb-2">Organic Certified</div>
-              <p className="text-forest-600 text-sm">Natural compliance</p>
-            </div>
-            <div className="p-6">
-              <div className="text-5xl font-bold text-sage-600 mb-2">4</div>
-              <div className="text-lg font-semibold text-forest-800 mb-2">States Covered</div>
-              <p className="text-forest-600 text-sm">Southern India focus</p>
             </div>
           </div>
         </div>
