@@ -333,21 +333,6 @@ const Products = () => {
                 icon: "🌱",
                 title: "Simplified Natural Inputs",
                 description: "Using bio-formulations like Foundation Mix, AF-NPK, and LEO, farmers get a combination of soil conditioners, growth stimulants, and microbial inoculants—all from one place."
-              },
-              {
-                icon: "🛡️",
-                title: "Safe, Natural, No Harsh Chemicals",
-                description: "While we await organic certification, all Biolia products are based on naturally sourced ingredients without harmful chemical additives."
-              },
-              {
-                icon: "📈",
-                title: "Proven Results",
-                description: "Trusted by over 15,000 farmers with documented yield improvements of 30-45% across various crops."
-              },
-              {
-                icon: "🤝",
-                title: "Expert Support",
-                description: "Comprehensive technical support, application guidance, and ongoing consultation from our agricultural experts."
               }
             ].map((feature, index) => (
               <div key={index} className="text-center p-6 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 border border-sage-100">
