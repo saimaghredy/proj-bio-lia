@@ -33,19 +33,19 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               to="/products" 
-              className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center transform hover:shadow-sage-400/50"
+              className="bg-gradient-to-r from-sage-400 to-sage-300 hover:from-sage-300 hover:to-sage-200 text-forest-800 font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center transform hover:shadow-sage-400/50"
             >
               🌿 View Products
             </Link>
             <Link 
               to="/products#bundles" 
-              className="bg-transparent border-3 border-sage-400 hover:bg-sage-400 text-sage-300 hover:text-white font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center"
+              className="bg-gradient-to-r from-sage-400 to-sage-300 hover:from-sage-300 hover:to-sage-200 text-forest-800 font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center"
             >
               📦 Explore Bundles
             </Link>
             <Link 
               to="/contact" 
-              className="bg-gradient-to-r from-earth-200 to-earth-100 hover:from-earth-100 hover:to-white text-forest-800 font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-earth-200 focus:outline-none text-center"
+              className="bg-gradient-to-r from-sage-400 to-sage-300 hover:from-sage-300 hover:to-sage-200 text-forest-800 font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center"
             >
               📥 Download Brochure
             </Link>
