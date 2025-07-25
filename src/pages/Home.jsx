@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-4 bg-gradient-to-br from-[#2f3a29] via-[#3d4a35] to-[#4a5741] overflow-hidden">
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35] overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-32 h-32 bg-[#a4be88] rounded-full blur-3xl"></div>
@@ -16,9 +16,9 @@ const Home = () => {
         <div className="relative z-10 text-center max-w-6xl mx-auto">
           <div className="mb-8 flex justify-center">
             <img 
-              src="/src/assets/Bio Lia Full & Individual Logo - no background-04.png" 
+              src="/src/assets/Bio Lia Full & Individual Logo - no background-05.png" 
               alt="Biolia Logo" 
-              className="h-20 w-auto opacity-90"
+              className="h-24 w-auto opacity-95 drop-shadow-2xl"
             />
           </div>
           <h1 className="text-6xl md:text-7xl font-serif text-white font-light mb-8 leading-tight animate-fade-in">
@@ -169,7 +169,7 @@ const Home = () => {
       </section>
 
       {/* Package Kits Section */}
-      <section className="py-20 px-4 bg-[#2f3a29]">
+      <section className="py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-serif text-white mb-6">
@@ -337,7 +337,7 @@ const Home = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 bg-[#2f3a29]">
+      <section className="py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-serif text-white mb-6">
             Ready to Transform Your Farm?

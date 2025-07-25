@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <Link to="/" className="flex items-center group">
             <img 
-              src="/src/assets/Bio Lia Full & Individual Logo - Mineral Light Colour-01.png" 
+              src="/src/assets/Bio Lia Full & Individual Logo - Mineral Light Colour-03.png" 
               alt="Biolia Logo" 
               className="h-12 w-auto group-hover:scale-105 transition-all duration-300"
             />

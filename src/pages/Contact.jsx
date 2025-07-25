@@ -109,12 +109,12 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4]">
       {/* Header Section */}
-      <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-[#2f3a29] to-[#4a5741]">
+      <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
         <div className="mb-6 flex justify-center">
           <img 
-            src="/src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
+            src="/src/assets/Bio Lia Full & Individual Logo - no background-05.png" 
             alt="Biolia Brand Mark" 
-            className="h-16 w-auto opacity-90"
+            className="h-20 w-auto opacity-95 drop-shadow-2xl filter brightness-110"
           />
         </div>
         <h1 className="text-5xl md:text-6xl font-serif text-white font-light mb-6 animate-fade-in">
