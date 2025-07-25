@@ -8,102 +8,60 @@ const Products = () => {
       tagline: "Build your soil from the roots up",
       icon: "🌱",
       category: "Soil Conditioner",
-      description: "Complete soil conditioning blend that transforms your soil structure and fertility for long-term agricultural success.",
-      keyBenefits: [
-        "Improves soil structure and porosity",
-        "Enhances water retention capacity",
-        "Boosts beneficial microbial activity",
-        "Increases organic matter content",
-        "Reduces soil compaction"
-      ],
-      applications: ["All crops", "Pre-planting soil preparation", "Annual soil conditioning"],
-      dosage: "50-100 kg per acre",
-      packaging: "50 kg bags"
+      use: "Improves soil structure, porosity, microbial activity, water retention",
+      packaging: "30kg / 50kg",
+      dosage: "30-50kg per acre",
+      stage: "Land preparation stage"
     },
     {
       name: "AF-NPK",
       tagline: "Nutrients that go beyond NPK",
       icon: "⚡",
       category: "Bio-Fertilizer",
-      description: "Advanced nutrient formula combining essential NPK with vital micronutrients for comprehensive plant nutrition.",
-      keyBenefits: [
-        "Balanced macro and micronutrients",
-        "Quick absorption and utilization",
-        "Sustained nutrient release",
-        "Improves nutrient use efficiency",
-        "Reduces fertilizer dependency"
-      ],
-      applications: ["Cereals", "Vegetables", "Cash crops", "Foliar and soil application"],
-      dosage: "1-2 L per acre",
-      packaging: "1L, 5L bottles"
+      use: "Balanced macro & micronutrients, improves uptake & efficiency",
+      packaging: "1L",
+      dosage: "1L per acre",
+      stage: "Vegetative stage"
     },
     {
       name: "Rhizobium",
       tagline: "Seed coating that powers pulses",
       icon: "🫘",
       category: "Bio-Inoculant",
-      description: "Specialized nitrogen-fixing bacteria that forms symbiotic relationships with legume roots for natural nitrogen supply.",
-      keyBenefits: [
-        "Enhanced seed germination",
-        "Natural nitrogen fixation",
-        "Stronger root development",
-        "Improved nodulation",
-        "Reduced nitrogen fertilizer need"
-      ],
-      applications: ["Pulses", "Legumes", "Seed treatment", "Soil application"],
-      dosage: "100-200 mL per acre",
-      packaging: "100mL, 250mL bottles"
+      use: "Nitrogen-fixing bacteria for legumes. Enhances germination & nodulation",
+      packaging: "100mL / 250mL",
+      dosage: "100-200mL per acre",
+      stage: "Seed coating before sowing"
     },
     {
       name: "LEO",
       tagline: "Tonic for flowering and fruiting",
       icon: "🌸",
       category: "Growth Enhancer",
-      description: "Specialized bio-stimulant formula designed to optimize reproductive growth phases for maximum yield potential.",
-      keyBenefits: [
-        "Enhanced flower initiation",
-        "Better fruit setting percentage",
-        "Improved fruit quality and size",
-        "Extended flowering period",
-        "Higher yield potential"
-      ],
-      applications: ["Fruits", "Vegetables", "Flowering crops", "Foliar spray"],
-      dosage: "250-500 mL per acre",
-      packaging: "250mL, 500mL, 1L bottles"
+      use: "Boosts flower initiation, fruit size, setting, flowering duration",
+      packaging: "250mL / 500mL / 1L",
+      dosage: "250-500mL per acre",
+      stage: "Flowering stage"
     },
     {
       name: "NORA",
       tagline: "Support for stressed crops",
       icon: "💪",
       category: "Stress Reliever",
-      description: "Advanced stress recovery formula that helps crops overcome environmental challenges and build natural immunity.",
-      keyBenefits: [
-        "Heat and drought stress tolerance",
-        "Disease resistance enhancement",
-        "Quick recovery from stress",
-        "Improved plant immunity",
-        "Better stress adaptation"
-      ],
-      applications: ["All crops", "Stress conditions", "Disease prevention", "Recovery treatment"],
-      dosage: "250-500 mL per acre",
-      packaging: "250mL, 500mL bottles"
+      use: "Heat/drought tolerance, faster recovery, immunity boost",
+      packaging: "250mL / 500mL",
+      dosage: "250-500mL per acre",
+      stage: "Abiotic stress / mid-season recovery"
     },
     {
       name: "Soil Sterilizer",
       tagline: "Cleaner soil, stronger starts",
       icon: "🛡️",
       category: "Soil Treatment",
-      description: "Natural soil sanitization solution that eliminates harmful pathogens while preserving beneficial microorganisms.",
-      keyBenefits: [
-        "Pathogen control and elimination",
-        "Soil detoxification",
-        "Safe for beneficial microbes",
-        "Improved seed germination",
-        "Healthier root environment"
-      ],
-      applications: ["Pre-planting treatment", "Nursery preparation", "Problem soils", "Seed bed preparation"],
-      dosage: "10-20 kg per acre",
-      packaging: "10kg, 25kg bags"
+      use: "Kills harmful pathogens while preserving good microbes",
+      packaging: "10kg / 25kg",
+      dosage: "10-20kg per acre",
+      stage: "Before sowing or transplanting"
     }
   ];
 
@@ -111,75 +69,54 @@ const Products = () => {
     {
       name: "Paddy Grower Kit",
       icon: "🌾",
-      subtitle: "Complete solution for wetland and dryland paddy cultivation",
-      products: [
-        { name: "Foundation Mix", qty: "50 kg" },
-        { name: "AF-NPK", qty: "1 L" },
-        { name: "NORA", qty: "500 mL" },
-        { name: "LEO", qty: "500 mL" }
-      ],
-      benefits: "Improves soil health, supports tillering, and increases grain fill. Perfect for monsoon-planted paddy under unpredictable rainfall conditions.",
-      suitableFor: "Kharif and Rabi paddy, both wetland and dryland cultivation",
+      contents: "Foundation Mix, AF-NPK, NORA, LEO",
+      bestFor: "Kharif & Rabi Paddy, wet & dryland",
       coverage: "1 acre",
       popular: true
     },
     {
       name: "Pulses Starter Kit",
       icon: "🫘",
-      subtitle: "Specialized package for legume crops",
-      products: [
-        { name: "Soil Sterilizer", qty: "10 kg" },
-        { name: "Rhizobium", qty: "100 mL" },
-        { name: "Foundation Mix", qty: "30 kg" },
-        { name: "LEO", qty: "250 mL" }
-      ],
-      benefits: "Better germination, stronger nodulation, and enhanced flowering response. Specially formulated for red soils and dryland farming conditions.",
-      suitableFor: "Toor Dal, Green Gram, Black Gram, Cowpea",
+      contents: "Soil Sterilizer, Rhizobium, Foundation Mix, LEO",
+      bestFor: "Toor, Green Gram, Black Gram, Cowpea",
       coverage: "1 acre"
     },
     {
       name: "Dryland Vegetable Bundle",
       icon: "🍅",
-      subtitle: "Optimized for vegetable cultivation in water-scarce conditions",
-      products: [
-        { name: "Foundation Mix", qty: "30 kg" },
-        { name: "AF-NPK", qty: "500 mL" },
-        { name: "NORA", qty: "250 mL" },
-        { name: "LEO", qty: "500 mL" }
-      ],
-      benefits: "Supports flowering, fruit setting, and helps crops recover from heat stress or delayed irrigation. Ideal for dryland vegetable farming.",
-      suitableFor: "Brinjal, Tomato, Chili, Okra, Cucumber",
+      contents: "Foundation Mix, AF-NPK, NORA, LEO",
+      bestFor: "Tomato, Brinjal, Chilli, Okra, Cucumber",
       coverage: "1 acre"
     },
     {
       name: "Orchard Care Kit",
       icon: "🌳",
-      subtitle: "Long-term nutrition for perennial fruit trees",
-      products: [
-        { name: "Foundation Mix", qty: "50 kg" },
-        { name: "AF-NPK", qty: "1 L" },
-        { name: "LEO", qty: "1 L" },
-        { name: "NORA", qty: "500 mL" },
-        { name: "Drone Spray Option", qty: "Available" }
-      ],
-      benefits: "Sustains long-term soil fertility, promotes consistent fruit set and yield in perennial trees. Includes drone-based application for large orchards.",
-      suitableFor: "Mango, Citrus, Guava, Pomegranate, other fruit trees",
+      contents: "Foundation Mix, AF-NPK, LEO, NORA, Drone Option",
+      bestFor: "Mango, Guava, Citrus, Pomegranate",
       coverage: "1 acre",
       premium: true
     }
+  ];
+
+  const cropRecommendations = [
+    { crop: "Paddy", kit: "Paddy Grower Kit", icon: "🌾" },
+    { crop: "Red Gram", kit: "Pulses Starter Kit", icon: "🫘" },
+    { crop: "Chilli", kit: "Dryland Vegetable Bundle", icon: "🌶️" },
+    { crop: "Mango", kit: "Orchard Care Kit", icon: "🥭" }
+  ];
+
+  const stageWiseInputs = [
+    { stage: "Soil Prep", input: "Foundation Mix + Soil Sterilizer", icon: "🌱" },
+    { stage: "Sowing/Seeding", input: "Rhizobium (Pulses only)", icon: "🌰" },
+    { stage: "Early Growth", input: "AF-NPK", icon: "⚡" },
+    { stage: "Flowering", input: "LEO", icon: "🌸" },
+    { stage: "Stress Period", input: "NORA", icon: "💪" }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sage-50 via-earth-50 to-sage-100">
       {/* Header Section */}
       <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-forest-900 via-olive-800 to-forest-800">
-        <div className="mb-6 flex justify-center">
-          <img 
-            src="/src/assets/Bio Lia Full & Individual Logo - no background-05.png" 
-            alt="Biolia Brand Mark" 
-            className="h-20 w-auto opacity-95 drop-shadow-2xl filter brightness-110"
-          />
-        </div>
         <h1 className="text-5xl md:text-6xl font-serif text-white font-light mb-6 animate-fade-in">
           Bio-Organic <span className="text-sage-300">Product Range</span>
         </h1>
@@ -188,7 +125,7 @@ const Products = () => {
         </p>
         <Link 
           to="/farmer-support"
-          className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold px-10 py-4 rounded-xl shadow-2xl transition-all text-lg hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none"
+          className="bg-gradient-to-r from-sage-400 to-sage-300 hover:from-sage-300 hover:to-sage-200 text-forest-800 font-bold px-10 py-4 rounded-xl shadow-2xl transition-all text-lg hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none"
         >
           Get Product Recommendations
         </Link>
@@ -202,57 +139,76 @@ const Products = () => {
               Individual Products
             </h2>
             <p className="text-xl text-forest-700 max-w-3xl mx-auto">
-              Each product is designed to address specific agricultural needs and can be used individually or in combination
+              Each product is designed to address specific agricultural needs and growth stages
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => (
               <div key={index} className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                <div className="flex">
-                  {/* Product Icon & Category */}
-                  <div className="w-32 h-full bg-gradient-to-br from-sage-400 to-earth-300 flex flex-col items-center justify-center p-6">
-                    <div className="text-4xl mb-2">{product.icon}</div>
-                    <div className="text-xs text-forest-800 font-semibold text-center">{product.category}</div>
+                <div className="h-32 bg-gradient-to-br from-sage-400 to-earth-300 flex items-center justify-center">
+                  <div className="text-5xl">{product.icon}</div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold text-forest-800">{product.name}</h3>
+                    <span className="text-xs bg-sage-100 text-sage-700 px-2 py-1 rounded-full font-semibold">
+                      {product.category}
+                    </span>
                   </div>
                   
-                  {/* Product Details */}
-                  <div className="flex-1 p-6">
-                    <h3 className="text-2xl font-bold text-forest-800 mb-2">{product.name}</h3>
-                    <p className="text-sage-600 font-semibold mb-3 italic">"{product.tagline}"</p>
-                    <p className="text-forest-600 mb-4 text-sm leading-relaxed">{product.description}</p>
-                    
-                    {/* Key Benefits */}
-                    <div className="mb-4">
-                      <h4 className="font-semibold text-forest-800 text-sm mb-2">Key Benefits:</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                        {product.keyBenefits.slice(0, 4).map((benefit, idx) => (
-                          <div key={idx} className="flex items-center text-xs text-forest-700">
-                            <span className="w-1.5 h-1.5 bg-sage-500 rounded-full mr-2 flex-shrink-0"></span>
-                            {benefit}
-                          </div>
-                        ))}
-                      </div>
+                  <p className="text-sage-600 font-semibold mb-3 italic text-sm">"{product.tagline}"</p>
+                  <p className="text-forest-600 mb-4 text-sm leading-relaxed">{product.use}</p>
+                  
+                  <div className="space-y-2 mb-4 text-xs">
+                    <div className="flex justify-between">
+                      <span className="font-semibold text-forest-800">Packaging:</span>
+                      <span className="text-forest-600">{product.packaging}</span>
                     </div>
-                    
-                    {/* Product Info */}
-                    <div className="grid grid-cols-2 gap-4 text-xs text-forest-600 mb-4">
-                      <div>
-                        <span className="font-semibold">Dosage:</span> {product.dosage}
-                      </div>
-                      <div>
-                        <span className="font-semibold">Packaging:</span> {product.packaging}
-                      </div>
+                    <div className="flex justify-between">
+                      <span className="font-semibold text-forest-800">Dosage:</span>
+                      <span className="text-forest-600">{product.dosage}</span>
                     </div>
-                    
-                    <Link
-                      to="/farmer-support"
-                      className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm text-center block"
-                    >
-                      Get This Product
-                    </Link>
+                    <div className="flex justify-between">
+                      <span className="font-semibold text-forest-800">Best Stage:</span>
+                      <span className="text-sage-600 font-medium">{product.stage}</span>
+                    </div>
                   </div>
+                  
+                  <Link
+                    to="/farmer-support"
+                    className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-3 px-4 rounded-lg transition-all text-sm text-center block"
+                  >
+                    Get This Product
+                  </Link>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stage-Wise Application Guide */}
+      <section className="py-20 px-4 bg-gradient-to-br from-earth-50 to-sage-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif text-forest-800 mb-6">
+              Stage-Wise Application Guide
+            </h2>
+            <p className="text-xl text-forest-700 max-w-3xl mx-auto">
+              Apply the right product at the right time for maximum effectiveness
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {stageWiseInputs.map((stage, index) => (
+              <div key={index} className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-sage-400 to-earth-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="text-3xl">{stage.icon}</div>
+                </div>
+                <h3 className="text-lg font-bold text-forest-800 mb-2">{stage.stage}</h3>
+                <p className="text-forest-600 text-sm leading-relaxed">{stage.input}</p>
               </div>
             ))}
           </div>
@@ -267,12 +223,11 @@ const Products = () => {
               Ready-to-Use <span className="text-sage-300">Package Kits</span>
             </h2>
             <p className="text-xl text-earth-200 max-w-3xl mx-auto">
-              Specially curated bundles combining multiple products for specific crops and farming conditions. 
-              Everything you need for complete crop nutrition and protection.
+              Pre-packaged combinations for specific crops - everything you need in one kit
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {packageKits.map((kit, index) => (
               <div key={index} className={`bg-white rounded-3xl shadow-2xl hover:shadow-sage-400/20 transition-all duration-500 hover:scale-105 overflow-hidden ${kit.popular ? 'ring-4 ring-sage-400' : ''} ${kit.premium ? 'ring-4 ring-earth-300' : ''} relative`}>
                 {kit.popular && (
@@ -286,40 +241,23 @@ const Products = () => {
                   </div>
                 )}
                 
-                <div className="h-40 bg-gradient-to-br from-sage-400 to-earth-300 flex items-center justify-center relative">
-                  <div className="text-6xl">{kit.icon}</div>
+                <div className="h-32 bg-gradient-to-br from-sage-400 to-earth-300 flex items-center justify-center">
+                  <div className="text-5xl">{kit.icon}</div>
                 </div>
                 
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-forest-800 mb-2">{kit.name}</h3>
-                  <p className="text-sage-600 font-semibold text-sm mb-6">{kit.subtitle}</p>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-forest-800 mb-3">{kit.name}</h3>
                   
-                  {/* Included Products */}
-                  <div className="mb-6">
-                    <h4 className="font-bold text-forest-800 mb-3">Package Includes:</h4>
-                    <div className="grid grid-cols-1 gap-2">
-                      {kit.products.map((product, idx) => (
-                        <div key={idx} className="flex justify-between items-center bg-sage-50 rounded-lg p-3">
-                          <span className="text-sm font-medium text-forest-800">{product.name}</span>
-                          <span className="text-sm text-sage-600 font-semibold">{product.qty}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-forest-800 text-sm mb-2">Contents:</h4>
+                    <p className="text-forest-600 text-sm">{kit.contents}</p>
                   </div>
                   
-                  {/* Benefits */}
-                  <div className="mb-6">
-                    <h4 className="font-bold text-forest-800 mb-2">Benefits:</h4>
-                    <p className="text-forest-600 text-sm leading-relaxed">{kit.benefits}</p>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-forest-800 text-sm mb-2">Best For:</h4>
+                    <p className="text-forest-600 text-sm">{kit.bestFor}</p>
                   </div>
                   
-                  {/* Suitable For */}
-                  <div className="mb-6">
-                    <h4 className="font-bold text-forest-800 mb-2">Suitable For:</h4>
-                    <p className="text-forest-700 text-sm">{kit.suitableFor}</p>
-                  </div>
-                  
-                  {/* Coverage */}
                   <div className="mb-6">
                     <div className="flex justify-between items-center bg-sage-100 rounded-lg p-3">
                       <span className="font-semibold text-forest-800">Coverage:</span>
@@ -329,7 +267,7 @@ const Products = () => {
                   
                   <Link
                     to="/farmer-support"
-                    className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold py-4 px-6 rounded-xl transition-all text-center block text-lg"
+                    className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold py-3 px-4 rounded-xl transition-all text-center block"
                   >
                     Get This Kit
                   </Link>
@@ -340,8 +278,38 @@ const Products = () => {
         </div>
       </section>
 
+      {/* Crop-Specific Recommendations */}
+      <section className="py-20 px-4 bg-gradient-to-br from-sage-50 to-earth-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-serif text-forest-800 mb-6">
+              Crop-Specific Recommendations
+            </h2>
+            <p className="text-xl text-forest-700 max-w-3xl mx-auto">
+              Quick recommendations for popular South Indian crops
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {cropRecommendations.map((rec, index) => (
+              <div key={index} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 p-6 text-center">
+                <div className="text-4xl mb-4">{rec.icon}</div>
+                <h3 className="text-xl font-bold text-forest-800 mb-2">{rec.crop}</h3>
+                <p className="text-sage-600 font-semibold mb-4">→ {rec.kit}</p>
+                <Link
+                  to="/farmer-support"
+                  className="bg-sage-500 hover:bg-sage-400 text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm"
+                >
+                  Get Kit
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Our Products */}
-      <section className="py-20 px-4 bg-gradient-to-br from-earth-50 to-sage-50">
+      <section className="py-20 px-4 bg-gradient-to-br from-earth-100 to-sage-100">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-forest-800 mb-6">
