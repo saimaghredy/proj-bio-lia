@@ -18,6 +18,8 @@ const FarmerForm = () => {
     farmSize: '',
     farmingType: [],
     cropsGrown: [],
+    otherFarmingType: '',
+    otherCrops: '',
     soilType: '',
     purposeOfVisit: '',
     otherPurpose: '',
@@ -318,7 +320,7 @@ const FarmerForm = () => {
                     Type of Farming (Select all that apply)
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {['Organic', 'Natural', 'Traditional', 'Mixed'].map(type => (
+                    {['Organic', 'Natural', 'Traditional', 'Mixed', 'Other'].map(type => (
                       <label key={type} className="flex items-center">
                         <input
                           type="checkbox"
@@ -332,6 +334,18 @@ const FarmerForm = () => {
                       </label>
                     ))}
                   </div>
+                  {formData.farmingType.includes('Other') && (
+                    <div className="mt-3">
+                      <input
+                        type="text"
+                        name="otherFarmingType"
+                        value={formData.otherFarmingType}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
+                        placeholder="Please specify other farming type"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -352,7 +366,30 @@ const FarmerForm = () => {
                         <span className="text-forest-800 text-sm">{crop}</span>
                       </label>
                     ))}
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="cropsGrown"
+                        value="Other"
+                        checked={formData.cropsGrown.includes('Other')}
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      <span className="text-forest-800 text-sm">Other</span>
+                    </label>
                   </div>
+                  {formData.cropsGrown.includes('Other') && (
+                    <div className="mt-3">
+                      <input
+                        type="text"
+                        name="otherCrops"
+                        value={formData.otherCrops}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
+                        placeholder="Please specify other crops (comma separated)"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div>
