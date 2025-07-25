@@ -197,6 +197,13 @@ const FarmerForm = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
+          <div className="mb-6 flex justify-center">
+            <img 
+              src="/src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
+              alt="Biolia Brand Mark" 
+              className="h-16 w-auto"
+            />
+          </div>
           <h1 className="text-4xl font-serif text-[#2f3a29] mb-4">
             Get Expert Farm Consultation
           </h1>

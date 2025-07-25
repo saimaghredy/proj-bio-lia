@@ -20,13 +20,11 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center space-x-4">
           <Link to="/" className="flex items-center group">
-            <div className="relative">
-              <div className="h-14 w-40 bg-gradient-to-r from-[#2f3a29] to-[#4a5741] rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <span className="text-[#a4be88]">Bio</span>
-                <span className="text-white">lia</span>
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#a4be88] rounded-full"></div>
-            </div>
+            <img 
+              src="/src/assets/Bio Lia Full & Individual Logo - Mineral Light Colour-01.png" 
+              alt="Biolia Logo" 
+              className="h-12 w-auto group-hover:scale-105 transition-all duration-300"
+            />
           </Link>
           <div className="hidden md:block">
             <div className="text-xs text-gray-600 font-medium">Bio-Organic Solutions</div>

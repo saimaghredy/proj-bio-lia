@@ -110,6 +110,13 @@ const Contact = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4]">
       {/* Header Section */}
       <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-[#2f3a29] to-[#4a5741]">
+        <div className="mb-6 flex justify-center">
+          <img 
+            src="/src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
+            alt="Biolia Brand Mark" 
+            className="h-16 w-auto opacity-90"
+          />
+        </div>
         <h1 className="text-5xl md:text-6xl font-serif text-white font-light mb-6 animate-fade-in">
           Contact <span className="text-[#a4be88]">Biolia</span>
         </h1>
