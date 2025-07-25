@@ -309,6 +309,7 @@ const FarmerForm = () => {
                     className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="e.g., 2.5"
                     step="0.1"
+                   min="0"
                   />
                 </div>
 
