@@ -58,9 +58,9 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="p-6">
-              <div className="text-5xl font-bold text-sage-600 mb-2">20+</div>
-              <div className="text-lg font-semibold text-forest-800 mb-2">Products Available</div>
-              <p className="text-forest-600 text-sm">For different crop stages</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">100%</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Organic Certified</div>
+              <p className="text-forest-600 text-sm">Natural compliance</p>
             </div>
             <div className="p-6">
               <div className="text-5xl font-bold text-sage-600 mb-2">5+</div>
