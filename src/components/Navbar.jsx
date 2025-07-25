@@ -38,14 +38,16 @@ const Navbar = () => {
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`hover:text-sage-600 transition-all duration-300 border-b-2 pb-1 relative group ${
+                className={`hover:text-sage-600 transition-all duration-300 pb-1 relative group ${
                   isActive(item.path)
-                    ? 'border-sage-500 text-sage-600'
-                    : 'border-transparent hover:border-sage-500'
+                    ? 'text-sage-600'
+                    : ''
                 }`}
               >
                 {item.label}
-                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-sage-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                <span className={`absolute inset-x-0 -bottom-1 h-0.5 bg-sage-500 transform transition-transform duration-300 ${
+                  isActive(item.path) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></span>
               </Link>
             </li>
           ))}
