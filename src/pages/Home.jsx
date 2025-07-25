@@ -16,9 +16,9 @@ const Home = () => {
         <div className="relative z-10 text-center max-w-6xl mx-auto">
           <div className="mb-8 flex justify-center">
             <img 
-              src="/src/assets/Bio Lia Full & Individual Logo - no background-04.png" 
+              src="src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
               alt="Biolia Logo" 
-              className="h-24 w-auto opacity-95 drop-shadow-2xl"
+              className="h-20 w-20 opacity-95 drop-shadow-2xl"
             />
           </div>
           <h1 className="text-6xl md:text-7xl font-serif text-white font-light mb-8 leading-tight animate-fade-in">

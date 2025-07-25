@@ -131,9 +131,9 @@ const Contact = () => {
       <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-forest-900 via-olive-800 to-forest-800">
         <div className="mb-6 flex justify-center">
           <img 
-            src="/src/assets/Bio Lia Full & Individual Logo - no background-04.png" 
+            src="src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
             alt="Biolia Brand Mark" 
-            className="h-20 w-auto opacity-95 drop-shadow-2xl filter brightness-110"
+            className="h-16 w-16 opacity-95 drop-shadow-2xl filter brightness-110"
           />
         </div>
         <h1 className="text-5xl md:text-6xl font-serif text-white font-light mb-6 animate-fade-in">
