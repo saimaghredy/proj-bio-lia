@@ -312,7 +312,7 @@ const Contact = () => {
                   name="occupation"
                   value={formData.occupation}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white text-gray-500"
                 >
                   <option value="">Select your occupation (optional)</option>
                   <option value="Farmer">Farmer</option>
