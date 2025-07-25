@@ -27,8 +27,8 @@ const Home = () => {
             <span className="text-earth-200">The Bio-Organic Way.</span>
           </h1>
           <p className="text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto mb-12 font-jakarta leading-relaxed">
-            Natural farming inputs tailored for India's soils, climates, and crops. 
-            Trusted by farmers across <span className="text-sage-300 font-semibold">Telangana, Andhra Pradesh, Karnataka, and Tamil Nadu.</span>
+            Smart, bio-based solutions crafted for Indian farming — from drylands to deltas.
+            Trusted by farmers growing <span className="text-sage-300 font-semibold">paddy, pulses, vegetables, and fruits across India.</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
