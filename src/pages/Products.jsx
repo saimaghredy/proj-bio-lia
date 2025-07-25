@@ -320,29 +320,29 @@ const Products = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: "🔬",
-                title: "Scientifically Formulated",
-                description: "Each product is developed through rigorous research and field testing across different soil types and climatic conditions."
+                icon: "🇮🇳",
+                title: "Designed for Indian Conditions",
+                description: "Biolia products are curated with Indian farmers in mind—formulated for local crops like paddy, pulses, vegetables, and fruit trees, and optimized for dryland and red soils."
               },
               {
-                icon: "🌿",
-                title: "100% Organic Certified",
-                description: "All products meet organic farming standards and are safe for soil, crops, and the environment."
+                icon: "📦",
+                title: "Ready-to-Use Kits for Every Crop",
+                description: "Choose from pre-designed kits like the Paddy Grower Kit, Dryland Vegetable Bundle, or Orchard Care Kit—each with specific inputs needed for 1 acre."
+              },
+              {
+                icon: "🌱",
+                title: "Simplified Natural Inputs",
+                description: "Using bio-formulations like Foundation Mix, AF-NPK, and LEO, farmers get a combination of soil conditioners, growth stimulants, and microbial inoculants—all from one place."
+              },
+              {
+                icon: "🛡️",
+                title: "Safe, Natural, No Harsh Chemicals",
+                description: "While we await organic certification, all Biolia products are based on naturally sourced ingredients without harmful chemical additives."
               },
               {
                 icon: "📈",
                 title: "Proven Results",
                 description: "Trusted by over 15,000 farmers with documented yield improvements of 30-45% across various crops."
-              },
-              {
-                icon: "🎯",
-                title: "Crop-Specific Solutions",
-                description: "Tailored formulations for different crops, soil types, and regional farming conditions in South India."
-              },
-              {
-                icon: "💰",
-                title: "Cost-Effective",
-                description: "Reduces dependency on expensive chemical inputs while improving long-term soil health and productivity."
               },
               {
                 icon: "🤝",
