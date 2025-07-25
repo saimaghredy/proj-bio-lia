@@ -288,10 +288,6 @@ const Home = () => {
               {
                 question: "Do you offer bulk rates for FPOs or dealers?",
                 answer: "Yes. Contact our sales team for special pricing and bundled offers."
-              },
-              {
-                question: "Are your products available in local languages?",
-                answer: "Yes. Packaging, brochures, and advisory content are available in Telugu, Hindi, and Marathi."
               }
             ].map((faq, index) => (
               <div key={index} className="bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-sage-100">
