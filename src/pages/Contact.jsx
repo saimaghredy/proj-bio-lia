@@ -6,6 +6,9 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '',
+    occupation: '',
+    customOccupation: '',
     company: '',
     message: ''
   });
@@ -29,9 +32,10 @@ const Contact = () => {
   }, [formData]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
     if (error) setError('');
   };
@@ -39,16 +43,28 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.message) {
-      setError('Please fill in all required fields');
+    if (!formData.name || !formData.mobile || !formData.message) {
+      setError('Please fill in all required fields (Name, Mobile, Message)');
       return;
     }
+
+    // Validate mobile number
+    if (!/^\d{10}$/.test(formData.mobile)) {
+      setError('Please enter a valid 10-digit mobile number');
+      return;
+    }
+
+    // If occupation is "Other", use custom occupation
+    const finalOccupation = formData.occupation === 'Other' ? formData.customOccupation : formData.occupation;
 
     setLoading(true);
     setError('');
     
     try {
-      await api.saveContact(formData);
+      await api.saveContact({
+        ...formData,
+        occupation: finalOccupation
+      });
       
       // Clear form draft on successful submission
       optimizedDatabase.clearFormDraft('contact');
@@ -57,6 +73,9 @@ const Contact = () => {
       setFormData({
         name: '',
         email: '',
+        mobile: '',
+        occupation: '',
+        customOccupation: '',
         company: '',
         message: ''
       });
@@ -253,8 +272,25 @@ const Contact = () => {
               </div>
 
               <div>
+                <label htmlFor="mobile" className="block text-forest-800 text-sm font-semibold mb-2">
+                  Mobile Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="mobile"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
+                  placeholder="10-digit mobile number"
+                  maxLength={10}
+                  required
+                />
+              </div>
+
+              <div>
                 <label htmlFor="email" className="block text-forest-800 text-sm font-semibold mb-2">
-                  Email Address <span className="text-red-500">*</span>
+                  Email Address
                 </label>
                 <input
                   type="email"
@@ -263,10 +299,52 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
-                  placeholder="your.email@example.com"
-                  required
+                  placeholder="your.email@example.com (optional)"
                 />
               </div>
+
+              <div>
+                <label htmlFor="occupation" className="block text-forest-800 text-sm font-semibold mb-2">
+                  Occupation
+                </label>
+                <select
+                  id="occupation"
+                  name="occupation"
+                  value={formData.occupation}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white"
+                >
+                  <option value="">Select your occupation (optional)</option>
+                  <option value="Farmer">Farmer</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Business Owner">Business Owner</option>
+                  <option value="Agricultural Consultant">Agricultural Consultant</option>
+                  <option value="Dealer/Distributor">Dealer/Distributor</option>
+                  <option value="Student">Student</option>
+                  <option value="Researcher">Researcher</option>
+                  <option value="Government Official">Government Official</option>
+                  <option value="NGO Worker">NGO Worker</option>
+                  <option value="Retired">Retired</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {formData.occupation === 'Other' && (
+                <div>
+                  <label htmlFor="customOccupation" className="block text-forest-800 text-sm font-semibold mb-2">
+                    Please specify your occupation
+                  </label>
+                  <input
+                    type="text"
+                    id="customOccupation"
+                    name="customOccupation"
+                    value={formData.customOccupation}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
+                    placeholder="Enter your occupation"
+                  />
+                </div>
+              )}
 
               <div>
                 <label htmlFor="company" className="block text-forest-800 text-sm font-semibold mb-2">

@@ -38,7 +38,9 @@ class ApiService {
       .from('contact_forms')
       .insert([{
         name: formData.name,
+        mobile: formData.mobile,
         email: formData.email,
+        occupation: formData.occupation || '',
         company: formData.company || '',
         message: formData.message,
         status: 'new',
