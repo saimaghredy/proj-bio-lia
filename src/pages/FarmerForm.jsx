@@ -3,10 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
 const FarmerForm = () => {
-  const { sendPhoneOTP, verifyPhoneOTP } = useAuth();
   const [step, setStep] = useState(1);
-  const [showOTP, setShowOTP] = useState(false);
-  const [otpTimer, setOtpTimer] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -28,8 +25,6 @@ const FarmerForm = () => {
     communicationMode: 'phone',
     consent: false
   });
-
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
 
   const states = [
     'Andhra Pradesh', 'Karnataka', 'Tamil Nadu', 'Telangana', 'Maharashtra', 
@@ -71,74 +66,6 @@ const FarmerForm = () => {
     if (error) setError('');
   };
 
-  const handleOtpChange = (index, value) => {
-    if (value.length > 1) return;
-    
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-
-    if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      if (nextInput) nextInput.focus();
-    }
-  };
-
-  const sendOTP = async () => {
-    if (!formData.mobile || formData.mobile.length !== 10) {
-      setError('Please enter a valid 10-digit mobile number');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    
-    try {
-      await sendPhoneOTP(formData.mobile);
-      setShowOTP(true);
-      setOtpTimer(300); // 5 minutes
-      
-      const timer = setInterval(() => {
-        setOtpTimer(prev => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const verifyOTP = async () => {
-    const otpString = otp.join('');
-    if (otpString.length !== 6) {
-      setError('Please enter complete OTP');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    
-    try {
-      const result = await verifyPhoneOTP(formData.mobile, otpString);
-      if (result.verified) {
-        setShowOTP(false);
-        setStep(2);
-      } else {
-        setError('Invalid OTP. Please try again.');
-      }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -158,12 +85,6 @@ const FarmerForm = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   if (step === 3) {
@@ -268,61 +189,17 @@ const FarmerForm = () => {
                   <label className="block text-forest-800 font-semibold mb-2">
                     Mobile Number <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="tel"
-                      name="mobile"
-                      value={formData.mobile}
-                      onChange={handleChange}
-                      className="flex-1 px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
-                      placeholder="10-digit mobile number"
-                      maxLength={10}
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={sendOTP}
-                      disabled={loading || formData.mobile.length !== 10}
-                      className="bg-sage-500 hover:bg-sage-400 text-white font-semibold px-6 py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loading ? 'Sending...' : 'Send OTP'}
-                    </button>
-                  </div>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
+                    placeholder="10-digit mobile number"
+                    maxLength={10}
+                    required
+                  />
                 </div>
-
-                {showOTP && (
-                  <div className="p-6 bg-sage-50 rounded-lg">
-                    <h3 className="text-lg font-semibold text-forest-800 mb-4">
-                      Enter OTP sent to {formData.mobile}
-                    </h3>
-                    <div className="flex justify-center space-x-2 mb-4">
-                      {otp.map((digit, index) => (
-                        <input
-                          key={index}
-                          id={`otp-${index}`}
-                          type="text"
-                          value={digit}
-                          onChange={(e) => handleOtpChange(index, e.target.value)}
-                          className="w-12 h-12 text-center text-xl font-bold border-2 border-sage-200 rounded-lg focus:border-sage-500 focus:outline-none transition-colors"
-                          maxLength={1}
-                        />
-                      ))}
-                    </div>
-                    <div className="text-center mb-4">
-                      <p className="text-forest-600 text-sm mb-2">
-                        Time remaining: <span className="font-semibold">{formatTime(otpTimer)}</span>
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={verifyOTP}
-                      disabled={loading || otp.join('').length !== 6}
-                      className="w-full bg-sage-500 hover:bg-sage-400 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loading ? 'Verifying...' : 'Verify OTP'}
-                    </button>
-                  </div>
-                )}
 
                 <div>
                   <label className="block text-forest-800 font-semibold mb-2">
@@ -399,6 +276,17 @@ const FarmerForm = () => {
                     placeholder="Enter village or location"
                   />
                 </div>
+              </div>
+              
+              <div className="flex justify-end mt-8">
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  disabled={!formData.fullName || !formData.mobile || formData.mobile.length !== 10 || !formData.state}
+                  className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next: Farm Details
+                </button>
               </div>
             </div>
           )}
