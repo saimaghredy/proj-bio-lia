@@ -14,7 +14,7 @@ function App() {
     <ErrorBoundary>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-[#e9e7e3] font-jakarta">
+          <div className="min-h-screen bg-gradient-to-br from-sage-50 via-earth-50 to-sage-100 font-jakarta">
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />

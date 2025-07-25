@@ -107,9 +107,9 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4]">
+    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-earth-50 to-sage-100">
       {/* Header Section */}
-      <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
+      <section className="w-full py-20 px-4 text-center bg-gradient-to-br from-forest-900 via-olive-800 to-forest-800">
         <div className="mb-6 flex justify-center">
           <img 
             src="/src/assets/Bio Lia Full & Individual Logo - no background-05.png" 
@@ -118,9 +118,9 @@ const Contact = () => {
           />
         </div>
         <h1 className="text-5xl md:text-6xl font-serif text-white font-light mb-6 animate-fade-in">
-          Contact <span className="text-[#a4be88]">Biolia</span>
+          Contact <span className="text-sage-300">Biolia</span>
         </h1>
-        <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-8 font-jakarta">
+        <p className="text-xl text-earth-200 max-w-3xl mx-auto mb-8 font-jakarta">
           Get in touch with our agricultural experts for product information, technical support, or partnership opportunities.
         </p>
       </section>
@@ -131,18 +131,18 @@ const Contact = () => {
           <div className="space-y-8">
             {/* Company Info */}
             <div className="bg-white rounded-3xl shadow-2xl p-8">
-              <h2 className="text-3xl font-serif text-[#2f3a29] mb-8">Get in Touch</h2>
+              <h2 className="text-3xl font-serif text-forest-800 mb-8">Get in Touch</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#a4be88] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3a29] mb-1">Head Office</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg font-semibold text-forest-800 mb-1">Head Office</h3>
+                    <p className="text-forest-600">
                       Biolia Bio-Organic Solutions<br />
                       Agricultural Innovation Center<br />
                       Hyderabad, Telangana 500032<br />
@@ -152,14 +152,14 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#a4be88] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3a29] mb-1">Phone</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg font-semibold text-forest-800 mb-1">Phone</h3>
+                    <p className="text-forest-600">
                       +91 40 1234 5678 (Head Office)<br />
                       +91 40 1234 5679 (Sales)<br />
                       +91 40 1234 5680 (Technical Support)
@@ -168,15 +168,15 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#a4be88] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3a29] mb-1">Email</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg font-semibold text-forest-800 mb-1">Email</h3>
+                    <p className="text-forest-600">
                       info@biolia.com<br />
                       sales@biolia.com<br />
                       support@biolia.com
@@ -185,14 +185,14 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#a4be88] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979.446.74.736 1.747.736 2.771 0 1.024-.29 2.031-.736 2.771C10.792 13.807 10.304 14 10 14c-.304 0-.792-.193-1.264-.979C8.29 12.281 8 11.274 8 10.25c0-1.024.29-2.031.736-2.771z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#2f3a29] mb-1">Business Hours</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg font-semibold text-forest-800 mb-1">Business Hours</h3>
+                    <p className="text-forest-600">
                       Monday - Friday: 9:00 AM - 6:00 PM<br />
                       Saturday: 9:00 AM - 2:00 PM<br />
                       Sunday: Closed
@@ -204,20 +204,20 @@ const Contact = () => {
 
             {/* Downloadable Resources */}
             <div className="bg-white rounded-3xl shadow-2xl p-8">
-              <h2 className="text-2xl font-serif text-[#2f3a29] mb-6">Download Resources</h2>
+              <h2 className="text-2xl font-serif text-forest-800 mb-6">Download Resources</h2>
               <div className="grid grid-cols-1 gap-4">
                 {downloadableResources.map((resource, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-[#f4f1ee] rounded-xl hover:bg-[#e9e7e3] transition-all duration-300 cursor-pointer group">
+                  <div key={index} className="flex items-center justify-between p-4 bg-sage-50 rounded-xl hover:bg-sage-100 transition-all duration-300 cursor-pointer group">
                     <div className="flex items-center space-x-4">
                       <div className="text-2xl">{resource.icon}</div>
                       <div>
-                        <h3 className="font-semibold text-[#2f3a29] group-hover:text-[#a4be88] transition-colors">{resource.title}</h3>
-                        <p className="text-sm text-gray-600">{resource.subtitle}</p>
+                        <h3 className="font-semibold text-forest-800 group-hover:text-sage-600 transition-colors">{resource.title}</h3>
+                        <p className="text-sm text-forest-600">{resource.subtitle}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-gray-500">{resource.size}</div>
-                      <div className="text-[#a4be88] font-semibold text-sm">Download</div>
+                      <div className="text-xs text-forest-500">{resource.size}</div>
+                      <div className="text-sage-600 font-semibold text-sm">Download</div>
                     </div>
                   </div>
                 ))}
@@ -227,7 +227,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="bg-white rounded-3xl shadow-2xl p-8">
-            <h2 className="text-3xl font-serif text-[#2f3a29] mb-8">Send us a Message</h2>
+            <h2 className="text-3xl font-serif text-forest-800 mb-8">Send us a Message</h2>
             
             {error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -237,7 +237,7 @@ const Contact = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-[#2f3a29] text-sm font-semibold mb-2">
+                <label htmlFor="name" className="block text-forest-800 text-sm font-semibold mb-2">
                   Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -246,14 +246,14 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                   placeholder="Your full name"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-[#2f3a29] text-sm font-semibold mb-2">
+                <label htmlFor="email" className="block text-forest-800 text-sm font-semibold mb-2">
                   Email Address <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -262,14 +262,14 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                   placeholder="your.email@example.com"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-[#2f3a29] text-sm font-semibold mb-2">
+                <label htmlFor="company" className="block text-forest-800 text-sm font-semibold mb-2">
                   Company/Organization
                 </label>
                 <input
@@ -278,13 +278,13 @@ const Contact = () => {
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                   placeholder="Your company name (optional)"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-[#2f3a29] text-sm font-semibold mb-2">
+                <label htmlFor="message" className="block text-forest-800 text-sm font-semibold mb-2">
                   Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -293,7 +293,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none resize-vertical"
+                  className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none resize-vertical"
                   placeholder="Tell us about your inquiry, product questions, or how we can help you..."
                   required
                 />
@@ -302,11 +302,11 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-bold px-8 py-4 rounded-xl shadow transition-all text-lg hover:scale-105 focus:ring-2 focus:ring-[#a4be88] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold px-8 py-4 rounded-xl shadow transition-all text-lg hover:scale-105 focus:ring-2 focus:ring-sage-400 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <div className="flex items-center justify-center">
-                    <div className="w-5 h-5 border-2 border-[#2f3a29] border-t-transparent rounded-full animate-spin mr-2"></div>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                     Sending Message...
                   </div>
                 ) : (

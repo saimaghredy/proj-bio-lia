@@ -5,12 +5,12 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35] overflow-hidden">
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-4 bg-gradient-to-br from-forest-900 via-forest-800 to-olive-800 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-32 h-32 bg-[#a4be88] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-40 right-20 w-48 h-48 bg-[#d7e7c4] rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-[#a4be88] rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute top-20 left-20 w-32 h-32 bg-sage-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 right-20 w-48 h-48 bg-earth-300 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-sage-500 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
         </div>
         
         <div className="relative z-10 text-center max-w-6xl mx-auto">
@@ -23,29 +23,29 @@ const Home = () => {
           </div>
           <h1 className="text-6xl md:text-7xl font-serif text-white font-light mb-8 leading-tight animate-fade-in">
             Rebuilding Soil.<br />
-            <span className="text-[#a4be88]">Empowering Farmers.</span><br />
-            <span className="text-[#d7e7c4]">The Bio-Organic Way.</span>
+            <span className="text-sage-300">Empowering Farmers.</span><br />
+            <span className="text-earth-200">The Bio-Organic Way.</span>
           </h1>
           <p className="text-2xl md:text-3xl text-gray-200 max-w-4xl mx-auto mb-12 font-jakarta leading-relaxed">
             Natural farming inputs tailored for India's soils, climates, and crops. 
-            Trusted by farmers across <span className="text-[#a4be88] font-semibold">Telangana, Andhra Pradesh, Karnataka, and Tamil Nadu.</span>
+            Trusted by farmers across <span className="text-sage-300 font-semibold">Telangana, Andhra Pradesh, Karnataka, and Tamil Nadu.</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               to="/products" 
-              className="bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-[#a4be88] focus:outline-none text-center transform hover:shadow-[#a4be88]/50"
+              className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center transform hover:shadow-sage-400/50"
             >
               🌿 View Products
             </Link>
             <Link 
               to="/products#bundles" 
-              className="bg-transparent border-3 border-[#a4be88] hover:bg-[#a4be88] text-[#a4be88] hover:text-[#2f3a29] font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-[#a4be88] focus:outline-none text-center"
+              className="bg-transparent border-3 border-sage-400 hover:bg-sage-400 text-sage-300 hover:text-white font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none text-center"
             >
               📦 Explore Bundles
             </Link>
             <Link 
               to="/contact" 
-              className="bg-[#d7e7c4] hover:bg-white text-[#2f3a29] font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-[#d7e7c4] focus:outline-none text-center"
+              className="bg-gradient-to-r from-earth-200 to-earth-100 hover:from-earth-100 hover:to-white text-forest-800 font-bold px-10 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-earth-200 focus:outline-none text-center"
             >
               📥 Download Brochure
             </Link>
@@ -54,41 +54,41 @@ const Home = () => {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-16 px-4 bg-white">
+      <section className="py-16 px-4 bg-gradient-to-r from-earth-50 to-sage-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="p-6">
-              <div className="text-5xl font-bold text-[#a4be88] mb-2">15,000+</div>
-              <div className="text-lg font-semibold text-[#2f3a29] mb-2">Happy Farmers</div>
-              <p className="text-gray-600 text-sm">Across South India</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">15,000+</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Happy Farmers</div>
+              <p className="text-forest-600 text-sm">Across South India</p>
             </div>
             <div className="p-6">
-              <div className="text-5xl font-bold text-[#a4be88] mb-2">45%</div>
-              <div className="text-lg font-semibold text-[#2f3a29] mb-2">Yield Increase</div>
-              <p className="text-gray-600 text-sm">Average improvement</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">45%</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Yield Increase</div>
+              <p className="text-forest-600 text-sm">Average improvement</p>
             </div>
             <div className="p-6">
-              <div className="text-5xl font-bold text-[#a4be88] mb-2">100%</div>
-              <div className="text-lg font-semibold text-[#2f3a29] mb-2">Organic Certified</div>
-              <p className="text-gray-600 text-sm">Natural compliance</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">100%</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">Organic Certified</div>
+              <p className="text-forest-600 text-sm">Natural compliance</p>
             </div>
             <div className="p-6">
-              <div className="text-5xl font-bold text-[#a4be88] mb-2">4</div>
-              <div className="text-lg font-semibold text-[#2f3a29] mb-2">States Covered</div>
-              <p className="text-gray-600 text-sm">Southern India focus</p>
+              <div className="text-5xl font-bold text-sage-600 mb-2">4</div>
+              <div className="text-lg font-semibold text-forest-800 mb-2">States Covered</div>
+              <p className="text-forest-600 text-sm">Southern India focus</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Product Showcase */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#f4f1ee] to-[#e9e7e3]">
+      <section className="py-20 px-4 bg-gradient-to-br from-earth-100 via-sage-50 to-earth-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-serif text-[#2f3a29] mb-6">
+            <h2 className="text-5xl font-serif text-forest-800 mb-6">
               Complete Bio-Organic Solutions
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl text-forest-700 max-w-3xl mx-auto">
               From soil foundation to harvest, our scientifically formulated products support every stage of your crop's journey
             </p>
           </div>
@@ -139,25 +139,25 @@ const Home = () => {
               }
             ].map((product, index) => (
               <div key={index} className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden group">
-                <div className="h-48 bg-gradient-to-br from-[#a4be88] to-[#d7e7c4] flex items-center justify-center relative overflow-hidden">
+                <div className="h-48 bg-gradient-to-br from-sage-400 to-earth-300 flex items-center justify-center relative overflow-hidden">
                   <div className="text-6xl group-hover:scale-110 transition-transform duration-300">{product.icon}</div>
                   <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 </div>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-[#2f3a29] mb-2">{product.name}</h3>
-                  <p className="text-[#a4be88] font-semibold mb-4 italic">"{product.tagline}"</p>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{product.desc}</p>
+                  <h3 className="text-2xl font-bold text-forest-800 mb-2">{product.name}</h3>
+                  <p className="text-sage-600 font-semibold mb-4 italic">"{product.tagline}"</p>
+                  <p className="text-forest-600 mb-6 leading-relaxed">{product.desc}</p>
                   <ul className="space-y-2 mb-6">
                     {product.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-700">
-                        <span className="w-2 h-2 bg-[#a4be88] rounded-full mr-3"></span>
+                      <li key={idx} className="flex items-center text-sm text-forest-700">
+                        <span className="w-2 h-2 bg-sage-500 rounded-full mr-3"></span>
                         {benefit}
                       </li>
                     ))}
                   </ul>
                   <Link
                     to="/farmer-support"
-                    className="w-full bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold py-3 px-6 rounded-xl transition-all text-center block group-hover:shadow-lg"
+                    className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-3 px-6 rounded-xl transition-all text-center block group-hover:shadow-lg"
                   >
                     Get Recommendations
                   </Link>
@@ -169,13 +169,13 @@ const Home = () => {
       </section>
 
       {/* Package Kits Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
+      <section className="py-20 px-4 bg-gradient-to-br from-forest-900 via-olive-800 to-forest-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-serif text-white mb-6">
-              Ready-to-Use <span className="text-[#a4be88]">Package Kits</span>
+              Ready-to-Use <span className="text-sage-300">Package Kits</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-earth-200 max-w-3xl mx-auto">
               Specially curated bundles for different crops and farming needs. Everything you need in one package.
             </p>
           </div>
@@ -216,38 +216,38 @@ const Home = () => {
                 price: "Premium Package"
               }
             ].map((kit, index) => (
-              <div key={index} className={`bg-white rounded-3xl shadow-2xl hover:shadow-[#a4be88]/20 transition-all duration-500 hover:scale-105 overflow-hidden ${kit.popular ? 'ring-4 ring-[#a4be88] relative' : ''}`}>
+              <div key={index} className={`bg-white rounded-3xl shadow-2xl hover:shadow-sage-400/20 transition-all duration-500 hover:scale-105 overflow-hidden ${kit.popular ? 'ring-4 ring-sage-400 relative' : ''}`}>
                 {kit.popular && (
-                  <div className="absolute top-4 right-4 bg-[#a4be88] text-[#2f3a29] px-3 py-1 rounded-full text-sm font-bold">
+                  <div className="absolute top-4 right-4 bg-sage-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                     Most Popular
                   </div>
                 )}
-                <div className="h-32 bg-gradient-to-br from-[#a4be88] to-[#d7e7c4] flex items-center justify-center">
+                <div className="h-32 bg-gradient-to-br from-sage-400 to-earth-300 flex items-center justify-center">
                   <div className="text-5xl">{kit.icon}</div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#2f3a29] mb-2">{kit.name}</h3>
-                  <p className="text-[#a4be88] font-semibold text-sm mb-4">{kit.subtitle}</p>
+                  <h3 className="text-xl font-bold text-forest-800 mb-2">{kit.name}</h3>
+                  <p className="text-sage-600 font-semibold text-sm mb-4">{kit.subtitle}</p>
                   
                   <div className="mb-4">
-                    <h4 className="font-semibold text-[#2f3a29] text-sm mb-2">Included Products:</h4>
+                    <h4 className="font-semibold text-forest-800 text-sm mb-2">Included Products:</h4>
                     <ul className="space-y-1">
                       {kit.products.map((product, idx) => (
-                        <li key={idx} className="text-xs text-gray-600 flex items-center">
-                          <span className="w-1.5 h-1.5 bg-[#a4be88] rounded-full mr-2"></span>
+                        <li key={idx} className="text-xs text-forest-600 flex items-center">
+                          <span className="w-1.5 h-1.5 bg-sage-500 rounded-full mr-2"></span>
                           {product}
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{kit.benefits}</p>
+                  <p className="text-forest-600 text-sm mb-4 leading-relaxed">{kit.benefits}</p>
                   
                   <div className="text-center">
-                    <div className="text-[#a4be88] font-bold mb-3">{kit.price}</div>
+                    <div className="text-sage-600 font-bold mb-3">{kit.price}</div>
                     <Link
                       to="/farmer-support"
-                      className="w-full bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold py-3 px-4 rounded-xl transition-all text-sm block"
+                      className="w-full bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-3 px-4 rounded-xl transition-all text-sm block"
                     >
                       Get This Kit
                     </Link>
@@ -260,13 +260,13 @@ const Home = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-gradient-to-br from-earth-50 to-sage-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-[#2f3a29] mb-6">
+            <h2 className="text-4xl font-serif text-forest-800 mb-6">
               Frequently Asked Questions
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-forest-600">
               Everything you need to know about Biolia products
             </p>
           </div>
@@ -294,9 +294,9 @@ const Home = () => {
                 answer: "Yes. Packaging, brochures, and advisory content are available in Telugu, Hindi, and Marathi."
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-[#f4f1ee] rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-3">{faq.question}</h3>
-                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+              <div key={index} className="bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-sage-100">
+                <h3 className="text-lg font-semibold text-forest-800 mb-3">{faq.question}</h3>
+                <p className="text-forest-700 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -304,12 +304,12 @@ const Home = () => {
       </section>
 
       {/* Downloadable Resources */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#a4be88] to-[#d7e7c4]">
+      <section className="py-20 px-4 bg-gradient-to-br from-sage-400 via-earth-300 to-sage-300">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-serif text-[#2f3a29] mb-6">
+          <h2 className="text-4xl font-serif text-forest-800 mb-6">
             Download Resources
           </h2>
-          <p className="text-xl text-[#2f3a29] mb-12 max-w-3xl mx-auto">
+          <p className="text-xl text-forest-800 mb-12 max-w-3xl mx-auto">
             Get detailed product information, application guides, and crop-specific recommendations
           </p>
           
@@ -322,11 +322,11 @@ const Home = () => {
             ].map((resource, index) => (
               <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 <div className="text-4xl mb-4">{resource.icon}</div>
-                <h3 className="text-lg font-semibold text-[#2f3a29] mb-2">{resource.title}</h3>
-                <p className="text-gray-600 text-sm mb-4">{resource.subtitle}</p>
+                <h3 className="text-lg font-semibold text-forest-800 mb-2">{resource.title}</h3>
+                <p className="text-forest-600 text-sm mb-4">{resource.subtitle}</p>
                 <Link
                   to="/contact"
-                  className="bg-[#a4be88] hover:bg-[#2f3a29] text-[#2f3a29] hover:text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm"
+                  className="bg-sage-500 hover:bg-forest-700 text-white hover:text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm"
                 >
                   Download
                 </Link>
@@ -337,17 +337,17 @@ const Home = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#1a2e1a] via-[#2f3a29] to-[#3d4a35]">
+      <section className="py-20 px-4 bg-gradient-to-br from-forest-900 via-olive-800 to-forest-800">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-serif text-white mb-6">
             Ready to Transform Your Farm?
           </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-earth-200 mb-8 max-w-2xl mx-auto">
             Join thousands of farmers who have increased their yields and improved soil health with Biolia's bio-organic solutions.
           </p>
           <Link 
             to="/farmer-support" 
-            className="bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-bold px-12 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-[#a4be88] focus:outline-none inline-block"
+            className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-bold px-12 py-5 rounded-xl shadow-2xl transition-all text-xl hover:scale-110 focus:ring-4 focus:ring-sage-400 focus:outline-none inline-block"
           >
             Get Free Expert Consultation
           </Link>

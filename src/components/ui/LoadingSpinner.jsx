@@ -9,10 +9,10 @@ const LoadingSpinner = ({ size = 'md', message = 'Loading...' }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className={`${sizeClasses[size]} bg-[#a4be88] rounded-full flex items-center justify-center animate-spin`}>
+      <div className={`${sizeClasses[size]} bg-sage-500 rounded-full flex items-center justify-center animate-spin`}>
         <div className="w-1/2 h-1/2 border-4 border-white border-t-transparent rounded-full"></div>
       </div>
-      <p className="text-[#2f3a29] font-semibold mt-4">{message}</p>
+      <p className="text-forest-800 font-semibold mt-4">{message}</p>
     </div>
   );
 };

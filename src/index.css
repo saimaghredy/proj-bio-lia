@@ -4,16 +4,16 @@
 
 :root {
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-  background-color: #e9e7e3;
-  color: #2f3a29;
+  background-color: #f6f8f4;
+  color: #2a362a;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #e9e7e3;
-  color: #2f3a29;
+  background: linear-gradient(135deg, #f6f8f4 0%, #e9f0e3 50%, #d4e2c8 100%);
+  color: #2a362a;
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
 }
 
@@ -27,12 +27,12 @@ body {
 
 a {
   font-weight: 500;
-  color: #2f3a29;
+  color: #2a362a;
   text-decoration: inherit;
   transition: color 0.2s;
 }
 a:hover {
-  color: #a4be88;
+  color: #7a9f56;
 }
 
 h1 {
@@ -47,14 +47,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #a4be88;
-  color: #2f3a29;
+  background: linear-gradient(135deg, #7a9f56 0%, #94b876 100%);
+  color: #2a362a;
   cursor: pointer;
   transition: border-color 0.25s, background 0.25s;
 }
 button:hover {
-  border-color: #2f3a29;
-  background-color: #d7e7c4;
+  border-color: #2a362a;
+  background: linear-gradient(135deg, #94b876 0%, #b5cfa1 100%);
 }
 button:focus,
 button:focus-visible {

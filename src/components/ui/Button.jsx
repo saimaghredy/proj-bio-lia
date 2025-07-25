@@ -12,9 +12,9 @@ const Button = ({
   const baseClasses = 'font-semibold rounded-lg transition-all focus:outline-none focus:ring-2';
   
   const variants = {
-    primary: 'bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] focus:ring-[#a4be88]',
-    secondary: 'bg-[#2f3a29] hover:bg-[#3d4a35] text-white focus:ring-[#2f3a29]',
-    outline: 'border-2 border-[#2f3a29] text-[#2f3a29] hover:bg-[#2f3a29] hover:text-white',
+    primary: 'bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white focus:ring-sage-400',
+    secondary: 'bg-forest-800 hover:bg-forest-900 text-white focus:ring-forest-700',
+    outline: 'border-2 border-forest-800 text-forest-800 hover:bg-forest-800 hover:text-white',
     danger: 'bg-red-500 hover:bg-red-600 text-white focus:ring-red-500'
   };
   

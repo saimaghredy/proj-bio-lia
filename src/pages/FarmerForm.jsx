@@ -193,7 +193,7 @@ const FarmerForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e9e7e3] via-[#f4f1ee] to-[#d7e7c4]">
+    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-earth-50 to-sage-100">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -204,10 +204,10 @@ const FarmerForm = () => {
               className="h-18 w-auto drop-shadow-lg"
             />
           </div>
-          <h1 className="text-4xl font-serif text-[#2f3a29] mb-4">
+          <h1 className="text-4xl font-serif text-forest-800 mb-4">
             Get Expert Farm Consultation
           </h1>
-          <p className="text-xl text-[#2f3a29] max-w-2xl mx-auto">
+          <p className="text-xl text-forest-800 max-w-2xl mx-auto">
             Share your farm details and get personalized organic solutions for higher yields
           </p>
         </div>
@@ -217,25 +217,25 @@ const FarmerForm = () => {
           <div className="flex items-center justify-center space-x-8">
             <div className="flex items-center">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                step >= 1 ? 'bg-[#a4be88] text-white' : 'bg-gray-200 text-gray-600'
+                step >= 1 ? 'bg-sage-500 text-white' : 'bg-earth-200 text-forest-600'
               }`}>
                 1
               </div>
               <span className={`ml-2 font-semibold ${
-                step >= 1 ? 'text-[#a4be88]' : 'text-gray-600'
+                step >= 1 ? 'text-sage-600' : 'text-forest-600'
               }`}>
                 Contact Details
               </span>
             </div>
-            <div className="w-16 h-0.5 bg-gray-300" />
+            <div className="w-16 h-0.5 bg-earth-300" />
             <div className="flex items-center">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                step >= 2 ? 'bg-[#a4be88] text-white' : 'bg-gray-200 text-gray-600'
+                step >= 2 ? 'bg-sage-500 text-white' : 'bg-earth-200 text-forest-600'
               }`}>
                 2
               </div>
               <span className={`ml-2 font-semibold ${
-                step >= 2 ? 'text-[#a4be88]' : 'text-gray-600'
+                step >= 2 ? 'text-sage-600' : 'text-forest-600'
               }`}>
                 Farm Details
               </span>
@@ -253,11 +253,11 @@ const FarmerForm = () => {
           {/* Step 1: Contact Details */}
           {step === 1 && (
             <div>
-              <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-semibold text-forest-800 mb-6">Contact Information</h2>
               
               <div className="space-y-6">
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -265,14 +265,14 @@ const FarmerForm = () => {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="Enter your full name"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Mobile Number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex gap-2">
@@ -281,7 +281,7 @@ const FarmerForm = () => {
                       name="mobile"
                       value={formData.mobile}
                       onChange={handleChange}
-                      className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                      className="flex-1 px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                       placeholder="10-digit mobile number"
                       maxLength={10}
                       required
@@ -290,7 +290,7 @@ const FarmerForm = () => {
                       type="button"
                       onClick={sendOTP}
                       disabled={loading || formData.mobile.length !== 10}
-                      className="bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold px-6 py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-sage-500 hover:bg-sage-400 text-white font-semibold px-6 py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? 'Sending...' : 'Send OTP'}
                     </button>
@@ -298,8 +298,8 @@ const FarmerForm = () => {
                 </div>
 
                 {showOTP && (
-                  <div className="p-6 bg-[#f4f1ee] rounded-lg">
-                    <h3 className="text-lg font-semibold text-[#2f3a29] mb-4">
+                  <div className="p-6 bg-sage-50 rounded-lg">
+                    <h3 className="text-lg font-semibold text-forest-800 mb-4">
                       Enter OTP sent to {formData.mobile}
                     </h3>
                     <div className="flex justify-center space-x-2 mb-4">
@@ -310,13 +310,13 @@ const FarmerForm = () => {
                           type="text"
                           value={digit}
                           onChange={(e) => handleOtpChange(index, e.target.value)}
-                          className="w-12 h-12 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#a4be88] focus:outline-none transition-colors"
+                          className="w-12 h-12 text-center text-xl font-bold border-2 border-sage-200 rounded-lg focus:border-sage-500 focus:outline-none transition-colors"
                           maxLength={1}
                         />
                       ))}
                     </div>
                     <div className="text-center mb-4">
-                      <p className="text-gray-600 text-sm mb-2">
+                      <p className="text-forest-600 text-sm mb-2">
                         Time remaining: <span className="font-semibold">{formatTime(otpTimer)}</span>
                       </p>
                     </div>
@@ -324,7 +324,7 @@ const FarmerForm = () => {
                       type="button"
                       onClick={verifyOTP}
                       disabled={loading || otp.join('').length !== 6}
-                      className="w-full bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-sage-500 hover:bg-sage-400 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>
@@ -332,7 +332,7 @@ const FarmerForm = () => {
                 )}
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     WhatsApp Number (if different)
                   </label>
                   <input
@@ -340,14 +340,14 @@ const FarmerForm = () => {
                     name="whatsapp"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="WhatsApp number"
                     maxLength={10}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Email ID (Optional)
                   </label>
                   <input
@@ -355,21 +355,21 @@ const FarmerForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="your.email@example.com"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[#2f3a29] font-semibold mb-2">
+                    <label className="block text-forest-800 font-semibold mb-2">
                       State <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="state"
                       value={formData.state}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white"
+                      className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white"
                       required
                     >
                       <option value="">Select State</option>
@@ -379,7 +379,7 @@ const FarmerForm = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[#2f3a29] font-semibold mb-2">
+                    <label className="block text-forest-800 font-semibold mb-2">
                       District
                     </label>
                     <input
@@ -387,14 +387,14 @@ const FarmerForm = () => {
                       name="district"
                       value={formData.district}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                       placeholder="Enter district"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Village / Location
                   </label>
                   <input
@@ -402,7 +402,7 @@ const FarmerForm = () => {
                     name="village"
                     value={formData.village}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="Enter village or location"
                   />
                 </div>
@@ -413,11 +413,11 @@ const FarmerForm = () => {
           {/* Step 2: Farm Details */}
           {step === 2 && (
             <form onSubmit={handleSubmit}>
-              <h2 className="text-2xl font-semibold text-[#2f3a29] mb-6">Farm & Crop Information</h2>
+              <h2 className="text-2xl font-semibold text-forest-800 mb-6">Farm & Crop Information</h2>
               
               <div className="space-y-6">
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Farm Size (in acres)
                   </label>
                   <input
@@ -425,14 +425,14 @@ const FarmerForm = () => {
                     name="farmSize"
                     value={formData.farmSize}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                     placeholder="e.g., 2.5"
                     step="0.1"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-3">
+                  <label className="block text-forest-800 font-semibold mb-3">
                     Type of Farming (Select all that apply)
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -446,17 +446,17 @@ const FarmerForm = () => {
                           onChange={handleChange}
                           className="mr-2"
                         />
-                        <span className="text-[#2f3a29]">{type}</span>
+                        <span className="text-forest-800">{type}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-3">
+                  <label className="block text-forest-800 font-semibold mb-3">
                     Crops Grown (Current/Planned)
                   </label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-h-40 overflow-y-auto border border-gray-200 rounded-lg p-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-h-40 overflow-y-auto border border-sage-200 rounded-lg p-3">
                     {crops.map(crop => (
                       <label key={crop} className="flex items-center">
                         <input
@@ -467,21 +467,21 @@ const FarmerForm = () => {
                           onChange={handleChange}
                           className="mr-2"
                         />
-                        <span className="text-[#2f3a29] text-sm">{crop}</span>
+                        <span className="text-forest-800 text-sm">{crop}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Soil Type
                   </label>
                   <select
                     name="soilType"
                     value={formData.soilType}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white"
                   >
                     <option value="">Select Soil Type</option>
                     <option value="Red">Red Soil</option>
@@ -494,14 +494,14 @@ const FarmerForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Purpose of Visit <span className="text-red-500">*</span>
                   </label>
                   <select
                     name="purposeOfVisit"
                     value={formData.purposeOfVisit}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none appearance-none bg-white"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none appearance-none bg-white"
                     required
                   >
                     <option value="">Select Purpose</option>
@@ -513,7 +513,7 @@ const FarmerForm = () => {
 
                 {formData.purposeOfVisit === 'Other (please specify)' && (
                   <div>
-                    <label className="block text-[#2f3a29] font-semibold mb-2">
+                    <label className="block text-forest-800 font-semibold mb-2">
                       Please specify
                     </label>
                     <input
@@ -521,14 +521,14 @@ const FarmerForm = () => {
                       name="otherPurpose"
                       value={formData.otherPurpose}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none"
+                      className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none"
                       placeholder="Please specify your purpose"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-2">
+                  <label className="block text-forest-800 font-semibold mb-2">
                     Crop Issues / Requirements (Optional)
                   </label>
                   <textarea
@@ -536,13 +536,13 @@ const FarmerForm = () => {
                     value={formData.cropIssues}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#a4be88] focus:ring-2 focus:ring-[#a4be88]/20 transition-all duration-300 outline-none resize-vertical"
+                    className="w-full px-4 py-3 rounded-lg border border-sage-200 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 transition-all duration-300 outline-none resize-vertical"
                     placeholder="Describe any specific crop issues, pest problems, or requirements..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#2f3a29] font-semibold mb-3">
+                  <label className="block text-forest-800 font-semibold mb-3">
                     Preferred Communication Mode
                   </label>
                   <div className="flex gap-6">
@@ -560,7 +560,7 @@ const FarmerForm = () => {
                           onChange={handleChange}
                           className="mr-2"
                         />
-                        <span className="text-[#2f3a29]">{mode.label}</span>
+                        <span className="text-forest-800">{mode.label}</span>
                       </label>
                     ))}
                   </div>
@@ -575,7 +575,7 @@ const FarmerForm = () => {
                     className="mr-3 mt-1"
                     required
                   />
-                  <label className="text-[#2f3a29] text-sm">
+                  <label className="text-forest-800 text-sm">
                     I agree to be contacted by Bio Lia experts for farm consultation and product recommendations. 
                     I understand that my information will be used to provide personalized agricultural solutions.
                   </label>
@@ -585,14 +585,14 @@ const FarmerForm = () => {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all"
+                    className="bg-earth-300 hover:bg-earth-400 text-forest-700 font-semibold py-3 px-6 rounded-lg transition-all"
                   >
                     Previous
                   </button>
                   <button
                     type="submit"
                     disabled={loading || !formData.consent}
-                    className="bg-[#a4be88] hover:bg-[#d7e7c4] text-[#2f3a29] font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-r from-sage-500 to-sage-400 hover:from-sage-400 hover:to-sage-300 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? 'Submitting...' : 'Submit Request'}
                   </button>
