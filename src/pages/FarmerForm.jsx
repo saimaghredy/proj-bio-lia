@@ -199,7 +199,7 @@ const FarmerForm = () => {
         <div className="text-center mb-8">
           <div className="mb-6 flex justify-center">
             <img 
-              src="/src/assets/Bio Lia Full & Individual Logo - Mineral Light Colour-03.png" 
+              src="/src/assets/Bio-Lia-Brand-Mark-transparent-background-02.png" 
               alt="Biolia Brand Mark" 
               className="h-18 w-auto drop-shadow-lg"
             />
