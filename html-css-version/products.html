@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Biolia Bio-Organic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="products.html" class="nav-link active">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+                <li><a href="products.html" onclick="closeMobileMenu()">Products</a></li>
+                <li><a href="farmer-form.html" onclick="closeMobileMenu()">Get Support</a></li>
+                <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta" onclick="closeMobileMenu()">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Bio-Organic <span class="accent">Product Range</span></h1>
+            <p class="page-subtitle">Scientifically formulated, field-tested solutions for sustainable farming and higher yields across South India</p>
+            <a href="farmer-form.html" class="header-cta">Get Product Recommendations</a>
+        </div>
+    </section>
+
+    <!-- Individual Products Section -->
+    <section class="individual-products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Individual Products</h2>
+                <p class="section-subtitle">Each product is designed to address specific agricultural needs and growth stages</p>
+            </div>
+            
+            <div class="products-detailed-grid">
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">🌱</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">Foundation Mix</h3>
+                            <span class="product-category">Soil Conditioner</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Build your soil from the roots up"</p>
+                        <p class="product-detailed-desc">Improves soil structure, porosity, microbial activity, water retention</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">30kg / 50kg</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">30-50kg per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Land preparation stage</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">⚡</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">AF-NPK</h3>
+                            <span class="product-category">Bio-Fertilizer</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Nutrients that go beyond NPK"</p>
+                        <p class="product-detailed-desc">Balanced macro & micronutrients, improves uptake & efficiency</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">1L</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">1L per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Vegetative stage</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">🫘</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">Rhizobium</h3>
+                            <span class="product-category">Bio-Inoculant</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Seed coating that powers pulses"</p>
+                        <p class="product-detailed-desc">Nitrogen-fixing bacteria for legumes. Enhances germination & nodulation</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">100mL / 250mL</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">100-200mL per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Seed coating before sowing</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">🌸</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">LEO</h3>
+                            <span class="product-category">Growth Enhancer</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Tonic for flowering and fruiting"</p>
+                        <p class="product-detailed-desc">Boosts flower initiation, fruit size, setting, flowering duration</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">250mL / 500mL / 1L</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">250-500mL per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Flowering stage</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">💪</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">NORA</h3>
+                            <span class="product-category">Stress Reliever</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Support for stressed crops"</p>
+                        <p class="product-detailed-desc">Heat/drought tolerance, faster recovery, immunity boost</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">250mL / 500mL</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">250-500mL per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Abiotic stress / mid-season recovery</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+
+                <div class="product-detailed-card">
+                    <div class="product-detailed-icon">🛡️</div>
+                    <div class="product-detailed-content">
+                        <div class="product-detailed-header">
+                            <h3 class="product-detailed-name">Soil Sterilizer</h3>
+                            <span class="product-category">Soil Treatment</span>
+                        </div>
+                        <p class="product-detailed-tagline">"Cleaner soil, stronger starts"</p>
+                        <p class="product-detailed-desc">Kills harmful pathogens while preserving good microbes</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-row">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">10kg / 25kg</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Dosage:</span>
+                                <span class="spec-value">10-20kg per acre</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">Best Stage:</span>
+                                <span class="spec-value-highlight">Before sowing or transplanting</span>
+                            </div>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="product-detailed-btn">Get This Product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stage-Wise Application Guide -->
+    <section class="stage-guide">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Stage-Wise Application Guide</h2>
+                <p class="section-subtitle">Apply the right product at the right time for maximum effectiveness</p>
+            </div>
+            
+            <div class="stages-grid">
+                <div class="stage-item">
+                    <div class="stage-icon">🌱</div>
+                    <h3 class="stage-title">Soil Prep</h3>
+                    <p class="stage-desc">Foundation Mix + Soil Sterilizer</p>
+                </div>
+                
+                <div class="stage-item">
+                    <div class="stage-icon">🌰</div>
+                    <h3 class="stage-title">Sowing/Seeding</h3>
+                    <p class="stage-desc">Rhizobium (Pulses only)</p>
+                </div>
+                
+                <div class="stage-item">
+                    <div class="stage-icon">⚡</div>
+                    <h3 class="stage-title">Early Growth</h3>
+                    <p class="stage-desc">AF-NPK</p>
+                </div>
+                
+                <div class="stage-item">
+                    <div class="stage-icon">🌸</div>
+                    <h3 class="stage-title">Flowering</h3>
+                    <p class="stage-desc">LEO</p>
+                </div>
+                
+                <div class="stage-item">
+                    <div class="stage-icon">💪</div>
+                    <h3 class="stage-title">Stress Period</h3>
+                    <p class="stage-desc">NORA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Kits Section -->
+    <section class="package-kits" id="bundles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-white">Ready-to-Use <span class="accent">Package Kits</span></h2>
+                <p class="section-subtitle-white">Pre-packaged combinations for specific crops - everything you need in one kit</p>
+            </div>
+            
+            <div class="kits-grid">
+                <div class="kit-card popular">
+                    <div class="kit-badge">Most Popular</div>
+                    <div class="kit-icon">🌾</div>
+                    <div class="kit-content">
+                        <h3 class="kit-name">Paddy Grower Kit</h3>
+                        <p class="kit-subtitle">For Kharif & Rabi Paddy, wet & dryland</p>
+                        
+                        <div class="kit-products">
+                            <h4>Contents:</h4>
+                            <p>Foundation Mix, AF-NPK, NORA, LEO</p>
+                        </div>
+                        
+                        <div class="kit-products">
+                            <h4>Best For:</h4>
+                            <p>Kharif & Rabi Paddy, wet & dryland</p>
+                        </div>
+                        
+                        <div class="kit-coverage">
+                            <span class="coverage-label">Coverage:</span>
+                            <span class="coverage-value">1 acre</span>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="kit-btn">Get This Kit</a>
+                    </div>
+                </div>
+
+                <div class="kit-card">
+                    <div class="kit-icon">🫘</div>
+                    <div class="kit-content">
+                        <h3 class="kit-name">Pulses Starter Kit</h3>
+                        <p class="kit-subtitle">For Toor, Green Gram, Black Gram, Cowpea</p>
+                        
+                        <div class="kit-products">
+                            <h4>Contents:</h4>
+                            <p>Soil Sterilizer, Rhizobium, Foundation Mix, LEO</p>
+                        </div>
+                        
+                        <div class="kit-products">
+                            <h4>Best For:</h4>
+                            <p>Toor, Green Gram, Black Gram, Cowpea</p>
+                        </div>
+                        
+                        <div class="kit-coverage">
+                            <span class="coverage-label">Coverage:</span>
+                            <span class="coverage-value">1 acre</span>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="kit-btn">Get This Kit</a>
+                    </div>
+                </div>
+
+                <div class="kit-card">
+                    <div class="kit-icon">🍅</div>
+                    <div class="kit-content">
+                        <h3 class="kit-name">Dryland Vegetable Bundle</h3>
+                        <p class="kit-subtitle">For Tomato, Brinjal, Chilli, Okra, Cucumber</p>
+                        
+                        <div class="kit-products">
+                            <h4>Contents:</h4>
+                            <p>Foundation Mix, AF-NPK, NORA, LEO</p>
+                        </div>
+                        
+                        <div class="kit-products">
+                            <h4>Best For:</h4>
+                            <p>Tomato, Brinjal, Chilli, Okra, Cucumber</p>
+                        </div>
+                        
+                        <div class="kit-coverage">
+                            <span class="coverage-label">Coverage:</span>
+                            <span class="coverage-value">1 acre</span>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="kit-btn">Get This Kit</a>
+                    </div>
+                </div>
+
+                <div class="kit-card premium">
+                    <div class="kit-badge premium-badge">Premium</div>
+                    <div class="kit-icon">🌳</div>
+                    <div class="kit-content">
+                        <h3 class="kit-name">Orchard Care Kit</h3>
+                        <p class="kit-subtitle">For Mango, Guava, Citrus, Pomegranate</p>
+                        
+                        <div class="kit-products">
+                            <h4>Contents:</h4>
+                            <p>Foundation Mix, AF-NPK, LEO, NORA, Drone Option</p>
+                        </div>
+                        
+                        <div class="kit-products">
+                            <h4>Best For:</h4>
+                            <p>Mango, Guava, Citrus, Pomegranate</p>
+                        </div>
+                        
+                        <div class="kit-coverage">
+                            <span class="coverage-label">Coverage:</span>
+                            <span class="coverage-value">1 acre</span>
+                        </div>
+                        
+                        <a href="farmer-form.html" class="kit-btn">Get This Kit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop-Specific Recommendations -->
+    <section class="crop-recommendations">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Crop-Specific Recommendations</h2>
+                <p class="section-subtitle">Quick recommendations for popular South Indian crops</p>
+            </div>
+            
+            <div class="crop-grid">
+                <div class="crop-card">
+                    <div class="crop-icon">🌾</div>
+                    <h3 class="crop-name">Paddy</h3>
+                    <p class="crop-kit">→ Paddy Grower Kit</p>
+                    <a href="farmer-form.html" class="crop-btn">Get Kit</a>
+                </div>
+                
+                <div class="crop-card">
+                    <div class="crop-icon">🫘</div>
+                    <h3 class="crop-name">Red Gram</h3>
+                    <p class="crop-kit">→ Pulses Starter Kit</p>
+                    <a href="farmer-form.html" class="crop-btn">Get Kit</a>
+                </div>
+                
+                <div class="crop-card">
+                    <div class="crop-icon">🌶️</div>
+                    <h3 class="crop-name">Chilli</h3>
+                    <p class="crop-kit">→ Dryland Vegetable Bundle</p>
+                    <a href="farmer-form.html" class="crop-btn">Get Kit</a>
+                </div>
+                
+                <div class="crop-card">
+                    <div class="crop-icon">🥭</div>
+                    <h3 class="crop-name">Mango</h3>
+                    <p class="crop-kit">→ Orchard Care Kit</p>
+                    <a href="farmer-form.html" class="crop-btn">Get Kit</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Our Products -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Biolia Products?</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🇮🇳</div>
+                    <h3 class="feature-title">Designed for Indian Conditions</h3>
+                    <p class="feature-desc">Biolia products are curated with Indian farmers in mind—formulated for local crops like paddy, pulses, vegetables, and fruit trees, and optimized for dryland and red soils.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3 class="feature-title">Ready-to-Use Kits for Every Crop</h3>
+                    <p class="feature-desc">Choose from pre-designed kits like the Paddy Grower Kit, Dryland Vegetable Bundle, or Orchard Care Kit—each with specific inputs needed for 1 acre.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <h3 class="feature-title">Simplified Natural Inputs</h3>
+                    <p class="feature-desc">Using bio-formulations like Foundation Mix, AF-NPK, and LEO, farmers get a combination of soil conditioners, growth stimulants, and microbial inoculants—all from one place.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="products-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Boost Your Farm's Productivity?</h2>
+                <p class="cta-subtitle">Get personalized product recommendations based on your crops, soil type, and farming conditions. Our experts will help you choose the right products and application methods.</p>
+                <div class="cta-buttons">
+                    <a href="farmer-form.html" class="cta-btn-primary">Get Free Consultation</a>
+                    <a href="contact.html" class="cta-btn-secondary">Contact Our Experts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

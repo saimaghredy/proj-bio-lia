@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Support - Biolia Bio-Organic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="products.html" class="nav-link">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link active">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+                <li><a href="products.html" onclick="closeMobileMenu()">Products</a></li>
+                <li><a href="farmer-form.html" onclick="closeMobileMenu()">Get Support</a></li>
+                <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta" onclick="closeMobileMenu()">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Form Container -->
+    <div class="farmer-form-container">
+        <div class="form-wrapper">
+            <!-- Header -->
+            <div class="form-header">
+                <h1 class="form-main-title">Get Expert Farm Consultation</h1>
+                <p class="form-main-subtitle">Share your farm details and get personalized organic solutions for higher yields</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step-container">
+                    <div class="step active" id="step1Indicator">
+                        <div class="step-number">1</div>
+                        <span class="step-label">Contact Details</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step2Indicator">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Farm Details</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="farmer-form-card">
+                <!-- Step 1: Contact Details -->
+                <div class="form-step" id="step1">
+                    <h2 class="step-title">Contact Information</h2>
+                    
+                    <form class="farmer-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                class="form-input"
+                                placeholder="Enter your full name"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile" class="form-label">
+                                Mobile Number <span class="required">*</span>
+                            </label>
+                            <input
+                                type="tel"
+                                id="mobile"
+                                name="mobile"
+                                class="form-input"
+                                placeholder="10-digit mobile number"
+                                maxlength="10"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp" class="form-label">
+                                WhatsApp Number (if different)
+                            </label>
+                            <input
+                                type="tel"
+                                id="whatsapp"
+                                name="whatsapp"
+                                class="form-input"
+                                placeholder="WhatsApp number"
+                                maxlength="10"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email ID (Optional)
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-input"
+                                placeholder="your.email@example.com"
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="state" class="form-label">
+                                    State <span class="required">*</span>
+                                </label>
+                                <select
+                                    id="state"
+                                    name="state"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">Select State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="district" class="form-label">
+                                    District
+                                </label>
+                                <input
+                                    type="text"
+                                    id="district"
+                                    name="district"
+                                    class="form-input"
+                                    placeholder="Enter district"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="village" class="form-label">
+                                Village / Location
+                            </label>
+                            <input
+                                type="text"
+                                id="village"
+                                name="village"
+                                class="form-input"
+                                placeholder="Enter village or location"
+                            />
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-next" onclick="goToStep2()">
+                                Next: Farm Details
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Farm Details -->
+                <div class="form-step" id="step2" style="display: none;">
+                    <h2 class="step-title">Farm & Crop Information</h2>
+                    
+                    <form class="farmer-form" id="farmForm">
+                        <div class="form-group">
+                            <label for="farmSize" class="form-label">
+                                Farm Size (in acres)
+                            </label>
+                            <input
+                                type="number"
+                                id="farmSize"
+                                name="farmSize"
+                                class="form-input"
+                                placeholder="e.g., 2.5"
+                                step="0.1"
+                                min="0"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Type of Farming (Select all that apply)
+                            </label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="farmingType" value="Organic">
+                                    <span class="checkbox-label">Organic</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="farmingType" value="Natural">
+                                    <span class="checkbox-label">Natural</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="farmingType" value="Traditional">
+                                    <span class="checkbox-label">Traditional</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="farmingType" value="Mixed">
+                                    <span class="checkbox-label">Mixed</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="farmingType" value="Other" onchange="toggleOtherFarmingType(this)">
+                                    <span class="checkbox-label">Other</span>
+                                </label>
+                            </div>
+                            <div class="form-group" id="otherFarmingTypeGroup" style="display: none;">
+                                <input
+                                    type="text"
+                                    id="otherFarmingType"
+                                    name="otherFarmingType"
+                                    class="form-input"
+                                    placeholder="Please specify other farming type"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Crops Grown (Current/Planned)
+                            </label>
+                            <div class="crops-container">
+                                <div class="crops-grid">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Paddy">
+                                        <span class="checkbox-label">Paddy</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Wheat">
+                                        <span class="checkbox-label">Wheat</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Maize">
+                                        <span class="checkbox-label">Maize</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Sugarcane">
+                                        <span class="checkbox-label">Sugarcane</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Cotton">
+                                        <span class="checkbox-label">Cotton</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Soybean">
+                                        <span class="checkbox-label">Soybean</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Groundnut">
+                                        <span class="checkbox-label">Groundnut</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Tomato">
+                                        <span class="checkbox-label">Tomato</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Onion">
+                                        <span class="checkbox-label">Onion</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Potato">
+                                        <span class="checkbox-label">Potato</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Chilli">
+                                        <span class="checkbox-label">Chilli</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Brinjal">
+                                        <span class="checkbox-label">Brinjal</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Okra">
+                                        <span class="checkbox-label">Okra</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Cabbage">
+                                        <span class="checkbox-label">Cabbage</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Cauliflower">
+                                        <span class="checkbox-label">Cauliflower</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Beans">
+                                        <span class="checkbox-label">Beans</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Peas">
+                                        <span class="checkbox-label">Peas</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Carrot">
+                                        <span class="checkbox-label">Carrot</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Beetroot">
+                                        <span class="checkbox-label">Beetroot</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Spinach">
+                                        <span class="checkbox-label">Spinach</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="cropsGrown" value="Other" onchange="toggleOtherCrops(this)">
+                                        <span class="checkbox-label">Other</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="otherCropsGroup" style="display: none;">
+                                <input
+                                    type="text"
+                                    id="otherCrops"
+                                    name="otherCrops"
+                                    class="form-input"
+                                    placeholder="Please specify other crops (comma separated)"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soilType" class="form-label">
+                                Soil Type
+                            </label>
+                            <select
+                                id="soilType"
+                                name="soilType"
+                                class="form-select"
+                            >
+                                <option value="">Select Soil Type</option>
+                                <option value="Red">Red Soil</option>
+                                <option value="Black">Black Soil</option>
+                                <option value="Sandy">Sandy Soil</option>
+                                <option value="Loamy">Loamy Soil</option>
+                                <option value="Clay">Clay Soil</option>
+                                <option value="Mixed">Mixed Soil</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purposeOfVisit" class="form-label">
+                                Purpose of Visit <span class="required">*</span>
+                            </label>
+                            <select
+                                id="purposeOfVisit"
+                                name="purposeOfVisit"
+                                class="form-select"
+                                required
+                                onchange="toggleOtherPurpose(this)"
+                            >
+                                <option value="">Select Purpose</option>
+                                <option value="To buy products for my farm">To buy products for my farm</option>
+                                <option value="To understand recommended products for my crop">To understand recommended products for my crop</option>
+                                <option value="To get consultation for crop issues">To get consultation for crop issues</option>
+                                <option value="To learn about organic farming methods">To learn about organic farming methods</option>
+                                <option value="To become a distributor or partner">To become a distributor or partner</option>
+                                <option value="To attend training/workshop">To attend training/workshop</option>
+                                <option value="Just exploring options">Just exploring options</option>
+                                <option value="Other (please specify)">Other (please specify)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="otherPurposeGroup" style="display: none;">
+                            <label for="otherPurpose" class="form-label">
+                                Please specify
+                            </label>
+                            <input
+                                type="text"
+                                id="otherPurpose"
+                                name="otherPurpose"
+                                class="form-input"
+                                placeholder="Please specify your purpose"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cropIssues" class="form-label">
+                                Crop Issues / Requirements (Optional)
+                            </label>
+                            <textarea
+                                id="cropIssues"
+                                name="cropIssues"
+                                rows="4"
+                                class="form-textarea"
+                                placeholder="Describe any specific crop issues, pest problems, or requirements..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Preferred Communication Mode
+                            </label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="communicationMode" value="phone" checked>
+                                    <span class="radio-label">Phone Call</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="communicationMode" value="whatsapp">
+                                    <span class="radio-label">WhatsApp</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="communicationMode" value="email">
+                                    <span class="radio-label">Email</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="consent-item">
+                                <input type="checkbox" name="consent" required>
+                                <span class="consent-text">
+                                    I agree to be contacted by Bio Lia experts for farm consultation and product recommendations. 
+                                    I understand that my information will be used to provide personalized agricultural solutions.
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-previous" onclick="goToStep1()">
+                                Previous
+                            </button>
+                            <button type="submit" class="btn-submit">
+                                Submit Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h2 class="success-title">Thank You!</h2>
+                    <p class="success-text">
+                        Your inquiry has been submitted successfully. Our agricultural expert will contact you within 24 hours to provide personalized recommendations for your farm.
+                    </p>
+                    <div class="success-actions">
+                        <a href="index.html" class="btn-home">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
