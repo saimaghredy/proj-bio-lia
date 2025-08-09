@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Biolia Bio-Organic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link active" data-page="contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" data-page="home">Home</a></li>
+                <li><a href="products.html" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" data-page="contact">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="page-header" id="pageHeader">
+        <div class="container">
+            <h1 class="page-title">Contact <span class="accent">Biolia</span></h1>
+            <p class="page-subtitle">Get in touch with our agricultural experts for product information, technical support, or partnership opportunities.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content" id="contactContent">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <!-- Company Info -->
+                    <div class="info-card">
+                        <h2 class="info-title">Get in Touch</h2>
+                        
+                        <div class="info-items" id="contactInfoItems">
+                            <!-- Contact info will be loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Downloadable Resources -->
+                    <div class="info-card">
+                        <h2 class="info-title">Download Resources</h2>
+                        <div class="resources-list" id="downloadableResources">
+                            <!-- Resources will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="form-card">
+                        <h2 class="form-title">Send us a Message</h2>
+                        
+                        <!-- Form Messages -->
+                        <div class="form-messages" id="formMessages"></div>
+                        
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name" class="form-label">
+                                    Full Name <span class="required">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    class="form-input"
+                                    placeholder="Your full name"
+                                    required
+                                />
+                                <div class="field-error" id="nameError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobile" class="form-label">
+                                    Mobile Number <span class="required">*</span>
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="mobile"
+                                    name="mobile"
+                                    class="form-input"
+                                    placeholder="10-digit mobile number"
+                                    maxlength="10"
+                                    required
+                                />
+                                <div class="field-error" id="mobileError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email Address
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="your.email@example.com (optional)"
+                                />
+                                <div class="field-error" id="emailError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="occupation" class="form-label">
+                                    Occupation
+                                </label>
+                                <select
+                                    id="occupation"
+                                    name="occupation"
+                                    class="form-select"
+                                >
+                                    <option value="">Select your occupation (optional)</option>
+                                    <option value="Farmer">Farmer</option>
+                                    <option value="Employee">Employee</option>
+                                    <option value="Business Owner">Business Owner</option>
+                                    <option value="Agricultural Consultant">Agricultural Consultant</option>
+                                    <option value="Dealer/Distributor">Dealer/Distributor</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Researcher">Researcher</option>
+                                    <option value="Government Official">Government Official</option>
+                                    <option value="NGO Worker">NGO Worker</option>
+                                    <option value="Retired">Retired</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="customOccupationGroup" style="display: none;">
+                                <label for="customOccupation" class="form-label">
+                                    Please specify your occupation
+                                </label>
+                                <input
+                                    type="text"
+                                    id="customOccupation"
+                                    name="customOccupation"
+                                    class="form-input"
+                                    placeholder="Enter your occupation"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company" class="form-label">
+                                    Company/Organization
+                                </label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    class="form-input"
+                                    placeholder="Your company name (optional)"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label">
+                                    Message <span class="required">*</span>
+                                </label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="6"
+                                    class="form-textarea"
+                                    placeholder="Tell us about your inquiry, product questions, or how we can help you..."
+                                    required
+                                ></textarea>
+                                <div class="field-error" id="messageError"></div>
+                            </div>
+
+                            <button type="submit" class="form-submit-btn" id="submitBtn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <div class="loading-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    Sending...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <h2 class="modal-title">Message Sent Successfully!</h2>
+            <p class="modal-text">Thank you for contacting Biolia. Our team will get back to you within 24 hours with the information you requested.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="closeSuccessModal()">Continue</button>
+                <a href="index.html" class="btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading contact information...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

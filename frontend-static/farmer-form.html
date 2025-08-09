@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Support - Biolia Bio-Organic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link active" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" data-page="home">Home</a></li>
+                <li><a href="products.html" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" data-page="contact">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Form Container -->
+    <div class="farmer-form-container" id="farmerFormContainer">
+        <div class="form-wrapper">
+            <!-- Header -->
+            <div class="form-header">
+                <h1 class="form-main-title">Get Expert Farm Consultation</h1>
+                <p class="form-main-subtitle">Share your farm details and get personalized organic solutions for higher yields</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps" id="progressSteps">
+                <div class="step-container">
+                    <div class="step active" id="step1Indicator">
+                        <div class="step-number">1</div>
+                        <span class="step-label">Contact Details</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step2Indicator">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Farm Details</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="farmer-form-card" id="farmerFormCard">
+                <!-- Step 1: Contact Details -->
+                <div class="form-step" id="step1">
+                    <h2 class="step-title">Contact Information</h2>
+                    
+                    <!-- Form Messages -->
+                    <div class="form-messages" id="step1Messages"></div>
+                    
+                    <form class="farmer-form" id="contactDetailsForm">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                class="form-input"
+                                placeholder="Enter your full name"
+                                required
+                            />
+                            <div class="field-error" id="fullNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile" class="form-label">
+                                Mobile Number <span class="required">*</span>
+                            </label>
+                            <input
+                                type="tel"
+                                id="mobile"
+                                name="mobile"
+                                class="form-input"
+                                placeholder="10-digit mobile number"
+                                maxlength="10"
+                                required
+                            />
+                            <div class="field-error" id="mobileError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp" class="form-label">
+                                WhatsApp Number (if different)
+                            </label>
+                            <input
+                                type="tel"
+                                id="whatsapp"
+                                name="whatsapp"
+                                class="form-input"
+                                placeholder="WhatsApp number"
+                                maxlength="10"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email ID (Optional)
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-input"
+                                placeholder="your.email@example.com"
+                            />
+                            <div class="field-error" id="emailError"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="state" class="form-label">
+                                    State <span class="required">*</span>
+                                </label>
+                                <select
+                                    id="state"
+                                    name="state"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">Select State</option>
+                                    <!-- States will be loaded dynamically -->
+                                </select>
+                                <div class="field-error" id="stateError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="district" class="form-label">
+                                    District
+                                </label>
+                                <input
+                                    type="text"
+                                    id="district"
+                                    name="district"
+                                    class="form-input"
+                                    placeholder="Enter district"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="village" class="form-label">
+                                Village / Location
+                            </label>
+                            <input
+                                type="text"
+                                id="village"
+                                name="village"
+                                class="form-input"
+                                placeholder="Enter village or location"
+                            />
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-next" id="nextToStep2">
+                                Next: Farm Details
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Farm Details -->
+                <div class="form-step" id="step2" style="display: none;">
+                    <h2 class="step-title">Farm & Crop Information</h2>
+                    
+                    <!-- Form Messages -->
+                    <div class="form-messages" id="step2Messages"></div>
+                    
+                    <form class="farmer-form" id="farmDetailsForm">
+                        <div class="form-group">
+                            <label for="farmSize" class="form-label">
+                                Farm Size (in acres)
+                            </label>
+                            <input
+                                type="number"
+                                id="farmSize"
+                                name="farmSize"
+                                class="form-input"
+                                placeholder="e.g., 2.5"
+                                step="0.1"
+                                min="0"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Type of Farming (Select all that apply)
+                            </label>
+                            <div class="checkbox-grid" id="farmingTypeGrid">
+                                <!-- Farming types will be loaded dynamically -->
+                            </div>
+                            <div class="form-group" id="otherFarmingTypeGroup" style="display: none;">
+                                <input
+                                    type="text"
+                                    id="otherFarmingType"
+                                    name="otherFarmingType"
+                                    class="form-input"
+                                    placeholder="Please specify other farming type"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Crops Grown (Current/Planned)
+                            </label>
+                            <div class="crops-container">
+                                <div class="crops-grid" id="cropsGrid">
+                                    <!-- Crops will be loaded dynamically -->
+                                </div>
+                            </div>
+                            <div class="form-group" id="otherCropsGroup" style="display: none;">
+                                <input
+                                    type="text"
+                                    id="otherCrops"
+                                    name="otherCrops"
+                                    class="form-input"
+                                    placeholder="Please specify other crops (comma separated)"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soilType" class="form-label">
+                                Soil Type
+                            </label>
+                            <select
+                                id="soilType"
+                                name="soilType"
+                                class="form-select"
+                            >
+                                <option value="">Select Soil Type</option>
+                                <!-- Soil types will be loaded dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purposeOfVisit" class="form-label">
+                                Purpose of Visit <span class="required">*</span>
+                            </label>
+                            <select
+                                id="purposeOfVisit"
+                                name="purposeOfVisit"
+                                class="form-select"
+                                required
+                            >
+                                <option value="">Select Purpose</option>
+                                <!-- Purposes will be loaded dynamically -->
+                            </select>
+                            <div class="field-error" id="purposeError"></div>
+                        </div>
+
+                        <div class="form-group" id="otherPurposeGroup" style="display: none;">
+                            <label for="otherPurpose" class="form-label">
+                                Please specify
+                            </label>
+                            <input
+                                type="text"
+                                id="otherPurpose"
+                                name="otherPurpose"
+                                class="form-input"
+                                placeholder="Please specify your purpose"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cropIssues" class="form-label">
+                                Crop Issues / Requirements (Optional)
+                            </label>
+                            <textarea
+                                id="cropIssues"
+                                name="cropIssues"
+                                rows="4"
+                                class="form-textarea"
+                                placeholder="Describe any specific crop issues, pest problems, or requirements..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Preferred Communication Mode
+                            </label>
+                            <div class="radio-group" id="communicationModeGroup">
+                                <!-- Communication modes will be loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="consent-item">
+                                <input type="checkbox" name="consent" id="consent" required>
+                                <span class="consent-text">
+                                    I agree to be contacted by Bio Lia experts for farm consultation and product recommendations. 
+                                    I understand that my information will be used to provide personalized agricultural solutions.
+                                </span>
+                            </label>
+                            <div class="field-error" id="consentError"></div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-previous" id="backToStep1">
+                                Previous
+                            </button>
+                            <button type="submit" class="btn-submit" id="submitFarmerForm">
+                                <span class="btn-text">Submit Request</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <div class="loading-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    Submitting...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h2 class="success-title">Thank You!</h2>
+                    <p class="success-text">
+                        Your inquiry has been submitted successfully. Our agricultural expert will contact you within 24 hours to provide personalized recommendations for your farm.
+                    </p>
+                    <div class="success-actions">
+                        <a href="index.html" class="btn-home">Back to Home</a>
+                        <button class="btn-secondary" onclick="resetForm()">Submit Another Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading form...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/farmer-form.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

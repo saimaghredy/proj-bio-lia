@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Biolia Bio-Organic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="products.html" class="nav-link active" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" data-page="home">Home</a></li>
+                <li><a href="products.html" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" data-page="contact">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="page-header" id="pageHeader">
+        <div class="container">
+            <h1 class="page-title">Bio-Organic <span class="accent">Product Range</span></h1>
+            <p class="page-subtitle">Scientifically formulated, field-tested solutions for sustainable farming and higher yields across South India</p>
+            <a href="farmer-form.html" class="header-cta" data-analytics="header-cta">Get Product Recommendations</a>
+        </div>
+    </section>
+
+    <!-- Product Filter -->
+    <section class="product-filter" id="productFilter">
+        <div class="container">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All Products</button>
+                <button class="filter-tab" data-filter="fertilizers">Fertilizers</button>
+                <button class="filter-tab" data-filter="bio-inoculant">Bio-Inoculants</button>
+                <button class="filter-tab" data-filter="growth-enhancer">Growth Enhancers</button>
+                <button class="filter-tab" data-filter="soil-treatment">Soil Treatment</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Individual Products Section -->
+    <section class="individual-products" id="individualProducts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Individual Products</h2>
+                <p class="section-subtitle">Each product is designed to address specific agricultural needs and growth stages</p>
+            </div>
+            
+            <div class="products-detailed-grid" id="productsDetailedGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stage-Wise Application Guide -->
+    <section class="stage-guide" id="stageGuide">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Stage-Wise Application Guide</h2>
+                <p class="section-subtitle">Apply the right product at the right time for maximum effectiveness</p>
+            </div>
+            
+            <div class="stages-grid" id="stagesGrid">
+                <!-- Stages will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Kits Section -->
+    <section class="package-kits" id="packageKits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-white">Ready-to-Use <span class="accent">Package Kits</span></h2>
+                <p class="section-subtitle-white">Pre-packaged combinations for specific crops - everything you need in one kit</p>
+            </div>
+            
+            <div class="kits-grid" id="kitsGrid">
+                <!-- Kits will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop-Specific Recommendations -->
+    <section class="crop-recommendations" id="cropRecommendations">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Crop-Specific Recommendations</h2>
+                <p class="section-subtitle">Quick recommendations for popular South Indian crops</p>
+            </div>
+            
+            <div class="crop-grid" id="cropGrid">
+                <!-- Crop recommendations will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Our Products -->
+    <section class="why-choose" id="whyChoose">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Biolia Products?</h2>
+            </div>
+            
+            <div class="features-grid" id="featuresGrid">
+                <!-- Features will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="products-cta" id="productsCta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Boost Your Farm's Productivity?</h2>
+                <p class="cta-subtitle">Get personalized product recommendations based on your crops, soil type, and farming conditions. Our experts will help you choose the right products and application methods.</p>
+                <div class="cta-buttons">
+                    <a href="farmer-form.html" class="cta-btn-primary" data-analytics="products-consultation">Get Free Consultation</a>
+                    <a href="contact.html" class="cta-btn-secondary" data-analytics="products-contact">Contact Our Experts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading products...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

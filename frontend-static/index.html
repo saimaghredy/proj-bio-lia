@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biolia - Bio-Organic Solutions for Indian Farmers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <div class="brand-text">
+                        <div class="brand-main">Biolia</div>
+                        <div class="brand-sub">Bio-Organic Solutions</div>
+                        <div class="brand-desc">for Indian Farmers</div>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="products.html" class="nav-link" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" class="nav-link" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="farmer-form.html" class="cta-button">🌾 Free Consultation</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" data-page="home">Home</a></li>
+                <li><a href="products.html" data-page="products">Products</a></li>
+                <li><a href="farmer-form.html" data-page="support">Get Support</a></li>
+                <li><a href="contact.html" data-page="contact">Contact</a></li>
+                <li><a href="farmer-form.html" class="mobile-cta">🌾 Get Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">
+                Rebuilding Soil.<br>
+                <span class="hero-accent1">Empowering Farmers.</span><br>
+                <span class="hero-accent2">The Bio-Organic Way.</span>
+            </h1>
+            <p class="hero-subtitle fade-in-up delay-1">
+                Smart, bio-based solutions crafted for Indian farming — from drylands to deltas.
+                Trusted by farmers growing <span class="hero-highlight">paddy, pulses, vegetables, and fruits across India.</span>
+            </p>
+            <div class="hero-buttons fade-in-up delay-2">
+                <a href="products.html" class="hero-btn" data-analytics="hero-products">🌿 View Products</a>
+                <a href="products.html#bundles" class="hero-btn" data-analytics="hero-bundles">📦 Explore Bundles</a>
+                <a href="contact.html" class="hero-btn" data-analytics="hero-brochure">📥 Download Brochure</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="trust-section" id="trustSection">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item fade-in-up" data-count="100">
+                    <div class="trust-number">0%</div>
+                    <div class="trust-title">Organic Certified</div>
+                    <p class="trust-desc">Natural compliance</p>
+                </div>
+                <div class="trust-item fade-in-up delay-1" data-count="5">
+                    <div class="trust-number">0+</div>
+                    <div class="trust-title">Curated Kits</div>
+                    <p class="trust-desc">For common farming systems</p>
+                </div>
+                <div class="trust-item fade-in-up delay-2" data-count="10">
+                    <div class="trust-number">0+</div>
+                    <div class="trust-title">States Tested</div>
+                    <p class="trust-desc">Under various soil types</p>
+                </div>
+                <div class="trust-item fade-in-up delay-3" data-count="45">
+                    <div class="trust-number">0%</div>
+                    <div class="trust-title">Yield Increase</div>
+                    <p class="trust-desc">Average improvement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="products-showcase" id="productsShowcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Complete Bio-Organic Solutions</h2>
+                <p class="section-subtitle">From soil foundation to harvest, our scientifically formulated products support every stage of your crop's journey</p>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Kits Section -->
+    <section class="package-kits" id="packageKits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-white">Ready-to-Use <span class="accent">Package Kits</span></h2>
+                <p class="section-subtitle-white">Specially curated bundles for different crops and farming needs. Everything you need in one package.</p>
+            </div>
+            
+            <div class="kits-grid" id="kitsGrid">
+                <!-- Kits will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faqSection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about Biolia products</p>
+            </div>
+            
+            <div class="faq-list" id="faqList">
+                <!-- FAQs will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloadable Resources -->
+    <section class="resources-section" id="resourcesSection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-dark">Download Resources</h2>
+                <p class="section-subtitle-dark">Get detailed product information, application guides, and crop-specific recommendations</p>
+            </div>
+            
+            <div class="resources-grid" id="resourcesGrid">
+                <!-- Resources will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="finalCta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Transform Your Farm?</h2>
+                <p class="cta-subtitle">Join thousands of farmers who have increased their yields and improved soil health with Biolia's bio-organic solutions.</p>
+                <a href="farmer-form.html" class="cta-btn-large" data-analytics="final-cta">Get Free Expert Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
